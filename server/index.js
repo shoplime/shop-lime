@@ -47,7 +47,7 @@ massive(DB_CONNECTION).then(db => {
 //note opentok broadcast function does not like rtmps url
 
 app.get('/startBroadcast', (req, res) => {
-    const sessionId = '2_MX40NjI4NjMwMn5-MTU1Mjk0MTc3MTU2NH4yZFhxWitaUWIxRW9CMi90SnR6U0t6V05-fg'
+    const sessionId = '1_MX40NjI4NjMwMn5-MTU1MzAyNDk4MTc1NH51cko0K0JrWlcyOE4xbkRRMldCaGoveDl-fg'
     const broadcastOptions = {
         outputs: {
             hls: {},
