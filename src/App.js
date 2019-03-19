@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {HashRouter as Router} from 'react-router-dom'
+import routes from './routes'
 import './App.css';
 import axios from 'axios'
 
@@ -16,12 +18,16 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className="App">
+          {/* {routes} */}
         <header className="App-header">
           <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
           <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
+          ShopLime has never looked better!
         </header>
       </div>
+      </Router>
     );
   }
 }
