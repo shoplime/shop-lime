@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-          {/* {routes} */}
+          {routes}
         <header className="App-header">
           <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
           <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
