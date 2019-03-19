@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-          {/* {routes} */}
+          {routes}
         <header className="App-header">
           ShopLime has never looked better!
         </header>
