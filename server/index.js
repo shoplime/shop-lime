@@ -46,8 +46,31 @@ massive(DB_CONNECTION).then(db => {
 
 //note opentok broadcast function does not like rtmps url
 
-app.get('/startBroadcast', (req, res) => {
-    const sessionId = '1_MX40NjI4NjMwMn5-MTU1MzAyNDk4MTc1NH51cko0K0JrWlcyOE4xbkRRMldCaGoveDl-fg'
+app.get('/createSession', (req, res) => {
+    opentok.createSession({mediaMode:"routed"}, function(error, session) {
+    if (error) {
+        console.log("Error creating session:", error)
+    } else {
+        console.log(session)
+        const sessionId = session.sessionId;
+        console.log("Session ID: " + sessionId);
+        res.status(200).send(sessionId);
+    }
+    });
+})
+
+app.get('/generateToken/:sid', (req, res) => {
+    const sessionId = req.params.sid
+    const token = opentok.generateToken(sessionId)
+    res.status(200).send(token)
+})
+
+app.get('/getKey', (req, res) => {
+    res.status(200).send(OT_API_KEY)
+})
+
+app.get('/startBroadcast/:sid', (req, res) => {
+    const sessionId = req.params.sid
     const broadcastOptions = {
         outputs: {
             hls: {},
@@ -55,13 +78,13 @@ app.get('/startBroadcast', (req, res) => {
                 {
                     id: 'Facebook',
                     serverUrl: 'rtmp://live-api-s.facebook.com:80/rtmp/',
-                    streamName: '312029836036601?s_ps=1&s_sw=0&s_vt=api-s&a=AbyJ8Q7RZsS7thbL'
+                    streamName: '10219365127618398?s_ps=1&s_sw=0&s_vt=api-s&a=AbyTQYUbsuYUhy66'
+                },
+                {
+                    id: 'Youtube',
+                    serverUrl: 'rtmp://a.rtmp.youtube.com/live2',
+                    streamName: '5x7r-sv7j-qjyb-2cc6'
                 }
-                // {
-                //     id: 'Youtube',
-                //     serverUrl: '',
-                //     streamName: ''
-                // }
             ]
         },
         maxDuration: 600,
