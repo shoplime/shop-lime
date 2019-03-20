@@ -65,7 +65,7 @@ class OTClient extends Component {
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
                         <OTStreams>
-                            <OTSubscriber />
+                            <OTSubscriber properties={{ width: '100%', height: '500px' }}/>
                         </OTStreams>
                         </OTSession>
                     </div>

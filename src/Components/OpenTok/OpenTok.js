@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { OTSession, OTPublisher, OTSubscriber } from 'opentok-react';
+import './OpenTok.scss'
 
 class OpenTok extends Component {
     constructor(props) {
@@ -65,7 +66,9 @@ class OpenTok extends Component {
                     (token ?
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
-                            <OTPublisher />
+                            <div  className="stream-container">
+                                <OTPublisher  properties={{ width: '100%', height: '500px' }}/>
+                            </div>
                             <OTSubscriber />
                         </OTSession>
                         <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
