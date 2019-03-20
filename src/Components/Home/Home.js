@@ -1,9 +1,13 @@
 import React, { useState, useEffect, Suspense, memo } from 'react'
+import Modal from '@material-ui/core/Modal';
+import Authentication from '../Authentication/Authentication';
 const Nav = React.lazy(() => import('../Nav/Nav'))
+
 
 const Home = () => {
 
     const [count, setCount] = useState(0);
+    const [open, handleOpen] = useState(false);
 
     useEffect(() => {
         document.title = `You clicked ${count} times`;
@@ -19,6 +23,17 @@ const Home = () => {
                     Click me
                 </button>
             </div>
+            <div>
+                <p>Is modal open? {open}</p>
+                <button onClick={() => handleOpen(true)}>
+                    Open Modal
+                </button>
+            </div>
+            
+            <Modal open={open} onClose={() => handleOpen(false)}>
+                <Authentication />
+            </Modal>
+            
         </div>
     )
 }

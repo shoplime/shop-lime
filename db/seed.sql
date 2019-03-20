@@ -15,7 +15,8 @@ CREATE TABLE "users" (
   "id" serial primary key,
   "first_name" varchar,
   "last_name" varchar,
-  "email" varchar
+  "email" varchar,
+  "password" varchar(400)
 );
 
 

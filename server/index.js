@@ -108,4 +108,7 @@ app.get('/stopBroadcast', (req, res) => {
 
 //Authentication endpoints
 
-app.post()
+app.post('/user/register', authc.register)
+app.post('/user/login', authc.login)
+app.post('/user/logout', authc.logout)
+app.get('/user/fetchuser', authc.getUser)
