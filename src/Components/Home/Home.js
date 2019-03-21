@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense, memo } from 'react'
+import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
@@ -10,12 +11,17 @@ const Nav = React.lazy(() => import('../Nav/Nav'))
 const Home = () => {
 
     const [count, setCount] = useState(0);
+    const [checkout, setCheckout] = useState(false);
+    
     const [open, handleOpen] = useState(false);
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
 
     useEffect(() => {
         document.title = `You clicked ${count} times`;
     });
+    const toggleCheckout = () => {
+        setCheckout(checkout === false? true : false)
+    };
 
     return (
         <div>
@@ -49,6 +55,10 @@ const Home = () => {
                 <button onClick={() => setCount(count + 1)}>
                     Click me
                 </button>
+            </div>
+            <div>
+                <button onClick={toggleCheckout}>Add to Cart</button>
+                {checkout?<OrderModal toggle={toggleCheckout}/>:null}
             </div>
             <div>
                 <p>Is modal open? {open}</p>
