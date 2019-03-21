@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {HashRouter as Router} from 'react-router-dom'
 import routes from './routes'
-import './App.css';
+import './App.scss';
 
 class App extends Component {
 
@@ -9,10 +9,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-          {routes}
-        <header className="App-header">
-          ShopLime has never looked better!
-        </header>
+        {routes}
       </div>
       </Router>
     );
