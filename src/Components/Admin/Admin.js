@@ -116,7 +116,7 @@ class Admin extends React.Component {
             <Button onClick={this.handleReset} className={classes.button}>
               Reset
             </Button>
-          </Paper>
+          </Paper> 
         )}
       </div>
     );
