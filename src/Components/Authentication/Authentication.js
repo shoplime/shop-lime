@@ -74,7 +74,7 @@ function Authentication(props) {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography className={classes.typography} component="h1" variant="h5">
-                    Sign in
+                    Sign in to unlock content
                 </Typography>
                 <form className={classes.form} >
                     <FormControl margin="normal" required fullWidth>
