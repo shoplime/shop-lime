@@ -1,11 +1,16 @@
 import React, { useState, useEffect, Suspense, memo } from 'react'
-// const Nav = React.lazy(() => import('../Nav/Nav'))
+import Modal from '@material-ui/core/Modal';
+import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
+const Nav = React.lazy(() => import('../Nav/Nav'))
+// const Nav = React.lazy(() => import('../Nav/Nav'))
+
 
 const Home = () => {
 
     const [count, setCount] = useState(0);
+    const [open, handleOpen] = useState(false);
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
 
     useEffect(() => {
@@ -45,6 +50,17 @@ const Home = () => {
                     Click me
                 </button>
             </div>
+            <div>
+                <p>Is modal open? {open}</p>
+                <button onClick={() => handleOpen(true)}>
+                    Open Modal
+                </button>
+            </div>
+            
+            <Modal open={open} onClose={() => handleOpen(false)}>
+                <Authentication />
+            </Modal>
+            
         </div>
     )
 }

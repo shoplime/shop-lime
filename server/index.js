@@ -1,8 +1,10 @@
 const express = require('express')
+const sessions = require('express-session')
 require('dotenv').config()
 const massive = require('massive')
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT } = process.env
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET } = process.env
 const OpenTok = require('opentok')
+const authc = require('./AuthController')
 
 const app = express();
 app.use(express.json())
@@ -12,6 +14,17 @@ massive(DB_CONNECTION).then(db => {
     app.set('db', db)
     app.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
 })
+
+//Setting up sessions / middleware
+
+app.use(
+    sessions({
+        secret: SESSION_SECRET, 
+        resave: false,
+        saveUninitialized: false,
+        maxAge: null
+    })
+);
 
 //Broadcast Object Sent Back after Start Broadcast
 // Broadcast {
@@ -115,3 +128,10 @@ app.get('/stopBroadcast', (req, res) => {
         }
     })
 })
+
+//Authentication endpoints
+
+app.post('/user/register', authc.register)
+app.post('/user/login', authc.login)
+app.post('/user/logout', authc.logout)
+app.get('/user/fetchuser', authc.getUser)
