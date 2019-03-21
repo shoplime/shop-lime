@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { OTSession, OTPublisher, OTSubscriber } from 'opentok-react';
+import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
 
 class OpenTok extends Component {
@@ -67,9 +67,8 @@ class OpenTok extends Component {
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
                             <div  className="stream-container">
-                                <OTPublisher  properties={{ width: '100%', height: '500px' }}/>
+                                <OTPublisher  properties={{ width: '100%', fitMode: 'cover' }}/>
                             </div>
-                            <OTSubscriber />
                         </OTSession>
                         <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
                         <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
@@ -82,9 +81,7 @@ class OpenTok extends Component {
                         <button onClick={() => {this.generateToken()}} >Generate Token</button>
                     </div>)
                 }
-                
             </div>
-            
         );
     }
 }

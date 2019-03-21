@@ -34,7 +34,11 @@ class OTClient extends Component {
             })
         })
     }
-
+    
+    componentWillUnmount(){
+        this.sessionHelper.disconnect();
+    }
+    
     handleChange = (key, val) => {
         this.setState({
             [key]: val
@@ -52,9 +56,6 @@ class OTClient extends Component {
         })
     }
 
-    componentWillUnmount() {
-        this.sessionHelper.disconnect();
-    }
 
     render() {
         const { apiKey, sessionId, token } = this.state;
@@ -64,9 +65,9 @@ class OTClient extends Component {
                     (token ?
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
-                        <OTStreams>
-                            <OTSubscriber properties={{ width: '100%', height: '500px' }}/>
-                        </OTStreams>
+                            <OTStreams>
+                                <OTSubscriber properties={{ width: '1280px', height: '720px' }}/>
+                            </OTStreams>
                         </OTSession>
                     </div>
                     :

@@ -53,7 +53,6 @@ app.get('/createSession', (req, res) => {
     } else {
         console.log(session)
         const sessionId = session.sessionId;
-        console.log("Session ID: " + sessionId);
         res.status(200).send(sessionId);
     }
     });
@@ -62,6 +61,7 @@ app.get('/createSession', (req, res) => {
 app.get('/generateToken/:sid', (req, res) => {
     const sessionId = req.params.sid
     const token = opentok.generateToken(sessionId)
+    console.log(token)
     res.status(200).send(token)
 })
 
