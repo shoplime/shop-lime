@@ -86,7 +86,7 @@ function Authentication(props) {
                 <form className={classes.form} >
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
-                        <Input onChange={(e) => handleEmail(e.target.value)} id="email" name="email" autoComplete="email" autoFocus />
+                        <Input onChange={(e) => handleEmail(e.target.value)} id="email" type="email" name="email" autoComplete="email" autoFocus />
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>

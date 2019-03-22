@@ -34,8 +34,10 @@ const Home = () => {
                 console.log(res)
                 handleOpen(false)
             })
-            .catch(() => {
-                handleError('EMAIL ALREADY EXISTS!')
+            .catch((res) => {
+                console.log('Msg 1', res)
+                console.log('Msg 1', res.errormsg2)
+                handleError('Register Error')
             })    
     }
     const login = async () => {
