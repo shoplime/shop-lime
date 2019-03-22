@@ -16,7 +16,7 @@ const Home = () => {
     
     const [open, handleOpen] = useState(false);
     const [email, handleEmail] = useState('')
-    const [password, handlePassword] = useState('')
+    const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
 
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
@@ -34,7 +34,9 @@ const Home = () => {
                 console.log(res)
                 handleOpen(false)
             })
-            .catch((err) => console.log(err))    
+            .catch(() => {
+                handleError('EMAIL ALREADY EXISTS!')
+            })    
     }
     const login = async () => {
         await axios.post('/user/login', {email, password})
@@ -43,7 +45,7 @@ const Home = () => {
                 handleOpen(false)
             })
             .catch(() => {
-                handleError('Incorrect Username or Password')
+                handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
     

@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import './Authentication.scss'
 
 
 const buttonStyle = {
@@ -41,7 +42,7 @@ const styles = theme => ({
             '"Helvetica Neue"',
             'Arial',
             'sans-serif',
-            '"Apple Color Emoji"',
+            '"Apple Color Emoji"', 
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
         ].join(','),
@@ -118,7 +119,9 @@ function Authentication(props) {
                     >
                         Sign in
                     </Button>
-                    <div>{loginError}</div>
+                    <div className='login-error'>
+                        <p>{loginError}</p>
+                    </div>
                 </form>
             </Paper>
         </main>

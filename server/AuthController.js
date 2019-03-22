@@ -8,13 +8,19 @@ module.exports = {
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)
 
-        let newUser = await db.register({ email, password: hash })
-        newUser = newUser[0]
+        let found = await db.login({email})
+        found = found[0]
 
-        session.user = { ...newUser } 
-        res.status(201).send(session.user)
-        console.log('Session User', session.user)
-        
+        if(found){
+            res.status(418).send('Email already exists!')
+        }else{
+            let newUser = await db.register({ email, password: hash })
+            newUser = newUser[0]
+    
+            session.user = { ...newUser } 
+            res.status(201).send(session.user)
+            console.log('Session User', session.user)
+        }  
     },
     login: async (req, res) => {
         const db = req.app.get('db')
