@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
+import ReactPlayer from 'react-player';
 import './OpenTok.scss'
 
 class OpenTok extends Component {
@@ -9,7 +10,9 @@ class OpenTok extends Component {
         this.state = {
             apiKey: '',
             sessionId: '',
-            token: ''
+            token: '',
+            archive: '',
+            archiveUrl: 'https://s3.us-west-1.amazonaws.com/lime-archive/46286302/a26e1bad-7288-410c-bb7a-79c722577558/archive.mp4?response-content-disposition=inline&X-Amz-Security-Token=AgoGb3JpZ2luEDkaCXVzLXdlc3QtMSKAAh0m8MTND3mx3BV6UznV%2BVf6DpBKhYWlp91T2NjItqHd6ZLheeDl3Ig%2BQaguYSmn%2Bl26WT4I0j23mUDbJC1hJeBV%2Fw%2F0fFh%2FzYkY7hPrNPvgEA%2FeyUdOantKoAO3hv1LIDxJildz1t7PJYah51Oe6tUXycv6DJE%2BBWCRtHe0Z0X%2FdAv2lLoLS7hBfpHT6dY%2FECwq02XcZOf1jPWIMVZMQr05sKS5ch0LqKwe0C6SRncX9tH7InfmNNd273daobUqUneUCe%2BU%2BlfC1B9ITcAXwpmjOQHfiMshbnXhtHT5CRI3FarOkNhzTL12GYUkHQNNer%2BxFin%2BuD%2Bysh%2BhVLW9Cu4q5AMIjv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwwNzc5NzU0MDUzMDIiDFtKV2F%2FixJq19K5Siq4A2wXc4ZJzb6lrlBak6Aj2A1frSj7hwY1sSMLFpZCnMejMODMxbLNpQaYSAwu0azpSD%2BJ3l5ZIQlGV9kaWmfM7zs8AATFQVSC2pSNPB6qLno9IS9jXOLOs572%2BlNaPk490O4onNHC7cGvQT%2BfoHbjOyMRGJffnGWFJNbZfRoypbU9Sg5yQvtQ9Swm2fOnaj5GcLNKwqVfPfsNWJJxvPUGqsts7xcCtxOjBNMo7RpVfFroAc%2Bkps%2Bn7TMgNJ6%2BxdnOZzuOa2615r13UwdjRjHS%2FFWqw9q%2BMWxdHcJbVw3dfyuhdQurXaRlQUMmThQN4eCRejFBCEmsVZ8nAvZzYVRrEQqO2I0DZP5lcoJz2lPm%2FB2QyAqcvEvuVvUBkTc1Tri0EPC6fVsADPAzTFc2usdjlf%2FKiAYZaBtLD185UoSMW2Ira4HC%2FKakfBuNQgBY9TB18X4nwGthU7e3Ft5kRNkYL%2BkDTLJVV6VUfhGFwZXF3VNtWX34pkpp1yIin4cafoQ5jZNYpj5bmY5nz%2F%2Ffn%2FNfsuVYzje2U84gNsAXFZeeBuN5anDAR%2FJIPl2CMtfUC%2FQxMeyaUOZ5C9a3MM200%2BQF&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20190322T152657Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAREJ5SIL3L6BPIIWR%2F20190322%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Signature=60e7f0ec636dba8fc8c91f907c143cdba14e6d56cbc13a07dd2c3e99b011a9c1'
         };
     }
 
@@ -22,9 +25,9 @@ class OpenTok extends Component {
         })
     }
 
-    componentWillUnmount() {
-        this.sessionHelper.disconnect();
-    }
+    // componentWillUnmount() {
+    //     this.sessionHelper.disconnect();
+    // }
 
     createSession = () => {
         axios.get('/createSession')
@@ -58,10 +61,57 @@ class OpenTok extends Component {
         .then(res => console.log('broadcast ended'))
     }
 
+    startArchive = () => {
+        const data = {
+            sessionId: `${this.state.sessionId}`,
+            resolution: '1280x720',
+            outputMode: 'composed'
+        }
+        const headers = {
+            "Content-Type": "application/json"
+        }
+        axios.post('/startArchive', data, {headers: headers})
+        .then(res => {
+            this.setState({
+                archive: res.data.id
+            })
+            console.log(this.state)
+        })
+        .catch(err => {alert('Error starting archive')})
+    }
+
+    stopArchive = () => {
+        axios.get(`/stopArchive?archiveId=${this.state.archive}`)
+        .then(res => {
+            console.log('archiving stopped')
+            // const videoLink = document.createElement('a')
+            // const videoLinkText = document.createTextNode('Click here to view Archive');
+            // videoLink.appendChild(videoLinkText)
+            // videoLink.href = `/viewArchive/${res.data.id}`
+            // document.getElementById('links').appendChild(videoLink)
+        })
+        .catch(error => {
+            alert('Error stopping archive')
+        })
+    }
+
     render() {
         const { apiKey, sessionId, token } = this.state;
         return (
             <div>
+                <div className='player-container'>
+                    <ReactPlayer
+                        className='react-player'
+                        url={this.state.archiveUrl}
+                        playing={true}
+                        controls={true}
+                        volume={0.8}
+                        muted={true}
+                        pip={false}
+                        width={'100%'}
+                        height={'100%'}
+                    />
+                </div>
                 {
                     (token ?
                     <div>
@@ -72,6 +122,8 @@ class OpenTok extends Component {
                         </OTSession>
                         <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
                         <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
+                        <button onClick={() => {this.startArchive()}}>Start Archive</button>
+                        <button onClick={() => {this.stopArchive()}}>Stop Archive</button>
                     </div>
                     :
                     <div>

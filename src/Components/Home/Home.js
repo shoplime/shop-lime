@@ -34,11 +34,12 @@ const Home = () => {
             </header>
             <div className='player-container'>
                 <ReactPlayer
+                    className='react-player'
                     url={hls}
                     playing={true}
                     controls={true}
                     volume={0.8}
-                    muted={false}
+                    muted={true}
                     pip={false}
                     width={'100%'}
                     height={'100%'}

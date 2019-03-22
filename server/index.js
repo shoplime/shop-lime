@@ -120,11 +120,35 @@ app.get('/stopBroadcast', (req, res) => {
     opentok.stopBroadcast(broadcastID, (error, broadcast) => {
         if (error) {
             console.log('Error stopping broadcast', error)
-            res.status(500).send('There was an error')
+            res.status(500).send('There was an error stopping the broadcast')
         } else {
             app.set('broadcastID', null)
             console.log('broadcast object from stopBroadcast', broadcast)
             res.json(broadcast)
+        }
+    })
+})
+
+app.post('/startArchive', (req, res) => {
+    const { sessionId, resolution, outputMode } = req.body
+    opentok.startArchive(sessionId, {resolution, outputMode}, (error, archive) => {
+        if(error){
+            return res.status(400).send('there was an error starting the archive')
+        } else {
+            console.log('start archive', archive)
+            res.json(archive)
+        }
+    })
+})
+
+app.get('/stopArchive', (req, res) => {
+    const { archiveId } = req.query;
+    opentok.stopArchive(archiveId, (error, archive) => {
+        if(error){
+            return res.status(400).send('there was an error stopping the archive')
+        } else {
+            console.log('stop archive', archive)
+            res.json(archive)
         }
     })
 })
