@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
     register: async (req, res) => {
-        const { email, password } = req.body
+        let { email, password } = req.body
         const { session } = req
         const db = req.app.get('db')
         const salt = bcrypt.genSaltSync(10)
@@ -14,11 +14,11 @@ module.exports = {
         }
         console.log(validate(email))
 
-        const errormsg1 = "INVALID EMAIL!"
-        const errormsg2 = "EMAIL ALREADY EXISTS!"
         if(!validate(email)){
             res.status(500).send(errormsg1)
         }
+
+        email = email.toLowerCase()
 
         let found = await db.login({email})
         found = found[0]

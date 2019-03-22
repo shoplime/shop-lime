@@ -5,11 +5,13 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
 import axios from 'axios';
+const appLogic = import('../../Testing/AppLogic')
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
 
 const Home = () => {
+    console.log('Password type', typeof password)
 
     const [count, setCount] = useState(0);
     const [checkout, setCheckout] = useState(false);
@@ -29,6 +31,8 @@ const Home = () => {
         setCheckout(checkout === false? true : false)
     };
     const register = async () => {
+        const isEmail = appLogic.validateEmail(email)
+        const isPassword = appLogic.validatePassword(password)
         await axios.post('/user/register', {email, password})
             .then((res) => {
                 console.log(res)
@@ -53,6 +57,7 @@ const Home = () => {
     
 
     return (
+        
         <div>
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
@@ -91,6 +96,7 @@ const Home = () => {
             </div>
             <div>
                 <p>Is modal open? {open}</p>
+                <p>Password: {password}</p>
                 <p>state email: {email}</p>
                 <button onClick={() => {handleOpen(true); handleError('')}} >
                     Open Modal
