@@ -14,6 +14,10 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 
+const buttonStyle = {
+    marginTop: '10px',
+    marginBottom: '15px'
+}
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -56,15 +60,17 @@ const styles = theme => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing.unit,
-        fontFamily: ['montserrat'].join(',')
     },
     submit: {
         marginTop: theme.spacing.unit * 3,
+        marginBottom: '20px',
     },
 });
 
+
 function Authentication(props) {
-    const { classes } = props;
+    const { classes, handleEmail, handlePassword, register, login, loginError } = props;
+
 
     return (
         <main className={classes.main}>
@@ -79,18 +85,31 @@ function Authentication(props) {
                 <form className={classes.form} >
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
+                        <Input onChange={(e) => handleEmail(e.target.value)} id="email" name="email" autoComplete="email" autoFocus />
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
+                        <Input onChange={(e) => handlePassword(e.target.value)} name="password" type="password" id="password" autoComplete="current-password" />
                     </FormControl>
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
                     <Button
-                        type="submit"
+                        onClick={() => register()} 
+                        style={buttonStyle}
+                        type="button"                      
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        className={classes.typography}
+                    >
+                        Register
+                    </Button>
+                    <Button
+                        onClick={() => login()} 
+                        type="button"                      
                         fullWidth
                         variant="contained"
                         color="primary"
@@ -99,6 +118,7 @@ function Authentication(props) {
                     >
                         Sign in
                     </Button>
+                    <div>{loginError}</div>
                 </form>
             </Paper>
         </main>

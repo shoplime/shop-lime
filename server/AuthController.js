@@ -13,6 +13,7 @@ module.exports = {
 
         session.user = { ...newUser } 
         res.status(201).send(session.user)
+        console.log('Session User', session.user)
         
     },
     login: async (req, res) => {
@@ -33,6 +34,7 @@ module.exports = {
             delete user.password
             session.user = user
             res.status(200).send(session.user)
+            console.log('Logged in!')
             
         } else {
             res.status(401).send('Unauthorized')

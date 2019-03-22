@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
+import axios from 'axios';
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -14,14 +15,38 @@ const Home = () => {
     const [checkout, setCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
+    const [email, handleEmail] = useState('')
+    const [password, handlePassword] = useState('')
+    const [loginError, handleError] = useState('')
+
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
 
     useEffect(() => {
         document.title = `You clicked ${count} times`;
+        
     });
     const toggleCheckout = () => {
         setCheckout(checkout === false? true : false)
     };
+    const register = async () => {
+        await axios.post('/user/register', {email, password})
+            .then((res) => {
+                console.log(res)
+                handleOpen(false)
+            })
+            .catch((err) => console.log(err))    
+    }
+    const login = async () => {
+        await axios.post('/user/login', {email, password})
+            .then((res) => {
+                console.log(res)
+                handleOpen(false)
+            })
+            .catch(() => {
+                handleError('Incorrect Username or Password')
+            })    
+    }
+    
 
     return (
         <div>
@@ -62,13 +87,14 @@ const Home = () => {
             </div>
             <div>
                 <p>Is modal open? {open}</p>
-                <button onClick={() => handleOpen(true)}>
+                <p>state email: {email}</p>
+                <button onClick={() => {handleOpen(true); handleError('')}} >
                     Open Modal
                 </button>
             </div>
             
             <Modal open={open} onClose={() => handleOpen(false)}>
-                <Authentication />
+                <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
             </Modal>
             
         </div>

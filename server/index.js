@@ -8,7 +8,7 @@ const authc = require('./AuthController')
 
 const app = express();
 app.use(express.json())
-const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET)
+const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 massive(DB_CONNECTION).then(db => {
     app.set('db', db)
