@@ -5,7 +5,7 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
 import axios from 'axios';
-import appLogic from '../../Testing/AppLogic'
+import AuthLogic from '../../Testing/AuthLogic'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -22,7 +22,6 @@ const Home = () => {
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
     
-    console.log('Password type', typeof password)
     useEffect(() => {
         document.title = `You clicked ${count} times`;
         
@@ -31,33 +30,27 @@ const Home = () => {
         setCheckout(checkout === false? true : false)
     };
     const register = async () => {
-        // console.log(appLogic.validatePassword())
-        console.log(appLogic.validatePassword)
-        const isEmail = appLogic.validateEmail(email)
-        const isPassword = appLogic.validatePassword(password)
-        console.log(isPassword)
-
+        const isEmail = AuthLogic.validateEmail(email)
+        const isPassword = AuthLogic.validatePassword(password)
+        
         if(!isEmail){
             handleError('PLEASE ENTER VALID EMAIL')
         }else if(!isPassword.bool){
             handleError(isPassword.message)
         }else{
             await axios.post('/user/register', {email, password})
-                .then((res) => {
-                    console.log(res)
+                .then(() => {
                     handleError('Success!')
                     handleOpen(false)   
                 })
-                .catch((res) => {
-                    console.log(res)
+                .catch(() => {
                     handleError('EMAIL ALREADY EXISTS!')
                 })    
         }   
     }
     const login = async () => {
         await axios.post('/user/login', {email, password})
-            .then((res) => {
-                console.log(res)
+            .then(() => {
                 handleOpen(false)
             })
             .catch(() => {
