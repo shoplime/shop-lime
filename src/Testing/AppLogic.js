@@ -5,14 +5,18 @@ module.exports = {
         return expression.test(String(email).toLowerCase())
     },
     validatePassword: (password) => {
-        if(password.length = 0){
-            return 'Please enter password'
+        const returnObj = { bool: false, message: ''}
+        if (password.length === 0){
+            returnObj.message = 'Please enter a password'
+            return returnObj
         } else if (password.length >= 100){
-            return 'Password length can not exceed 100 characters'
-        }else if (password.length <= 6){
-            return 'Password length needs to be at least 7 characters'
-        }else if(typeof password != 'string'){
-            return
-        }   
+            returnObj.message = 'Password length can not exceed 100 characters'
+            return returnObj
+        } else if (password.length <= 6){
+            returnObj.message = 'Password length needs to be at least 7 characters'
+            return returnObj
+        }  
+        returnObj.bool = true
+        return returnObj
     }
 }

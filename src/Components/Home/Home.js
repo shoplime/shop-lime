@@ -5,14 +5,13 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
 import axios from 'axios';
-const appLogic = import('../../Testing/AppLogic')
+import appLogic from '../../Testing/AppLogic'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
 
 const Home = () => {
-    console.log('Password type', typeof password)
-
+    
     const [count, setCount] = useState(0);
     const [checkout, setCheckout] = useState(false);
     
@@ -20,9 +19,10 @@ const Home = () => {
     const [email, handleEmail] = useState('')
     const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
-
+    
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
-
+    
+    console.log('Password type', typeof password)
     useEffect(() => {
         document.title = `You clicked ${count} times`;
         
@@ -31,18 +31,28 @@ const Home = () => {
         setCheckout(checkout === false? true : false)
     };
     const register = async () => {
+        // console.log(appLogic.validatePassword())
+        console.log(appLogic.validatePassword)
         const isEmail = appLogic.validateEmail(email)
         const isPassword = appLogic.validatePassword(password)
-        await axios.post('/user/register', {email, password})
-            .then((res) => {
-                console.log(res)
-                handleOpen(false)
-            })
-            .catch((res) => {
-                console.log('Msg 1', res)
-                console.log('Msg 1', res.errormsg2)
-                handleError('Register Error')
-            })    
+        console.log(isPassword)
+
+        if(!isEmail){
+            handleError('PLEASE ENTER VALID EMAIL')
+        }else if(!isPassword.bool){
+            handleError(isPassword.message)
+        }else{
+            await axios.post('/user/register', {email, password})
+                .then((res) => {
+                    console.log(res)
+                    handleError('Success!')
+                    handleOpen(false)   
+                })
+                .catch((res) => {
+                    console.log(res)
+                    handleError('EMAIL ALREADY EXISTS!')
+                })    
+        }   
     }
     const login = async () => {
         await axios.post('/user/login', {email, password})
