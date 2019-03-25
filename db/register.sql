@@ -1,10 +1,8 @@
 insert into users(
-    first_name,
-    last_name,
-    email
+    email,
+    password
 ) values (
-    ${first_name},
-    ${last_name},
-    ${email}
+    ${email},
+    ${password}
 )
 returning *;

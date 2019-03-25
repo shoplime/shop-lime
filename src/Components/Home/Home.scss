@@ -1,34 +1,25 @@
 @import './../variables';
 
-.header {
-    background-color: $light;
-    height: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-  }
+.body-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20%;
+  margin-top: 50px;
+}
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
   
-  .header-left {
-    text-align: left;
-  }
-  
-  .header-right {
-    text-align: right;
-  }
-  
-  .player-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      // margin: 0 auto;
-      // position: relative;
-      // position: relative;
-      // padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
-      // grid-template-columns: 500px 300px;
 
-  }
+  
 
   .react-player {
     // align-self: center

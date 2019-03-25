@@ -12,7 +12,7 @@ const MoltinGateway = require('@moltin/sdk').gateway
 
 const app = express();
 app.use(express.json())
-const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET)
+const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 const Moltin = MoltinGateway({
     client_id: CLIENT_ID,
