@@ -5,6 +5,7 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
+import BuyBox from '../BuyBox/BuyBox'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
@@ -105,25 +106,14 @@ const Home = () => {
                     />
                     <input onChange={e => setHLS(e.target.value)} value={hls} />
                 </div>
+                <BuyBox/>
                 <ProductDesc/>
-                <div>
-                    <p>You clicked {count} times</p>
-                    <button onClick={() => setCount(count + 1)}>
-                        Click me
-                    </button>
-                </div>
+                
                 <div>
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div>
-                <div>
-                    <p>Is modal open? {open}</p>
-                    <p>Password: {password}</p>
-                    <p>state email: {email}</p>
-                    <button onClick={() => {handleOpen(true); handleError('')}} >
-                        Open Modal
-                    </button>
-                </div>
+                
                 
                 <Modal open={open} onClose={() => handleOpen(false)}>
                     <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
