@@ -2,13 +2,18 @@ const express = require('express')
 const sessions = require('express-session')
 require('dotenv').config()
 const massive = require('massive')
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET } = process.env
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET } = process.env
 const OpenTok = require('opentok')
 const authc = require('./AuthController')
+const MoltinGateway = require('@moltin/sdk').gateway
 
 const app = express();
 app.use(express.json())
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET)
+const Moltin = MoltinGateway({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+})
 
 massive(DB_CONNECTION).then(db => {
     app.set('db', db)
@@ -26,39 +31,52 @@ app.use(
     })
 );
 
-//Broadcast Object Sent Back after Start Broadcast
-// Broadcast {
-//     id: 'ae36ba45-a029-4d63-bfc6-64462fcde157',
-//     sessionId:
-//      '2_MX40NjI4NjMwMn5-MTU1Mjk0MTc3MTU2NH4yZFhxWitaUWIxRW9CMi90SnR6U0t6V05-fg',
-//     projectId: 46286302,
-//     createdAt: 1552943802923,
-//     broadcastUrls:
-//      { rtmp: [ [Object] ],
-//        hls:
-//         'https://cdn-broadcast002-pdx.tokbox.com/15449/15449_ae36ba45-a029-4d63-bfc6-64462fcde157.smil/playlist.m3u8' },
-//     updatedAt: 1552943803299,
-//     status: 'started',
-//     maxDuration: 600,
-//     resolution: '1280x720',
-//     stop: [Function] }
+//moltin
+app.get('/products', (req, res) => {
+    Moltin.Products.All()
+    .then(products => {
+        res.status(200).send(products)
+    })
+})
 
-//Broadcast Object Sent Back after Stop Broadcast
-// Broadcast {
-//     id: 'fe837e82-9fe3-4a1d-bb80-d94cba7fde8d',
-//     sessionId:
-//      '2_MX40NjI4NjMwMn5-MTU1Mjk0MTc3MTU2NH4yZFhxWitaUWIxRW9CMi90SnR6U0t6V05-fg',
-//     projectId: 46286302,
-//     createdAt: 1552944802470,
-//     broadcastUrls: null,
-//     updatedAt: 1552944802470,
-//     status: 'stopped',
-//     maxDuration: 600,
-//     resolution: '1280x720',
-//     stop: [Function] }
+app.get('/products/:id', (req, res) => {
+    const { id } = req.params;
+    Moltin.Products.Get(id)
+    .then(product => {
+        res.status(200).send(product)
+    })
+})
 
-//note opentok broadcast function does not like rtmps url
+app.post('/products', (req, res) => {
+    const { name, slug, sku, description, amount } = req.body
+    const product = {
+        name: name, //string
+        slug: slug, //string
+        sku: sku, //string
+        description: description, //string
+        manage_stock: true,
+        price: [
+          {
+            amount: amount, //integer
+            currency: 'USD',
+            includes_tax: true
+          }
+        ],
+        status: 'live',
+        commodity_type: 'physical'
+      }
+      
+      Moltin.Products.Create(product)
+      .then(product => {
+        res.status(200).send(product)
+      })
+})
 
+
+
+
+
+//opentok
 app.get('/createSession', (req, res) => {
     opentok.createSession({mediaMode:"routed"}, function(error, session) {
     if (error) {
@@ -76,6 +94,19 @@ app.get('/generateToken/:sid', (req, res) => {
     const token = opentok.generateToken(sessionId)
     console.log(token)
     res.status(200).send(token)
+})
+
+app.get('/startPublish', (req, res) => {
+    opentok.createSession({mediaMode:"routed"}, function(error, session) {
+        if (error) {
+            console.log("Error creating session:", error)
+        } else {
+            console.log(session)
+            const sessionId = session.sessionId;
+            const token = opentok.generateToken(sessionId)
+            res.status(200).send({sessionId, token});
+        }
+        });
 })
 
 app.get('/getKey', (req, res) => {

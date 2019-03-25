@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
-import ReactPlayer from 'react-player';
 import './OpenTok.scss'
 
 class OpenTok extends Component {
@@ -48,6 +47,17 @@ class OpenTok extends Component {
                 token: res.data
             })
             console.log(this.state)
+        })
+    }
+
+    startPublish = () => {
+        axios.get(`/startPublish`)
+        .then(res => {
+            const { sessionId, token } = res.data
+            this.setState({
+                sessionId: sessionId,
+                token: token
+            })
         })
     }
 
@@ -128,7 +138,8 @@ class OpenTok extends Component {
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
                             <div  className="stream-container">
-                                <OTPublisher  properties={{ width: '100%', fitMode: 'cover' }}/>
+                                <OTPublisher  properties={{ height: '360px', width: '640px'}}/>
+                                <OTPublisher  properties={{ height: '320px', width: '180px'}}/>
                             </div>
                         </OTSession>
                         <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
@@ -142,6 +153,7 @@ class OpenTok extends Component {
                         <button onClick={() => {this.createSession()}} >Create Session</button>
                         <h4>{this.state.token}</h4>
                         <button onClick={() => {this.generateToken()}} >Generate Token</button>
+                        <button onClick={() => {this.startPublish()}} >Start Publish - Session and Token</button>
                     </div>)
                 }
             </div>

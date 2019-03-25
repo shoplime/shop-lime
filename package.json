@@ -6,8 +6,8 @@
   "proxy": "http://localhost:4000",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
-    "@moltin/sdk": "^3.19.0",
     "@material-ui/icons": "^3.0.2",
+    "@moltin/sdk": "^3.19.0",
     "@sendgrid/mail": "^6.3.1",
     "aws-sdk": "^2.423.0",
     "axios": "^0.18.0",
@@ -36,6 +36,8 @@
     "redux-form": "^8.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "sendbird": "^3.0.97",
+    "stream-chat-react": "^0.1.68",
     "stripe": "^6.28.0",
     "styled-components": "^4.1.3"
   },

@@ -19,15 +19,27 @@
   
   .player-container {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
+      // margin: 0 auto;
+      // position: relative;
       // position: relative;
       // padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+      // grid-template-columns: 500px 300px;
+
   }
 
   .react-player {
+    // align-self: center
     // position: absolute;
     // top: 0;
     // left: 0;
+    grid-area: main;
+    border: 1px solid red;
+  }
+
+  .chat-wrapper {
+    grid-area: sidebar;
+    border: 1px solid blue;
   }
