@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
+import {Link} from 'react-router-dom';
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -27,10 +28,10 @@ const Home = () => {
         <div>
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
-            </Suspense> */}
+            </Suspense> */} 
             <header className="header">
                 <div className='header-left'>SHOP LIME</div>
-                <div className='header-right'>CART</div>
+                <Link to='/cart'><div className='header-right'>CART</div></Link>
             </header>
             <div className='player-container'>
                 <ReactPlayer

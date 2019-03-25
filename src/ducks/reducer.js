@@ -1,29 +1,16 @@
-const initialState = {
-    user: {
-        id: 0,
-        username: '',
-        email: ''
-    }
-};
+import { combineReducers } from 'redux';
 
-const UPDATE_USER = 'UPDATE_USER'
+import user from './user';
+import cart from './cart';
+import products from './products';
+import payments from './payments';
 
 
-export default function reducer(state = initialState, action){
-    const { type, payload } = action;
-    switch(type) {
-        case UPDATE_USER:
-        const { id, username, email } = payload;
-        return {...state, id, username, email }
-        default:
-        return state;
-    }
-    
-}
+const rootReducer = combineReducers({
+    user,
+    cart,
+    products,
+    payments
+});
 
-export function updateUser(userObj){
-    return {
-        type: UPDATE_USER,
-        payload: userObj
-    }
-}
+export default rootReducer;
