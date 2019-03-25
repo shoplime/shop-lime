@@ -117,7 +117,7 @@ class OpenTok extends Component {
     }
 
     render() {
-        const { apiKey, sessionId, token } = this.state;
+        const {apiKey, sessionId, token} = this.props;
         return (
             <div>
                 {/* <div className='player-container'>

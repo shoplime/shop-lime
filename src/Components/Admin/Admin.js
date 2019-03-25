@@ -13,6 +13,10 @@ import EnterPrice from './Stepper/EnterPrice'
 import SelectMerchant from './Stepper/SelectMerchant'
 import AddProduct from './Stepper/AddProduct'
 import OpenTok from './../OpenTok/OpenTok'
+import SelectProduct from './Stepper/SelectProduct'
+import axios from 'axios'
+
+
 
 
 const styles = theme => ({
@@ -32,17 +36,34 @@ const styles = theme => ({
 });
 
 
-
-
 class Admin extends React.Component {
   state = {
     activeStep: 0,
+    apiKey: '',
+    sessionId: '',
+    token: ''
   };
   
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
+    const steps = this.getSteps();
+    if (this.state.activeStep < steps.length - 1) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
+    } else {
+      axios.get(`/startPublish`)
+        .then(res => {
+            const { apiKey, sessionId, token } = res.data
+            console.log(res.data)
+            this.setState({
+              apiKey: apiKey,
+              sessionId: sessionId,
+              token: token,
+              activeStep: this.state.activeStep + 1
+            })
+        })
+    }
+   
   };
   
   handleBack = () => {
@@ -56,6 +77,29 @@ class Admin extends React.Component {
       activeStep: 0,
     });
   };
+  
+   getSteps = () => {
+    return ['1. Input a Name For Shop Lime Event', '2. Select Product', '3. Setup Broadcast'];
+  }
+  
+getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <EventName 
+        handleNext={this.handleNext} 
+        handleBack={this.handleBack}
+        />;
+      case 1:
+        return <SelectProduct
+        handleNext={this.handleNext} 
+        handleBack={this.handleBack}
+        />;
+      case 2:
+        return;
+      default:
+        return 'Unknown step';
+    }
+  }
 
   getSteps = () => {
     return ['1. Input a Name For Shop Lime Event', '2. Select a Merchant', '3. Add product name and picture', '4. Enter Price', '5. Get Ready to start lime event!'];
@@ -99,7 +143,7 @@ class Admin extends React.Component {
                         disabled={activeStep === 0}
                         onClick={this.handleBack}
                         className={classes.button}
-                      >
+                        >
                         Back
                       </Button>
                       <Button
@@ -107,7 +151,7 @@ class Admin extends React.Component {
                         color="primary"
                         onClick={this.handleNext}
                         className={classes.button}
-                      >
+                        >
                         {activeStep === steps.length - 1 ? 'Preview' : 'Next'}
                       </Button>
                     </div>
@@ -120,7 +164,11 @@ class Admin extends React.Component {
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
             <Typography>Preview</Typography>
-            <OpenTok />
+            <OpenTok
+            apiKey = {this.state.apiKey}
+            sessionId = {this.state.sessionId}
+            token = {this.state.token}
+            />
             <Button onClick={this.handleReset} className={classes.button}>
               Reset
             </Button>
