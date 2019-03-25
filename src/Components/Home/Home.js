@@ -3,6 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
+import Chat from './../Chat/Chat'
 import './Home.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
@@ -31,13 +32,20 @@ const Home = () => {
     const [loginError, handleError] = useState('')
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
-    
+    const [playing, setPlaying] = useState(true);
+    const [muted, setMuted] = useState(true)
+
     useEffect(() => {
-        document.title = `You clicked ${count} times`;
-        
+        // document.title = `You clicked ${count} times`;
     });
     const toggleCheckout = () => {
-        setCheckout(checkout === false? true : false)
+        setCheckout(checkout === false ? true : false)
+    };
+    const togglePlaying = () => {
+        setPlaying(playing === false ? true : false)
+    };
+    const toggleMuted = () => {
+        setMuted(muted === false ? true : false)
     };
     const register = async () => {
         const isEmail = AuthLogic.validateEmail(email)
