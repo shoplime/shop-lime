@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import EventName from './Stepper/EventName'
 import EnterPrice from './Stepper/EnterPrice'
 import SelectMerchant from './Stepper/SelectMerchant'
-import AddProduct from './Stepper/AddProduct'
 import OpenTok from './../OpenTok/OpenTok'
 import SelectProduct from './Stepper/SelectProduct'
 import axios from 'axios'
@@ -112,7 +111,7 @@ getStepContent = (step) => {
       case 1:
         return <SelectMerchant handleNext={this.handleNext} handleBack={this.handleBack}/>;
       case 2:
-        return <AddProduct handleNext={this.handleNext} handleBack={this.handleBack}/>;
+        return <SelectProduct handleNext={this.handleNext} handleBack={this.handleBack}/>;
       case 3:
         return <EnterPrice handleNext={this.handleNext} handleBack={this.handleBack}/>;
       case 4:
