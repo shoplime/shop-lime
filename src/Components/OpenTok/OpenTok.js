@@ -22,9 +22,9 @@ class OpenTok extends Component {
         })
     }
 
-    componentWillUnmount() {
-        this.sessionHelper.disconnect();
-    }
+    // componentWillUnmount() {
+    //     this.sessionHelper.disconnect();
+    // }
 
     createSession = () => {
         axios.get('/createSession')
@@ -59,7 +59,7 @@ class OpenTok extends Component {
     }
 
     render() {
-        const { apiKey, sessionId, token } = this.state;
+        const {apiKey, sessionId, token} = this.props;
         return (
             <div>
                 {
@@ -67,11 +67,12 @@ class OpenTok extends Component {
                     <div>
                         <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
                             <div  className="stream-container">
-                                <OTPublisher  properties={{ width: '100%', fitMode: 'cover' }}/>
+                                <OTPublisher  properties={{ height: '360px', width: '640px'}}/>
+                                <OTPublisher  properties={{ height: '320px', width: '180px'}}/>
                             </div>
                         </OTSession>
-                        <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
-                        <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
+                            <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
+                            <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
                     </div>
                     :
                     <div>
