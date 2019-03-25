@@ -1,12 +1,7 @@
 import React from 'react';
-import { Chat, Channel, ChannelHeader, Window } from 'stream-chat-react';
-import { MessageList, MessageInput, MessageLivestream } from 'stream-chat-react';
-import { MessageInputSmall, Thread } from 'stream-chat-react';
-import { StreamChat } from 'stream-chat';
 
-import 'stream-chat-react/dist/css/index.css';
-
-const chatClient = new StreamChat('qk4nn7rpcn75');
+const sb = new SendBird({appId: REACT_APP_SB_APP_ID});
+sb.connect(USER_ID, function(user, error) {});
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZnJhZ3JhbnQtbW9vbi0xIn0.ypyzjXhN_YhJVbeUNOKiABC8ok8NKVye_lfQrE39J3Y';
 
 chatClient.setUser(

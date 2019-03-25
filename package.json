@@ -37,7 +37,6 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sendbird": "^3.0.97",
-    "stream-chat-react": "^0.1.68",
     "stripe": "^6.28.0",
     "styled-components": "^4.1.3"
   },
