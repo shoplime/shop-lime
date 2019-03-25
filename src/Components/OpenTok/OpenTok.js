@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { OTSession, OTPublisher } from 'opentok-react';
+import { OTSession, OTPublisher, OTStreams, OTSubscriber } from 'opentok-react';
 import './OpenTok.scss'
+import phone from './../../iPhone.png'
 
 class OpenTok extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class OpenTok extends Component {
     }
 
     startBroadcast = () => {
-        axios.get(`/startBroadcast/${this.state.sessionId}`)
+        axios.get(`/startBroadcast/${this.props.sessionId}`)
         .then(res => console.log('broadcast started'))
     }
     
@@ -73,7 +74,7 @@ class OpenTok extends Component {
 
     startArchive = () => {
         const data = {
-            sessionId: `${this.state.sessionId}`,
+            sessionId: `${this.props.sessionId}`,
             resolution: '1280x720',
             outputMode: 'composed'
         }
@@ -136,12 +137,22 @@ class OpenTok extends Component {
                 {
                     (token ?
                     <div>
-                        <OTSession apiKey={apiKey} sessionId={sessionId} token={token}>
-                            <div  className="stream-container">
-                                <OTPublisher  properties={{ height: '360px', width: '640px'}}/>
-                                <OTPublisher  properties={{ height: '320px', width: '180px'}}/>
-                            </div>
-                        </OTSession>
+                        <div className='preview-wrapper'>
+                            <OTSession apiKey={apiKey} sessionId={sessionId} token={token} >
+                                <div  className="stream-container">
+                                    {/* <OTPublisher  properties={{ height: '360px', width: '640px'}}/> */}
+                                    <OTStreams>
+                                        <OTSubscriber/>
+                                    </OTStreams>
+                                </div>
+                            </OTSession>
+                            <OTSession apiKey={apiKey} sessionId={sessionId} token={token} >
+                                <div className='mobile-preview'>
+                                    <OTPublisher  properties={{ height: '370px', width: '180px'}}/>
+                                    <img className='phone' src={phone} alt='iphone' />
+                                </div>
+                            </OTSession>
+                        </div>
                         <button onClick={() => {this.startBroadcast()}} >Start Broadcast</button>
                         <button onClick={() => {this.stopBroadcast()}} >End Broadcast</button>
                         <button onClick={() => {this.startArchive()}}>Start Archive</button>
