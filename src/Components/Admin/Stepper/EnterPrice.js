@@ -27,13 +27,7 @@ class AddProduct extends Component {
     const { classes } = this.props;
     return (
       <div>
-       <TextField
-        id="outlined-dense"
-        label="Enter Price"
-        className={classNames(classes.textField, classes.dense)}
-        margin="dense"
-        variant="outlined"
-       />
+       <button onClick={() => {this.props.handleNext()}}>Preview</button>
       </div>
     )
   }

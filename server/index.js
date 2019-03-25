@@ -2,13 +2,22 @@ const express = require('express')
 const sessions = require('express-session')
 require('dotenv').config()
 const massive = require('massive')
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET } = process.env
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET } = process.env
 const OpenTok = require('opentok')
-const authc = require('./AuthController')
+const authc = require('./controllers/AuthController')
+const ctrlm = require('./controllers/MerchantController')
+const streamc= require('./controllers/StreamController.js')
+const MoltinGateway = require('@moltin/sdk').gateway
+
 
 const app = express();
 app.use(express.json())
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET)
+
+const Moltin = MoltinGateway({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+  })
 
 massive(DB_CONNECTION).then(db => {
     app.set('db', db)
@@ -78,6 +87,20 @@ app.get('/generateToken/:sid', (req, res) => {
     res.status(200).send(token)
 })
 
+app.get('/startPublish', (req, res) => {
+    opentok.createSession({mediaMode:"routed"}, function(error, session) {
+        if (error) {
+            console.log("Error creating session:", error)
+        } else {
+            console.log(session)
+            const sessionId = session.sessionId;
+            const token = opentok.generateToken(sessionId)
+            const apiKey = OT_API_KEY
+            res.status(200).send({apiKey, sessionId, token});
+        }
+        });
+})
+
 app.get('/getKey', (req, res) => {
     res.status(200).send(OT_API_KEY)
 })
@@ -135,3 +158,54 @@ app.post('/user/register', authc.register)
 app.post('/user/login', authc.login)
 app.post('/user/logout', authc.logout)
 app.get('/user/fetchuser', authc.getUser)
+
+//Adding Merchants
+app.post('/admin/register', ctrlm.addMerchant)
+
+//Create Stream
+app.post('/admin/newStream', streamc.createStream)
+
+//moltin
+app.get('/products', (req, res) => {
+    Moltin.Products.All()
+    .then(products => {
+        res.status(200).send(products)
+    })
+})
+
+app.get('/products/:id', (req, res) => {
+    const { id } = req.params;
+    Moltin.Products.Get(id)
+    .then(product => {
+        res.status(200).send(product)
+    })
+})
+
+app.post('/products', (req, res) => {
+    const { name, slug, sku, description, amount } = req.body
+    const product = {
+        name: name, //string
+        slug: slug, //string
+        sku: sku, //string
+        description: description, //string
+        manage_stock: true,
+        price: [
+          {
+            amount: amount, //integer
+            currency: 'USD',
+            includes_tax: true
+          }
+        ],
+        status: 'live',
+        commodity_type: 'physical'
+      }
+      
+      Moltin.Products.Create(product)
+      .then(product => {
+        res.status(200).send(product)
+      })
+})
+
+
+
+
