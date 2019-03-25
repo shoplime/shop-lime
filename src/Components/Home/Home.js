@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import './Home.scss'
+import ProductDesc from '../ProductDesc/ProductDesc'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
@@ -13,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-import green from '@material-ui/core/colors/green';
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -74,10 +74,6 @@ const Home = () => {
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
             </Suspense> */}
-            <header className="header">
-                <div className='header-left'>SHOP LIME</div>
-                <div className='header-right'>CART</div>
-            </header>
             <MuiThemeProvider theme={theme}>
                 <AppBar color="secondary">
                     <Toolbar>
@@ -109,6 +105,7 @@ const Home = () => {
                     />
                     <input onChange={e => setHLS(e.target.value)} value={hls} />
                 </div>
+                <ProductDesc/>
                 <div>
                     <p>You clicked {count} times</p>
                     <button onClick={() => setCount(count + 1)}>

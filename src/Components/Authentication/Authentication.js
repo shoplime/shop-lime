@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from '../../mui_theme'
 import './Authentication.scss'
 
 
@@ -74,57 +76,60 @@ function Authentication(props) {
 
 
     return (
-        <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography className={classes.typography} component="h1" variant="h5">
-                    Sign in to unlock content
-                </Typography>
-                <form className={classes.form} >
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
-                        <Input onChange={(e) => handleEmail(e.target.value)} id="email" type="email" name="email" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
-                        <Input onChange={(e) => handlePassword(e.target.value)} name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        onClick={() => register()} 
-                        style={buttonStyle}
-                        type="button"                      
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        className={classes.typography}
-                    >
-                        Register
-                    </Button>
-                    <Button
-                        onClick={() => login()} 
-                        type="button"                      
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        className={classes.typography}
-                    >
-                        Sign in
-                    </Button>
-                    <div className='login-error'>
-                        <p>{loginError}</p>
-                    </div>
-                </form>
-            </Paper>
-        </main>
+        <MuiThemeProvider theme={theme}>    
+            <main className={classes.main}>
+                <CssBaseline />
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography className={classes.typography} component="h1" variant="h5">
+                        Sign in to unlock content
+                    </Typography>
+                    <form className={classes.form} >
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
+                            <Input onChange={(e) => handleEmail(e.target.value)} id="email" type="email" name="email" autoComplete="email" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
+                            <Input onChange={(e) => handlePassword(e.target.value)} style={{ marginBottom: '30px' }} name="password" type="password" id="password" autoComplete="current-password" />
+                        </FormControl>
+                        
+                        {/* <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        /> */}
+                        <Button
+                            onClick={() => register()} 
+                            style={buttonStyle}
+                            type="button"                      
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                            className={classes.typography}
+                        >
+                            Register
+                        </Button>
+                        <Button
+                            onClick={() => login()} 
+                            type="button"                      
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            className={classes.typography}
+                        >
+                            Sign in
+                        </Button>
+                        <div className='login-error'>
+                            <p>{loginError}</p>
+                        </div>
+                    </form>
+                </Paper>
+            </main>
+        </MuiThemeProvider>
     );
 }
 
