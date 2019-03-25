@@ -5,6 +5,7 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import Chat from './../Chat/Chat'
 import './Home.scss'
+import {Link} from 'react-router-dom';
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
 import axios from 'axios';

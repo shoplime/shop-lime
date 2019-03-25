@@ -5,7 +5,9 @@ import Admin from './Components/Admin/Admin'
 import OpenTok from './Components/OpenTok/OpenTok'
 import OTClient from './Components/OTClient/OTClient'
 import OTHLS from './Components/OTHLS/OTHLS'
-
+import Cart from './Components/Checkout/Cart/Cart'
+import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
+import OrderConfirmation from './Components/Checkout/Orders/OrderConfirmationContainer';
 
 
 export default (
@@ -15,5 +17,8 @@ export default (
         <Route path= '/opentok' component={OpenTok} />
         <Route path= '/otclient' component={OTClient} />
         <Route path= '/othls' component={OTHLS} />
+        <Route path= '/cart' component={Cart} />
+        <Route path= '/checkout' component={CheckoutContainer} />
+        <Route path= '/order-confirmation' component={OrderConfirmation} />
     </Switch>
 )
