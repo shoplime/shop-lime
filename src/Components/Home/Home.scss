@@ -1,25 +1,36 @@
 @import './../variables';
 
-.header {
-    background-color: $light;
-    height: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-  }
+.body-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20%;
+  margin-top: 50px;
+}
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
   
-  .header-left {
-    text-align: left;
-  }
+
   
-  .header-right {
-    text-align: right;
+
+  .react-player {
+    // align-self: center
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    grid-area: main;
+    border: 1px solid red;
   }
-  
-  .player-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+
+  .chat-wrapper {
+    grid-area: sidebar;
+    border: 1px solid blue;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-
+import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,22 +23,39 @@ const styles = theme => ({
     },
   });
 
-class EventName extends Component {
+  class EventName extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+          name: '',
+      };
+      this.createStreamName = this.createStreamName.bind(this)
+      this.handleChange = this.handleChange.bind(this)
+  }
+
+  createStreamName(){
+    axios.post('/admin/newStream',
+    {
+      name:this.state.name,
+    })
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  handleChange(prop, val) {
+    this.setState({
+        [prop]:val
+    })
+  }
 
   
   render() {
 
-    function check_Email(mail){
-      var regex = /^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@{[a-zA-Z0-9_\-\.]+0\.([a-zA-Z]{2,5}){1,25})+)*$/;
-      if(regex.test(mail.myemail.value)){
-        return true;
-        alert("Congrats! This is a valid Email email");
-      }
-      else{
-        alert("This is not a valid email address");
-        return false;
-      }
-    }
+  console.log(this.state)
         
     const { classes } = this.props;
     return (
@@ -49,7 +66,8 @@ class EventName extends Component {
         className={classNames(classes.textField, classes.dense)}
         margin="dense"
         variant="outlined"
-        onBlur="check_Email"
+        onBlur={this.createStreamName}
+        onChange={(e)=>this.handleChange('name', e.target.value)}
        />
       </div>
     )
