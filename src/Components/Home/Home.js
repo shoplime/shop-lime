@@ -6,8 +6,17 @@ import ReactPlayer from 'react-player';
 import './Home.scss'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
+import AppBar from '@material-ui/core/AppBar';
+import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import LoginButton from './Button';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from '../../mui_theme'
+import green from '@material-ui/core/colors/green';
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
+
 
 
 const Home = () => {
@@ -69,47 +78,61 @@ const Home = () => {
                 <div className='header-left'>SHOP LIME</div>
                 <div className='header-right'>CART</div>
             </header>
-            <div className='player-container'>
-                <ReactPlayer
-                    url={hls}
-                    playing={true}
-                    controls={true}
-                    volume={0.8}
-                    muted={false}
-                    pip={false}
-                    width={'100%'}
-                    height={'100%'}
-                    config={{
-                        file: {
-                            forceHLS: true
-                        }
-                    }}
-                />
-                <input onChange={e => setHLS(e.target.value)} value={hls} />
-            </div>
-            <div>
-                <p>You clicked {count} times</p>
-                <button onClick={() => setCount(count + 1)}>
-                    Click me
-                </button>
-            </div>
-            <div>
-                <button onClick={toggleCheckout}>Add to Cart</button>
-                {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-            </div>
-            <div>
-                <p>Is modal open? {open}</p>
-                <p>Password: {password}</p>
-                <p>state email: {email}</p>
-                <button onClick={() => {handleOpen(true); handleError('')}} >
-                    Open Modal
-                </button>
-            </div>
-            
-            <Modal open={open} onClose={() => handleOpen(false)}>
-                <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-            </Modal>
-            
+            <MuiThemeProvider theme={theme}>
+                <AppBar color="secondary">
+                    <Toolbar>
+                        {/* <MenuIcon></MenuIcon> */}
+                        <Typography variant="h5">
+                            Shop Lime
+                        </Typography>
+                        <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
+                    </Toolbar>
+                </AppBar>
+            </MuiThemeProvider>
+
+            <div className='body-container'>
+                <div className='player-container'>
+                    <ReactPlayer
+                        url={hls}
+                        playing={true}
+                        controls={true}
+                        volume={0.8}
+                        muted={false}
+                        pip={false}
+                        width={'100%'}
+                        height={'100%'}
+                        config={{
+                            file: {
+                                forceHLS: true
+                            }
+                        }}
+                    />
+                    <input onChange={e => setHLS(e.target.value)} value={hls} />
+                </div>
+                <div>
+                    <p>You clicked {count} times</p>
+                    <button onClick={() => setCount(count + 1)}>
+                        Click me
+                    </button>
+                </div>
+                <div>
+                    <button onClick={toggleCheckout}>Add to Cart</button>
+                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
+                </div>
+                <div>
+                    <p>Is modal open? {open}</p>
+                    <p>Password: {password}</p>
+                    <p>state email: {email}</p>
+                    <button onClick={() => {handleOpen(true); handleError('')}} >
+                        Open Modal
+                    </button>
+                </div>
+                
+                <Modal open={open} onClose={() => handleOpen(false)}>
+                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                </Modal>
+
+            </div>   
         </div>
     )
 }
