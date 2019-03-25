@@ -58,6 +58,7 @@ const Home = () => {
                         }
                     }}
                 />
+                <Chat />
             </div>
             {/* <button onClick={togglePlaying}>Play/Pause</button> */}
             <button onClick={toggleMuted}>Mute/Unmute</button>
