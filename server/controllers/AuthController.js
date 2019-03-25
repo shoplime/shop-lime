@@ -64,7 +64,6 @@ module.exports = {
             console.log(err)
         }
     },
-<<<<<<< HEAD:server/AuthController.js
     logout: () => {
         try{
             
@@ -75,11 +74,6 @@ module.exports = {
         catch(err){
             console.log(err)
         }
-=======
-    logout: (req, res) => {
-        req.session.destroy();
-        res.sendStatus(200)
->>>>>>> master:server/controllers/AuthController.js
     },
 
     getUser: (req, res) => {

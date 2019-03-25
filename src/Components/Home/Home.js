@@ -80,10 +80,10 @@ const Home = () => {
 
     return (
         
-        <div>
+        <div>        
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
-            </Suspense> */}     
+            </Suspense> */}
             <MuiThemeProvider theme={theme}>
                 <AppBar color="secondary">
                     <Toolbar>
