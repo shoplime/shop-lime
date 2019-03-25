@@ -35,39 +35,52 @@ app.use(
     })
 );
 
-//Broadcast Object Sent Back after Start Broadcast
-// Broadcast {
-//     id: 'ae36ba45-a029-4d63-bfc6-64462fcde157',
-//     sessionId:
-//      '2_MX40NjI4NjMwMn5-MTU1Mjk0MTc3MTU2NH4yZFhxWitaUWIxRW9CMi90SnR6U0t6V05-fg',
-//     projectId: 46286302,
-//     createdAt: 1552943802923,
-//     broadcastUrls:
-//      { rtmp: [ [Object] ],
-//        hls:
-//         'https://cdn-broadcast002-pdx.tokbox.com/15449/15449_ae36ba45-a029-4d63-bfc6-64462fcde157.smil/playlist.m3u8' },
-//     updatedAt: 1552943803299,
-//     status: 'started',
-//     maxDuration: 600,
-//     resolution: '1280x720',
-//     stop: [Function] }
+//moltin
+app.get('/products', (req, res) => {
+    Moltin.Products.All()
+    .then(products => {
+        res.status(200).send(products)
+    })
+})
 
-//Broadcast Object Sent Back after Stop Broadcast
-// Broadcast {
-//     id: 'fe837e82-9fe3-4a1d-bb80-d94cba7fde8d',
-//     sessionId:
-//      '2_MX40NjI4NjMwMn5-MTU1Mjk0MTc3MTU2NH4yZFhxWitaUWIxRW9CMi90SnR6U0t6V05-fg',
-//     projectId: 46286302,
-//     createdAt: 1552944802470,
-//     broadcastUrls: null,
-//     updatedAt: 1552944802470,
-//     status: 'stopped',
-//     maxDuration: 600,
-//     resolution: '1280x720',
-//     stop: [Function] }
+app.get('/products/:id', (req, res) => {
+    const { id } = req.params;
+    Moltin.Products.Get(id)
+    .then(product => {
+        res.status(200).send(product)
+    })
+})
 
-//note opentok broadcast function does not like rtmps url
+app.post('/products', (req, res) => {
+    const { name, slug, sku, description, amount } = req.body
+    const product = {
+        name: name, //string
+        slug: slug, //string
+        sku: sku, //string
+        description: description, //string
+        manage_stock: true,
+        price: [
+          {
+            amount: amount, //integer
+            currency: 'USD',
+            includes_tax: true
+          }
+        ],
+        status: 'live',
+        commodity_type: 'physical'
+      }
+      
+      Moltin.Products.Create(product)
+      .then(product => {
+        res.status(200).send(product)
+      })
+})
 
+
+
+
+
+//opentok
 app.get('/createSession', (req, res) => {
     opentok.createSession({mediaMode:"routed"}, function(error, session) {
     if (error) {
@@ -143,11 +156,35 @@ app.get('/stopBroadcast', (req, res) => {
     opentok.stopBroadcast(broadcastID, (error, broadcast) => {
         if (error) {
             console.log('Error stopping broadcast', error)
-            res.status(500).send('There was an error')
+            res.status(500).send('There was an error stopping the broadcast')
         } else {
             app.set('broadcastID', null)
             console.log('broadcast object from stopBroadcast', broadcast)
             res.json(broadcast)
+        }
+    })
+})
+
+app.post('/startArchive', (req, res) => {
+    const { sessionId, resolution, outputMode } = req.body
+    opentok.startArchive(sessionId, {resolution, outputMode}, (error, archive) => {
+        if(error){
+            return res.status(400).send('there was an error starting the archive')
+        } else {
+            console.log('start archive', archive)
+            res.json(archive)
+        }
+    })
+})
+
+app.get('/stopArchive', (req, res) => {
+    const { archiveId } = req.query;
+    opentok.stopArchive(archiveId, (error, archive) => {
+        if(error){
+            return res.status(400).send('there was an error stopping the archive')
+        } else {
+            console.log('stop archive', archive)
+            res.json(archive)
         }
     })
 })

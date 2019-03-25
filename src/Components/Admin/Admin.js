@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import EventName from './Stepper/EventName'
-import EnterPrice from './Stepper/EnterPrice'
 import SelectProduct from './Stepper/SelectProduct'
 import OpenTok from './../OpenTok/OpenTok'
 import axios from 'axios'

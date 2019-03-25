@@ -3,6 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
+import Chat from './../Chat/Chat'
 import './Home.scss'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
@@ -15,12 +16,20 @@ const Home = () => {
     
     const [open, handleOpen] = useState(false);
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
+    const [playing, setPlaying] = useState(true);
+    const [muted, setMuted] = useState(true)
 
     useEffect(() => {
-        document.title = `You clicked ${count} times`;
+        // document.title = `You clicked ${count} times`;
     });
     const toggleCheckout = () => {
-        setCheckout(checkout === false? true : false)
+        setCheckout(checkout === false ? true : false)
+    };
+    const togglePlaying = () => {
+        setPlaying(playing === false ? true : false)
+    };
+    const toggleMuted = () => {
+        setMuted(muted === false ? true : false)
     };
 
     return (
@@ -34,11 +43,12 @@ const Home = () => {
             </header>
             <div className='player-container'>
                 <ReactPlayer
+                    className='react-player'
                     url={hls}
-                    playing={true}
-                    controls={true}
+                    playing={playing}
+                    controls={false}
                     volume={0.8}
-                    muted={false}
+                    muted={muted}
                     pip={false}
                     width={'100%'}
                     height={'100%'}
@@ -48,14 +58,10 @@ const Home = () => {
                         }
                     }}
                 />
-                <input onChange={e => setHLS(e.target.value)} value={hls} />
             </div>
-            <div>
-                <p>You clicked {count} times</p>
-                <button onClick={() => setCount(count + 1)}>
-                    Click me
-                </button>
-            </div>
+            {/* <button onClick={togglePlaying}>Play/Pause</button> */}
+            <button onClick={toggleMuted}>Mute/Unmute</button>
+            <input onChange={e => setHLS(e.target.value)} value={hls} />
             <div>
                 <button onClick={toggleCheckout}>Add to Cart</button>
                 {checkout?<OrderModal toggle={toggleCheckout}/>:null}
