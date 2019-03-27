@@ -25,7 +25,8 @@ export default createMuiTheme({
             'Montserrat'
             ].join(','),
         h5: {
-            fontWeight: 600
+            fontWeight: 600,
+            padding: '0 20%'
         }
         
     },

@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Authentication from '../Authentication/Authentication'
+import CartCounter from '../Checkout/Cart/CartCounter'
+import {Link} from 'react-router-dom'
 
 const styles = theme => ({
   button: {
     // margin: theme.spacing.unit,
+    // padding: '0 20%'
+    // marginRight: '20%',
+    // marginLeft: '0',
+    // margin: '0px'
     
   },
 });
@@ -14,9 +19,12 @@ const styles = theme => ({
 function TextButtons(props) {
   const { classes, handleOpen, handleError } = props;
   return (
-    <div style={{marginLeft: 'auto'}}>
+    <div style={{marginLeft: '0px'}}>
           <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
         Login
+      </Button>
+          <Button className={classes.button}>
+          <Link to='/cart'><CartCounter/></Link>
       </Button>
       
     </div>

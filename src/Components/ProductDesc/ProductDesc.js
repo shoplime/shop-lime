@@ -12,7 +12,9 @@ const styles = theme => ({
         width: '100%',
         border: 'none',
         boxShadow: 'none',
-        textAlign: 'left'
+        textAlign: 'left',
+        marginBottom: '10px',
+        marginTop: '10px'
        
     },
     heading: {

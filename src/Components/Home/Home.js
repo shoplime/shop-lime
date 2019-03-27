@@ -15,8 +15,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
+import Videos from '../Videos/Videos'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -84,18 +86,19 @@ const Home = () => {
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
             </Suspense> */}
-            <MuiThemeProvider theme={theme}>
-                <AppBar color="secondary">
-                    <Toolbar>
-                        {/* <MenuIcon></MenuIcon> */}
-                        <Typography variant="h5">
-                            Shop Lime
-                        </Typography>
-                        <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
-                    </Toolbar>
-                </AppBar>
-            </MuiThemeProvider>
-
+            <div className='header-container'>
+                <MuiThemeProvider theme={theme}>
+                    <AppBar color="secondary">
+                        <Toolbar>
+                            {/* <MenuIcon></MenuIcon> */}
+                            <Typography variant="h5">
+                                Shop Lime
+                            </Typography>
+                            <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
+                        </Toolbar>
+                    </AppBar>
+                </MuiThemeProvider>
+            </div>   
             <div className='body-container'>
                 <div className='player-container'>
                     <ReactPlayer
@@ -113,15 +116,16 @@ const Home = () => {
                             }
                         }}
                     />
-                    <input onChange={e => setHLS(e.target.value)} value={hls} />
-                </div>
+                    {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
                 <BuyBox/>
                 <ProductDesc/>
+                </div>
+                <Videos/>
                 
-                <div>
+                {/* <div>
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div>
+                </div> */}
                 
                 
                 <Modal open={open} onClose={() => handleOpen(false)}>
