@@ -26,7 +26,7 @@ export default createMuiTheme({
             ].join(','),
         h5: {
             fontWeight: 600,
-            padding: '0 20%'
+            // padding: '0 20%'
         }
         
     },

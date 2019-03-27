@@ -9,12 +9,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
     root: {
-        width: '100%',
+        width: '90%',
         border: 'none',
         boxShadow: 'none',
         textAlign: 'left',
         marginBottom: '10px',
-        marginTop: '10px'
+        marginTop: '10px',
+        marginRight: '0px',
+        // padding: '0px 5%'
+        // display: 'flex',
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        // justifyContent: 'center'
        
     },
     heading: {
@@ -33,6 +39,9 @@ const styles = theme => ({
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
         ].join(','),
+        marginRight: '0px'
+        
+        
     },
 });
 
@@ -40,7 +49,7 @@ function SimpleExpansionPanel(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <ExpansionPanel square className={classes.root}>
+            <ExpansionPanel square className={classes.root} style={{marginRight: '0px'}}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography className={classes.heading}>Product Description</Typography>
                 </ExpansionPanelSummary>

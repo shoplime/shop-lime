@@ -89,7 +89,7 @@ const Home = () => {
             <div className='header-container'>
                 <MuiThemeProvider theme={theme}>
                     <AppBar color="secondary">
-                        <Toolbar>
+                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                             {/* <MenuIcon></MenuIcon> */}
                             <Typography variant="h5">
                                 Shop Lime

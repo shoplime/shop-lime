@@ -14,9 +14,10 @@
     font-weight: 400;
     color: black;
     object-fit: fill;
-    img{
-        height: 120px;
+    .img-zoom{
+        height: 200px;   
     }
+    
 }
 .prod-desc{
     display: flex;
@@ -25,12 +26,35 @@
     font-weight: 800;
     letter-spacing: 1.1px;
     font-size: 1.4em;
-    margin-left: 85px;
-    margin-right: 85px;
+    // margin-left: 85px;
+    // margin-right: 85px;
     p{
        margin: 5px 0px;
        font-weight: 400; 
-       font-size: .7em;
-       
+       font-size: .7em;  
+    }
+}
+.image-item{
+    display: flex;
+    flex-direction: row;
+    // align-items: flex-start;
+    // justify-content: center;
+}
+.thumbnail-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    // object-fit: scale-down;
+    width: 50px;
+    padding: 20px 0px;
+    // height: 80px;
+
+    .thumbnails{
+        max-height: 100px; 
+        max-width: 100%;
+        // border: 1px solid black; 
+        // object-fit: cover;
+        // width: 100%;   
     }
 }

@@ -9,7 +9,7 @@ const styles = theme => ({
   button: {
     // margin: theme.spacing.unit,
     // padding: '0 20%'
-    // marginRight: '20%',
+    // marginRight: '20%', 
     // marginLeft: '0',
     // margin: '0px'
     
@@ -19,11 +19,11 @@ const styles = theme => ({
 function TextButtons(props) {
   const { classes, handleOpen, handleError } = props;
   return (
-    <div style={{marginLeft: '0px'}}>
-          <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
+    <div>
+      <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
         Login
       </Button>
-          <Button className={classes.button}>
+      <Button className={classes.button}>
           <Link to='/cart'><CartCounter/></Link>
       </Button>
       
