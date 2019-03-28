@@ -4,7 +4,7 @@ CREATE TABLE "merchants" (
 );
 
 CREATE TABLE "products" (
-  "id" serial primary key,
+  "id" varchar primary key,
   "name" varchar,
   "merchant_id" int REFERENCES merchants(id),
   "price" int
@@ -37,7 +37,7 @@ CREATE TABLE "orders" (
 CREATE TABLE "order_items" (
   "id" serial primary key,
   "order_id" int references orders(id),
-  "product_id" int references products(id),
+  "product_id" varchar references products(id),
   "quantity" int
 );
 
@@ -45,9 +45,11 @@ CREATE TABLE "order_items" (
 CREATE TABLE "streams" (
   "id" serial primary key,
   "name" varchar,
-  "archive_id" int,
-  "stream_id" int,
-  "created_at" int,
+  "archive_id" varchar,
+  "session_id" varchar,
+  "broadcast_id" varchar,
+  "status" varchar,
+  "created_at" varchar,
   "url" varchar,
-  "product_id" int REFERENCES products(id)
+  "product_id" varchar REFERENCES products(id)
 );

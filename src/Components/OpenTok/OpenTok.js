@@ -15,6 +15,8 @@ class OpenTok extends Component {
         };
     }
 
+    
+
     componentWillMount() {
         axios.get('/getKey')
         .then(res => {
@@ -62,9 +64,24 @@ class OpenTok extends Component {
     }
 
     startBroadcast = () => {
-        axios.get(`/startBroadcast/${this.state.sessionId}`)
-        .then(res => console.log('broadcast started'))
-    }
+        const {streamName, product, sessionId} = this.props; 
+        console.log("sessID", this.props.sessionId)
+        axios
+            .get(`/startBroadcast/${this.props.sessionId}`)
+            .then(res => {
+                console.log('broadcast started')
+                console.log("props", streamName, product, sessionId)
+        axios
+            .post('/admin/newStream', {
+                        name: streamName,
+                        session_id: sessionId, 
+                        product_id: product 
+                                            })
+                })
+                .catch(err => {
+                console.log(err);
+              })
+            }
     
     stopBroadcast = () => {
         axios.get('/stopBroadcast')

@@ -199,7 +199,7 @@ app.get('/user/fetchuser', authc.getUser)
 //Adding Merchants
 app.post('/admin/register', ctrlm.addMerchant)
 
-//Create Stream
+//Creating Stream
 app.post('/admin/newStream', streamc.createStream)
 
 //moltin
