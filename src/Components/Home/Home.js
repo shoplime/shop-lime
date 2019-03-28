@@ -36,7 +36,8 @@ const Home = () => {
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
     const [playing, setPlaying] = useState(true);
-    const [muted, setMuted] = useState(true)
+    const [muted, setMuted] = useState(true);
+    const [chatDisplay, setChatDisplay] = useState(false);
 
     useEffect(() => {
         // document.title = `You clicked ${count} times`;
@@ -49,6 +50,9 @@ const Home = () => {
     };
     const toggleMuted = () => {
         setMuted(muted === false ? true : false)
+    };
+    const toggleChat = () => {
+        setChatDisplay(chatDisplay === false ? true : false)
     };
     const register = async () => {
         const isEmail = AuthLogic.validateEmail(email)
@@ -106,7 +110,7 @@ const Home = () => {
                         playing={true}
                         controls={false}
                         volume={0.8}
-                        muted={false}
+                        muted={muted}
                         pip={false}
                         width={'100%'}
                         height={'100%'}
@@ -116,16 +120,11 @@ const Home = () => {
                             }
                         }}
                     />
-                    <ChatIcon />
-                    <Close />
-                    <VolumeUp />
-                    <VolumeOff />
-                    <div className='chat-wrapper'>
-                        <Chat />
-                    </div>
+                    <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                    <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle chat-close'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                    {chatDisplay && <div className='chat-wrapper'><Chat /></div>}             
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
-                <button onClick={toggleMuted}>Mute/Unmute</button>
                 <input onChange={e => setHLS(e.target.value)} value={hls} />
                 <BuyBox/>
                 <ProductDesc/>
