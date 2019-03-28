@@ -87,6 +87,11 @@ const Home = () => {
                 <Nav />
             </Suspense> */}
             <div className='header-container'>
+
+                <Modal open={open} onClose={() => handleOpen(false)}>
+                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                </Modal>
+
                 <MuiThemeProvider theme={theme}>
                     <AppBar color="secondary">
                         <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
@@ -99,6 +104,7 @@ const Home = () => {
                     </AppBar>
                 </MuiThemeProvider>
             </div>   
+
             <div className='body-container'>
                 <div className='player-container'>
                     <ReactPlayer
@@ -120,6 +126,9 @@ const Home = () => {
                 <BuyBox/>
                 <ProductDesc/>
                 </div>
+                <div className='recently-live'>
+                    <h3>RECENTLY LIVE</h3>
+                </div>
                 <Videos/>
                 
                 {/* <div>
@@ -128,9 +137,6 @@ const Home = () => {
                 </div> */}
                 
                 
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
 
             </div>   
         </div>

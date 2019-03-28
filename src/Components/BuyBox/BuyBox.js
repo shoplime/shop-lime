@@ -73,9 +73,7 @@ const BuyBox = () => {
             <Grid item className='prod-desc' style={{}}>
                 LIME SQUEEZER
                 <p>$25</p>
-                <p>- wassup</p>
-                <p>- cool</p>
-                <Button style={{ borderRadius: '0', backgroundColor: '#388e3c'}} variant="contained" color="primary" size='large'>
+                <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large'>
                 BUY NOW
                 </Button>
             </Grid>

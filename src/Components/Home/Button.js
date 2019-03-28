@@ -24,7 +24,7 @@ function TextButtons(props) {
         Login
       </Button>
       <Button className={classes.button}>
-          <Link to='/cart'><CartCounter/></Link>
+        <Link to='/cart' style={{ textDecoration: 'none', color: '#388e3c'}}><CartCounter/></Link>
       </Button>
       
     </div>
