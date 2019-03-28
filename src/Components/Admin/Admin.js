@@ -112,7 +112,7 @@ getStepContent = (step) => {
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
-                  <Typography>{this.getStepContent(index)}</Typography>
+                  <Typography component={'span'}>{this.getStepContent(index)}</Typography>
                   <div className={classes.actionsContainer}>
                     <div>
                       <Button

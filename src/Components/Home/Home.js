@@ -3,7 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-// import Chat from './../Chat/Chat'
+import Chat from './../Chat/Chat'
 import './Home.scss'
 import {Link} from 'react-router-dom';
 import ProductDesc from '../ProductDesc/ProductDesc'
@@ -17,7 +17,10 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-// import Chat from './../Chat/Chat'
+import { Chat as ChatIcon } from '@material-ui/icons'
+import Close from '@material-ui/icons/Close'
+import VolumeUp from '@material-ui/icons/VolumeUp'
+import VolumeOff from '@material-ui/icons/VolumeOff'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
@@ -32,7 +35,7 @@ const Home = () => {
     const [loginError, handleError] = useState('')
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true)
 
     useEffect(() => {
@@ -101,7 +104,7 @@ const Home = () => {
                         className='react-player'
                         url={hls}
                         playing={true}
-                        controls={true}
+                        controls={false}
                         volume={0.8}
                         muted={false}
                         pip={false}
@@ -113,6 +116,13 @@ const Home = () => {
                             }
                         }}
                     />
+                    <ChatIcon />
+                    <Close />
+                    <VolumeUp />
+                    <VolumeOff />
+                    <div className='chat-wrapper'>
+                        <Chat />
+                    </div>
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
                 <button onClick={toggleMuted}>Mute/Unmute</button>
