@@ -1,97 +1,135 @@
-import React, {Component} from 'react';
-import SendBird from 'sendbird'
+import React, { Component } from 'react'
+import MessageForm from './MessageForm'
+import MessageList from './MessageList'
+import TwilioChat from 'twilio-chat'
+import $ from 'jquery'
+import './Chat.scss'
 
-const sb = new SendBird({appId: process.env.REACT_APP_SB_APP_ID});
-
-class Chat extends Component{
-    constructor(props){
-        super(props)
-
-        this.state = {
-            userId: '',
-            nickname: '',
-            showChat: false
-        }
+class Chat extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      messages: [],
+      username: null,
+      channel: null,
     }
+  }
 
-    handleChange(key, val){
-        this.setState({
-            [key]: val
-        })
+  componentDidMount = () => {
+    this.getToken()
+      .then(this.createChatClient)
+      .then(this.joinGeneralChannel)
+      .then(this.configureChannelEvents)
+      .catch((error) => {
+        this.addMessage({ body: `Error: ${error.message}` })
+      })
+  }
+
+  getToken = () => {
+    return new Promise((resolve, reject) => {
+      this.addMessage({ body: 'Connecting...' })
+      $.getJSON('/token', (token) => {
+        console.log(token)
+        this.setState({ username: token.identity })
+        resolve(token)
+      }).fail(() => {
+        reject(Error('Failed to connect.'))
+      })
+    })
+  }
+
+  createChatClient = (token) => {
+    return new Promise((resolve, reject) => {
+      console.log(token)
+      resolve(new TwilioChat(token.jwt))
+    })
+  }
+
+  getChannelMessages = () => {
+    this.state.channel.getMessages()
+    .then(messages => {
+      console.log(messages)
+      const totalMessages = messages.items.length;
+      const channelMessages = messages.items.map(message => {
+        return {author: message.author, body: message.body}
+      })
+      this.setState({
+        messages: channelMessages
+      })
+      console.log(channelMessages)
+      console.log('Total Messages:' + totalMessages);
+    })
+  }
+
+  joinGeneralChannel = (chatClient) => {
+    return new Promise((resolve, reject) => {
+      console.log(chatClient.getSubscribedChannels())
+      chatClient.getSubscribedChannels().then(() => {
+        console.log(chatClient)
+        chatClient.getChannelByUniqueName('lime').then((channel) => {
+          console.log(channel)
+          this.addMessage({ body: 'Joining lime channel...' })
+          this.setState({ channel })
+          console.log(this.state)
+          channel.join().then(() => {
+            this.addMessage({ body: `Joined lime channel as ${this.state.username}` })
+            this.getChannelMessages()
+            window.addEventListener('beforeunload', () => channel.leave())
+          }).catch(() => reject(Error('Could not join lime channel.')))
+
+          resolve(channel)
+        }).catch(() => this.createGeneralChannel(chatClient))
+      }).catch(() => reject(Error('Could not get channel list.')))
+    })
+  }
+
+  createGeneralChannel = (chatClient) => {
+    return new Promise((resolve, reject) => {
+      this.addMessage({ body: 'Creating lime channel...' })
+      console.log(chatClient)
+      chatClient
+        .createChannel({ uniqueName: 'lime', friendlyName: 'Lime Chat' })
+        .then(() => this.joinGeneralChannel(chatClient))
+        .catch(() => reject(Error('Could not create lime channel.')))
+    })
+  }
+
+  addMessage = (message) => {
+    const messageData = { ...message, me: message.author === this.state.username }
+    this.setState({
+      messages: [...this.state.messages, messageData],
+    })
+    console.log(this.state)
+  }
+
+  handleNewMessage = (text) => {
+    if (this.state.channel) {
+      this.state.channel.sendMessage(text)
     }
+  }
 
-    connectUser = () => {
-        const { userId, nickname } = this.state;
-        sb.connect(userId, (user, error) => {
-            if (error) {
-                console.log({ error });
-            } else {
-                sb.updateCurrentUserInfo(nickname, null, (user, error) => {
-                    if (error) {
-                        console.log({ error });
-                    } else {
-                        this.setState({
-                            userId: '',
-                            nickname: '',
-                            showChat: true
-                        });
-                    }
-                })
-            }
-        })
-    }
+  configureChannelEvents = (channel) => {
+    channel.on('messageAdded', ({ author, body }) => {
+      this.addMessage({ author, body })
+    })
 
-    createChannel = () => {
-        sb.OpenChannel.createChannel(function(openChannel, error) {
-            if (error) {
-                return;
-            }
-        })
-    }
+    channel.on('memberJoined', (member) => {
+      this.addMessage({ body: `${member.identity} has joined the channel.` })
+    })
 
-    // enterChannel = () => {
-    //     sb.OpenChannel.getChannel(CHANNEL_URL, function(openChannel, error) {
-    //         if (error) {
-    //             return;
-    //         }
-        
-    //         openChannel.enter(function(response, error) {
-    //             if (error) {
-    //                 return;
-    //             }
-    //         })
-    //     }); 
-    // }
+    channel.on('memberLeft', (member) => {
+      this.addMessage({ body: `${member.identity} has left the channel.` })
+    })
+  }
 
-    render(){
-        return(
-            <div>
-                Chat
-                {
-                    (!this.state.showChat ?
-                    <div>
-                        Enter User ID:
-                        <input onChange={e => {this.handleChange('userId', e.target.value)}} value={this.state.userId} />
-                        Enter Nickname:
-                        <input onChange={e => {this.handleChange('nickname', e.target.value)}} value={this.state.nickname} />
-                        <button onClick={() => {this.connectUser()}}>Connect User</button>
-                    </div>
-                    :
-                    <div>
-                        {this.state.nickname}
-                    </div>
-                    )
-                }
-                <button onClick={() => {this.createChannel()}}>Create Channel</button>
-                {/* <button onClick={this.enterChannel()}>Enter Channel</button> */}
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="Chat">
+        <MessageList messages={this.state.messages} />
+        <MessageForm onMessageSend={this.handleNewMessage} />
+      </div>
+    )
+  }
 }
 
 export default Chat
-// const Chat = () => (
-
-// );
-
-// export default Chat;

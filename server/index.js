@@ -2,12 +2,15 @@ const express = require('express')
 const sessions = require('express-session')
 require('dotenv').config()
 const massive = require('massive')
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET } = process.env
 const OpenTok = require('opentok')
 const authc = require('./controllers/AuthController')
 const ctrlm = require('./controllers/MerchantController')
 const streamc= require('./controllers/StreamController.js')
 const MoltinGateway = require('@moltin/sdk').gateway
+const Twilio = require('twilio')
+const chance = new require('chance')()
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET, TWILIO_CHAT_SERVICE_SID, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET } = process.env
+
 
 
 const app = express();
@@ -17,7 +20,10 @@ const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET)
 const Moltin = MoltinGateway({
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET
-  })
+})
+
+const AccessToken = Twilio.jwt.AccessToken
+const ChatGrant = AccessToken.ChatGrant
 
 massive(DB_CONNECTION).then(db => {
     app.set('db', db)
@@ -79,7 +85,6 @@ app.post('/products', (req, res) => {
 
 
 
-
 //opentok
 app.get('/createSession', (req, res) => {
     opentok.createSession({mediaMode:"routed"}, function(error, session) {
@@ -136,7 +141,7 @@ app.get('/startBroadcast/:sid', (req, res) => {
                 }
             ]
         },
-        maxDuration: 600,
+        maxDuration: 120,
         resolution: '1280x720'
     }
     opentok.startBroadcast(sessionId, broadcastOptions, (error, broadcast) => {
@@ -189,8 +194,8 @@ app.get('/stopArchive', (req, res) => {
     })
 })
 
-//Authentication endpoints
 
+//Authentication endpoints
 app.post('/user/register', authc.register)
 app.post('/user/login', authc.login)
 app.post('/user/logout', authc.logout)
@@ -242,7 +247,21 @@ app.post('/products', (req, res) => {
         res.status(200).send(product)
       })
 })
+//Twilio Chat
+app.get('/token', function (req, res) {
+    const token = new AccessToken(
+        TWILIO_ACCOUNT_SID,
+        TWILIO_API_KEY,
+        TWILIO_API_SECRET,
+    )
 
+    token.identity = chance.name()
+    token.addGrant(new ChatGrant({
+        serviceSid: TWILIO_CHAT_SERVICE_SID
+    }))
 
-
-
+    res.send({
+        identity: token.identity,
+        jwt: token.toJwt()
+    })
+})

@@ -3,7 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-import Chat from './../Chat/Chat'
+// import Chat from './../Chat/Chat'
 import './Home.scss'
 import {Link} from 'react-router-dom';
 import ProductDesc from '../ProductDesc/ProductDesc'
@@ -17,10 +17,9 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+// import Chat from './../Chat/Chat'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
-
-
 
 const Home = () => {
     
@@ -33,7 +32,7 @@ const Home = () => {
     const [loginError, handleError] = useState('')
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(true)
 
     useEffect(() => {
@@ -114,7 +113,6 @@ const Home = () => {
                             }
                         }}
                     />
-                     <Chat />
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
                 <button onClick={toggleMuted}>Mute/Unmute</button>

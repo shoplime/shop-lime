@@ -8,6 +8,8 @@ import OTHLS from './Components/OTHLS/OTHLS'
 import Cart from './Components/Checkout/Cart/Cart'
 import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
 import OrderConfirmation from './Components/Checkout/Orders/OrderConfirmationContainer';
+import Chat from './Components/Chat/Chat'
+
 
 
 export default (
@@ -20,5 +22,6 @@ export default (
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
         <Route path= '/order-confirmation' component={OrderConfirmation} />
+        <Route path='/chat' component={Chat} />
     </Switch>
 )
