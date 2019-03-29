@@ -64,15 +64,22 @@ module.exports = {
             console.log(err)
         }
     },
-    logout: (req, res) => {
-        req.session.destroy();
-        res.sendStatus(200)
+    logout: () => {
+        try{
+            
+            req.session.destroy();
+            res.sendStatus(200)
+
+        }
+        catch(err){
+            console.log(err)
+        }
     },
 
     getUser: (req, res) => {
         try{
 
-            const { user } = req.session
+            const { user } = req.session 
             
             if (user) {
                 res.status(200).send(user)

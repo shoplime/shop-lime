@@ -219,12 +219,12 @@ app.get('/stopArchive', (req, res) => {
 
 //Authentication endpoints
 
-app.post('/user/register', authc.register)
+app.post('/user/register', authc.register) 
 app.post('/user/login', authc.login)
 app.post('/user/logout', authc.logout)
 app.get('/user/fetchuser', authc.getUser)
 
-//Adding Merchants
+//Adding Merchants 
 app.post('/admin/register', ctrlm.addMerchant)
 
 //Creating Stream
