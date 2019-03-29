@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './MessageForm.scss'
+// import Send from '@material-ui/icons/Send'
 
 class MessageForm extends Component {
   static propTypes = {
@@ -29,6 +30,7 @@ class MessageForm extends Component {
         </div>
         <div className="button-container">
           <button type="submit">
+            {/* <Send style={{color: '#fff'}}/> */}
             Send
           </button>
         </div>

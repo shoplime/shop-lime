@@ -5,23 +5,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 20%;
-  margin-top: 50px;
+  overflow-x: hidden;
 }
 .player-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 5%;
-  margin-bottom: 3%;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  width: 100vw;
+  max-width: 1280px;
+  margin: 0 auto;
   position: relative;
 }
 
 .chat-wrapper {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   right: 0;
   height: 90%;
   display: flex;
@@ -33,7 +32,7 @@
 .chat-toggle, .mute {
   color: #ffffff;
   position: absolute;
-  bottom: 15px;
+  bottom: 20px;
 }
 
 .chat-toggle {
@@ -41,7 +40,7 @@
 }
 
 .chat-close {
-  right: 210px;
+  right: 310px;
 }
 
 .mute {
@@ -53,5 +52,32 @@
   border: none;
   &:hover{
     cursor: pointer;
+  }
+}
+
+.react-player {
+  align-self: center;
+}
+
+
+@media (max-width: 450px){
+  .player-container {
+    overflow: hidden;
+    height: 100vh;
+    width: 300vw;
+    // max-width: none;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                7%;
+  }
+  .react-player {
+    height: 100vh;
+  }
+  .chat-toggle {
+    left: 15px;
+    bottom: 60px;
+  }
+  .chat-close {
+    right: 210px;
+  }
+  .mute {
+    bottom: 30px;
   }
 }

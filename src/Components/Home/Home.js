@@ -34,7 +34,7 @@ const Home = () => {
     const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
     
-    const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
+    const [hls, setHLS] = useState('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8')
     const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true);
     const [chatDisplay, setChatDisplay] = useState(false);
@@ -90,17 +90,7 @@ const Home = () => {
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
             </Suspense> */}
-            <MuiThemeProvider theme={theme}>
-                <AppBar color="secondary">
-                    <Toolbar>
-                        {/* <MenuIcon></MenuIcon> */}
-                        <Typography variant="h5">
-                            Shop Lime
-                        </Typography>
-                        <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
-                    </Toolbar>
-                </AppBar>
-            </MuiThemeProvider>
+
 
             <div className='body-container'>
                 <div className='player-container'>
@@ -122,7 +112,7 @@ const Home = () => {
                     />
                     <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                     <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle chat-close'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                    {chatDisplay && <div className='chat-wrapper'><Chat /></div>}             
+                    {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
                 <input onChange={e => setHLS(e.target.value)} value={hls} />
