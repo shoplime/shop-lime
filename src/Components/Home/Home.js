@@ -3,7 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-// import Chat from './../Chat/Chat'
+import Chat from './../Chat/Chat'
 import './Home.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
@@ -119,31 +119,37 @@ const Home = () => {
 
             <div className='body-container'>
                 <div className='player-container'>
-                    <ReactPlayer
-                        className='react-player'
-                        url={hls}
-                        playing={true}
-                        controls={false}
-                        volume={0.8}
-                        muted={muted}
-                        pip={false}
-                        width={'100%'}
-                        height={'100%'}
-                        config={{
-                            file: {
-                                forceHLS: true
-                            }
-                        }}
-                    />
-                    <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
-                    <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle chat-close'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                    {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                    <div className='player-wrapper'>
+                        <ReactPlayer
+                            className='react-player'
+                            url={hls}
+                            playing={true}
+                            controls={false}
+                            volume={0.8}
+                            muted={muted}
+                            pip={false}
+                            width={'100%'}
+                            height={'100%'}
+                            config={{
+                                file: {
+                                    forceHLS: true
+                                }
+                            }}
+                            />
+                        <div className='overlay'>
+                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                            <div className='right-overlay'>
+                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                            </div>
+                        </div>
+                    </div>
+                    <BuyBox/>
+                    <ProductDesc/>
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
-                <input onChange={e => setHLS(e.target.value)} value={hls} />
-                <BuyBox/>
-                <ProductDesc/>
-                </div>
+                {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
+                
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
@@ -156,8 +162,7 @@ const Home = () => {
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
-                
-            </div>   
+                </div>
         </div>
     )
 }

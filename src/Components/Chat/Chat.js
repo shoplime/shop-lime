@@ -80,7 +80,6 @@ class Chat extends Component {
             this.getChannelMessages()
             window.addEventListener('beforeunload', () => channel.leave())
           }).catch(() => reject(Error('Could not join general channel.')))
-
           resolve(channel)
         }).catch(() => this.createGeneralChannel(chatClient))
       }).catch(() => reject(Error('Could not get channel list.')))

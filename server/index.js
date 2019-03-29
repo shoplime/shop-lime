@@ -11,9 +11,6 @@ const Twilio = require('twilio')
 const chance = new require('chance')()
 const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET, TWILIO_CHAT_SERVICE_SID, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET } = process.env
 
-
-
-
 const Moltin = MoltinGateway({
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET
@@ -43,21 +40,8 @@ app.use(
     })
 );
 
-
-
-// http.listen(3000, function(){
-//   console.log('listening on *:3000');
-// });
-
-
-// const app = express();
 app.use(express.json())
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
-
-const Moltin = MoltinGateway({
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET
-})
 
 
 massive(DB_CONNECTION).then(db => {

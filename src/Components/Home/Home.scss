@@ -5,24 +5,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
-  // padding: 0 20%;
-  // margin-top: 50px;
+  padding: 0 20%;
+  margin-top: 50px;
 }
+
+
 .player-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 100vw;
-  max-width: 1280px;
-  margin: 0 auto;
   position: relative;
-  background-color: black;
-  // margin-top: 4%;
-  // margin-bottom: 20%;
-  // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  margin-top: 4%;
+  margin-bottom: 20%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  overflow: hidden;
 }
+
+.player-wrapper {
+  background-color: black;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .header-container{
   width: 70%;
   padding: 0 40%;
@@ -36,11 +42,8 @@
   border-bottom: 1px solid #1b5e20;
   margin-bottom: 50px;
 }
-  
 
 .chat-wrapper {
-  position: absolute;
-  right: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -52,55 +55,36 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
 }
 
-.chat-toggle, .mute {
-  color: #ffffff;
+.overlay {
   position: absolute;
-  bottom: 20px;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between
 }
 
-.chat-toggle {
-  right: 15px;
-}
-
-.chat-close {
-  right: 310px;
-}
-
-.mute {
-  left: 15px;
+.right-overlay {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .icon-button {
   background: none;
   border: none;
+  align-self: flex-end;
+  margin: 15px;
   &:hover{
     cursor: pointer;
   }
 }
 
-.react-player {
-  align-self: center;
+.chat-toggle, .mute {
+  color: #ffffff;
 }
 
-
-@media (max-width: 450px){
-  .player-container {
-    overflow: hidden;
-    height: 100vh;
-    width: 300vw;
-    // max-width: none;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                7%;
-  }
-  .react-player {
-    height: 100vh;
-  }
-  .chat-toggle {
-    left: 15px;
-    bottom: 60px;
-  }
-  .chat-close {
-    right: 210px;
-  }
-  .mute {
-    bottom: 30px;
-  }
+.react-player {
+  align-self: center;
 }
