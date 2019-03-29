@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import axios from 'axios'
+import './SelectProduct.scss';
 
 
 const styles = theme => ({
@@ -76,35 +77,46 @@ class AddProduct extends Component {
     }
   }
 
-  componentDidMount(){
-    axios.get('/products')
-    .then(res => {
-      console.log(res.data.data)
-      this.setState({
-        products: res.data.data
-      })
-    })
-  }
+  // componentDidMount(){
+  //   axios.get('/products')
+  //   .then(res => {
+  //     console.log(res.data.data)
+  //     this.setState({
+  //       products: res.data.data
+  //     })
+  //   })
+  // }
 
-  handleSelect = (id) => {
-    axios.get(`/products/${id}`)
-    .then(res => {
-      console.log(res.data)
-      this.setState({
-        product: res.data
-      })
-    })
-    console.log(this.state.product)
-  }
+  // handleSelect = (product) => {
+  //   product.selected = !product.selected 
+  //   const index = this.state.products.findIndex(stateproduct =>
+  //   stateproduct.id === product.id)
+  //   this.setState(prevState => {
+  //     prevState.products.splice(index, 1, product)
+  //     return {
+  //     products: [
+  //       ...prevState.products
+  //     ],
+  //   }});
+  //   // document.getElementById('panel'+ id).classList.toggle('highlight') //*
+  //   axios.get(`/products/${product.id}`)
+  //   .then(res => {
+  //     console.log("res",res.data.data.id)
+  //     this.setState({
+  //       product: res.data.data.id
+  //     })
+  //   })
+  // }
 
   render() {
-    const { classes } = this.props;
+    const { classes, product, products, handleSelectFn } = this.props;
+    console.log(this.state)
     return (
       <div>
         <div>{this.state.product.name}</div>
         {
-          this.state.products.map(product => (
-            <ExpansionPanel>
+          products.map(product => (
+            <ExpansionPanel className = {product.selected && "highlight"}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div className={classes.column}>
                   <Typography className={classes.heading}>{product.name}</Typography>
@@ -131,7 +143,8 @@ class AddProduct extends Component {
               <Divider />
               <ExpansionPanelActions>
                 {/* <Button size="small">Cancel</Button> */}
-                <Button size="small" color="primary" onClick={() => this.handleSelect(product.id)}>
+                <Button size="small" color="primary" 
+                  onClick={(e) => handleSelectFn(product)}>
                   Select Product
                 </Button>
               </ExpansionPanelActions>
