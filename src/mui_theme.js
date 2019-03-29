@@ -14,6 +14,7 @@ export default createMuiTheme({
         text: {
             primary: "#388e3c"
             // primary: "#fafafa"
+            
         },
         common: {
             black: "#000"
@@ -25,7 +26,8 @@ export default createMuiTheme({
             'Montserrat'
             ].join(','),
         h5: {
-            fontWeight: 600,
+            fontWeight: 900,
+            letterSpacing: '1.2px'
             // padding: '0 20%'
         }
         

@@ -16,12 +16,14 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 
 const Home = () => {
     
     const [checkout, setCheckout] = useState(false);
+    const [openCheckout, handleOpenCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
     const [email, handleEmail] = useState('')
@@ -99,7 +101,7 @@ const Home = () => {
                         <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                             {/* <MenuIcon></MenuIcon> */}
                             <Typography variant="h5">
-                                Shop Lime
+                                SHOPLIME
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
@@ -125,7 +127,8 @@ const Home = () => {
                         }}
                     />
                     {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
-                <BuyBox/>
+                <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout}/>
+                <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout}/>
                 <ProductDesc/>
                 </div>
                 <div className='recently-live'>
