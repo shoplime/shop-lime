@@ -33,14 +33,16 @@ const Home = () => {
     const [email, handleEmail] = useState('')
     const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
+    const [user, handleUser] = useState(false)
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
     const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true)
 
     useEffect(() => {
-        // document.title = `You clicked ${count} times`;
-    });
+        getUser()
+    }, [user]);
+
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
     };
@@ -50,6 +52,15 @@ const Home = () => {
     const toggleMuted = () => {
         setMuted(muted === false ? true : false)
     };
+    const getUser = async () => {
+        await axios.get('/user/fetchuser')
+            .then(() => {
+                handleUser(true)
+            })
+            .catch(() => {
+                handleUser(false)
+            })
+    }
     const register = async () => {
         const isEmail = AuthLogic.validateEmail(email)
         const isPassword = AuthLogic.validatePassword(password)
@@ -62,7 +73,8 @@ const Home = () => {
             await axios.post('/user/register', {email, password})
                 .then(() => {
                     handleError('Success!')
-                    handleOpen(false)   
+                    handleOpen(false) 
+                    handleUser(true)  
                 })
                 .catch(() => {
                     handleError('EMAIL ALREADY EXISTS!')
@@ -73,21 +85,20 @@ const Home = () => {
         await axios.post('/user/login', {email, password})
             .then(() => {
                 handleOpen(false)
+                handleUser(true)
             })
             .catch(() => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
-    
 
     return (
-        
         <div>
             {/* <Suspense fallback={<div>loading...</div>}>
                 <Nav />
             </Suspense> */}
             <div className='header-container'>
-
+            
                 <Modal open={open} onClose={() => handleOpen(false)}>
                     <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
                 </Modal>
@@ -99,20 +110,29 @@ const Home = () => {
                             <Typography variant="h5">
                                 Shop Lime
                             </Typography>
-                            <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
+                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
                     </AppBar>
                 </MuiThemeProvider>
             </div>   
 
             <div className='body-container'>
+            {<p>
+                {
+                    user
+                    ?
+                    <p>True</p>
+                    :
+                    <p>False</p>
+                }
+            </p>}
                 <div className='player-container'>
                     <ReactPlayer
                         url={hls}
-                        playing={true}
+                        playing={false}
                         controls={true}
                         volume={0.8}
-                        muted={false}
+                        muted={true}
                         pip={false}
                         width={'100%'}
                         height={'100%'}
@@ -129,7 +149,8 @@ const Home = () => {
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
-                <Videos/>
+                <Videos handleOpen={handleOpen} user={user}/>
+                
                 
                 {/* <div>
                     <button onClick={toggleCheckout}>Add to Cart</button>

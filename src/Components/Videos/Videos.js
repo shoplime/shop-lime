@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import './Videos.scss'
+import { userInfo } from 'os';
 
 const styles = theme => ({
     root: {
@@ -22,45 +23,52 @@ const styles = theme => ({
 class Videos extends React.Component {
     state = {
         spacing: '16',
+        videos: []
     };
-
+    getVideos = () => {
+        // axios.get
+    }
     handleChange = key => (event, value) => {
         this.setState({
             [key]: value,
         });
     };
+    handleClick = () => {
+
+    }
 
     render() {
-        const { classes } = this.props;
+        const { classes, user, handleOpen } = this.props;
         const { spacing } = this.state;
 
         return (
+            
             <Grid container className={classes.root} spacing={16}>
-                <Grid item xs={12}>
-                    <Grid container className={classes.demo} justify="space-between" spacing={Number(spacing)}>
-                        {tileData.map((tile, index) => (
-                                <div>
-                                    <button className='video-card'>
-    
-                                    </button>
-                                        <p>{tile.author}</p>
-                                </div>
-                                    
-                            
-                            
-                            
-                            // <Grid key={index} item>
-                            //     <Paper className={classes.paper}>
-                            //         <img src={tile.img} alt=""/>
-                            //     </Paper>
-                            //         <p>{tile.author}</p>
-                            //         <p>{tile.title}</p>
-                                
-                            // </Grid>
-                        ))}
+                    <Grid item xs={12}>
+                        <Grid container className={classes.demo} justify="space-between" spacing={Number(spacing)}>
+                            {tileData.map((tile, index) => (
+                                <div key={index}>              
+                                {
+                                        user
+                                        ?
+                                        <>
+                                            <button className='video-card'>
+                                            </button>
+                                            <p>{tile.author}</p>
+                                        </>
+                                        :
+                                        <>
+                                            <button onClick={() => handleOpen(true)} className='video-card'>
+                                            </button>
+                                            <p>{tile.author}</p>
+                                        </>
+                                    }
+
+                                    </div>
+                            ))}
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
         );
     }
 }
