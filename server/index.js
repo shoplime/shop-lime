@@ -8,21 +8,26 @@ const authc = require('./controllers/AuthController')
 const ctrlm = require('./controllers/MerchantController')
 const streamc= require('./controllers/StreamController.js')
 const MoltinGateway = require('@moltin/sdk').gateway
+//user tracking with sockets
+let ws = require('ws')
+let geoip = require('geoip-lite')
+let useragent = require('useragent')
+let wss = new ws.Server({ server: server, path: '/', clientTracking: false, maxPayload: 1024 })
 
 
-const app = express();
-app.use(express.json())
-const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
-const Moltin = MoltinGateway({
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET
-  })
+// var app = require('express')();
+// var app = connect();
 
-massive(DB_CONNECTION).then(db => {
-    app.set('db', db)
-    app.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
-})
+const app = express()
+
+//initializing socket 
+
+app.get('/', function(req, res){
+    res.send('<h1>Hello world</h1>');
+});
+
+var http = require('http').Server(app);
 
 //Setting up sessions / middleware
 
@@ -34,6 +39,29 @@ app.use(
         maxAge: null
     })
 );
+
+
+
+// http.listen(3000, function(){
+//   console.log('listening on *:3000');
+// });
+
+
+// const app = express();
+app.use(express.json())
+const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
+
+const Moltin = MoltinGateway({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+})
+
+
+massive(DB_CONNECTION).then(db => {
+    app.set('db', db)
+    http.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
+})
+
 
 //moltin
 app.get('/products', (req, res) => {
@@ -242,6 +270,43 @@ app.post('/products', (req, res) => {
         res.status(200).send(product)
       })
 })
+
+//tracking site visits to website
+let users = {}
+let userCount = 0
+let userLastID = 0
+
+setInterval(() => console.log(`Users online: $(userCount)`), 10*1000)
+
+wss.on('connection', socket => {
+    userCount++
+  
+    let id = userLastID++
+    let ip = socket.upgradeReq.headers['x-real-ip'] || socket.upgradeReq.connection.remoteAddress
+    let user = users[id] = {
+      id: id,
+      host: socket.upgradeReq.headers['host'],
+      ip: ip,
+      ipgeo: geoip.lookup(ip),
+      ua: useragent.lookup(socket.upgradeReq.headers['user-agent']).toJSON(),
+      date: Date.now(),
+      updated: Date.now()
+    }
+  
+    socket.once('close', () => {
+      delete users[id]
+      userCount--
+    })
+  })
+  
+  wss.on('error', err => console.error(err))
+
+  app.get('/analytics.js', (req, res) => {
+    let trackerjs = `var socket = new WebSocket('${config.wshost}');`
+  
+    res.set('Content-Type', 'application/javascript')
+    res.send(trackerjs)
+  })
 
 
 

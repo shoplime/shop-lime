@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
+import Dashboard from '../Dashboard/Dashboard'
 
 class OpenTok extends Component {
     constructor(props) {
@@ -171,8 +172,11 @@ class OpenTok extends Component {
                         <h4>{this.state.token}</h4>
                         <button onClick={() => {this.generateToken()}} >Generate Token</button>
                         <button onClick={() => {this.startPublish()}} >Start Publish - Session and Token</button>
-                    </div>)
+                    </div>)   
                 }
+                <div>
+                    <Dashboard/>
+                </div>
             </div>
         );
     }
