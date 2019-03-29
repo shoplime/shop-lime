@@ -3,7 +3,7 @@ import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-// import Chat from './../Chat/Chat'
+import Chat from './../Chat/Chat'
 import './Home.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
@@ -16,9 +16,13 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+import { Chat as ChatIcon } from '@material-ui/icons'
+import Close from '@material-ui/icons/Close'
+import VolumeUp from '@material-ui/icons/VolumeUp'
+import VolumeOff from '@material-ui/icons/VolumeOff'
+const Nav = React.lazy(() => import('../Nav/Nav'))
+// const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
-
-
 
 const Home = () => {
     
@@ -30,9 +34,10 @@ const Home = () => {
     const [loginError, handleError] = useState('')
     const [user, handleUser] = useState(false)
     
-    const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
+    const [hls, setHLS] = useState('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8')
     const [playing, setPlaying] = useState(true);
-    const [muted, setMuted] = useState(true)
+    const [muted, setMuted] = useState(true);
+    const [chatDisplay, setChatDisplay] = useState(false);
 
     useEffect(() => {
         getUser()
@@ -46,6 +51,9 @@ const Home = () => {
     };
     const toggleMuted = () => {
         setMuted(muted === false ? true : false)
+    };
+    const toggleChat = () => {
+        setChatDisplay(chatDisplay === false ? true : false)
     };
     const getUser = async () => {
         await axios.get('/user/fetchuser')
@@ -111,25 +119,37 @@ const Home = () => {
 
             <div className='body-container'>
                 <div className='player-container'>
-                    <ReactPlayer
-                        url={hls}
-                        playing={false}
-                        controls={true}
-                        volume={0.8}
-                        muted={true}
-                        pip={false}
-                        width={'100%'}
-                        height={'100%'}
-                        config={{
-                            file: {
-                                forceHLS: true
-                            }
-                        }}
-                    />
-                    {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
-                <BuyBox/>
-                <ProductDesc/>
+                    <div className='player-wrapper'>
+                        <ReactPlayer
+                            className='react-player'
+                            url={hls}
+                            playing={true}
+                            controls={false}
+                            volume={0.8}
+                            muted={muted}
+                            pip={false}
+                            width={'100%'}
+                            height={'100%'}
+                            config={{
+                                file: {
+                                    forceHLS: true
+                                }
+                            }}
+                            />
+                        <div className='overlay'>
+                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                            <div className='right-overlay'>
+                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                            </div>
+                        </div>
+                    </div>
+                    <BuyBox/>
+                    <ProductDesc/>
                 </div>
+                {/* <button onClick={togglePlaying}>Play/Pause</button> */}
+                {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
+                
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
@@ -142,8 +162,7 @@ const Home = () => {
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
-                
-            </div>   
+                </div>
         </div>
     )
 }

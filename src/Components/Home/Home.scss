@@ -7,17 +7,28 @@
   justify-content: center;
   padding: 0 20%;
   margin-top: 50px;
-  
 }
+
+
 .player-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
   margin-top: 4%;
   margin-bottom: 20%;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  overflow: hidden;
 }
+
+.player-wrapper {
+  background-color: black;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .header-container{
   width: 70%;
   padding: 0 40%;
@@ -31,20 +42,49 @@
   border-bottom: 1px solid #1b5e20;
   margin-bottom: 50px;
 }
-  
 
-  
+.chat-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.65+100 */
+  background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+}
 
-  .react-player {
-    // align-self: center
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    grid-area: main;
-    border: 1px solid red;
+.overlay {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between
+}
+
+.right-overlay {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  align-self: flex-end;
+  margin: 15px;
+  &:hover{
+    cursor: pointer;
   }
+}
 
-  .chat-wrapper {
-    grid-area: sidebar;
-    border: 1px solid blue;
-  }
+.chat-toggle, .mute {
+  color: #ffffff;
+}
+
+.react-player {
+  align-self: center;
+}

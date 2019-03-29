@@ -20,7 +20,7 @@ import axios from 'axios'
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
   },
   button: {
     marginTop: theme.spacing.unit,
@@ -172,7 +172,7 @@ getStepContent = (step) => {
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
-                  <Typography>{this.getStepContent(index)}</Typography>
+                  <Typography component={'span'}>{this.getStepContent(index)}</Typography>
                   <div className={classes.actionsContainer}>
                     <div>
                       <Button
