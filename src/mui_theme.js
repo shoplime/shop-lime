@@ -29,7 +29,9 @@ export default createMuiTheme({
             fontWeight: 900,
             letterSpacing: '1.2px'
             // padding: '0 20%'
-        }
+        },
+           
+        useNextVariants: true
         
     },
     props: {

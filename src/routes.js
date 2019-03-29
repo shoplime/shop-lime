@@ -8,17 +8,16 @@ import OTHLS from './Components/OTHLS/OTHLS'
 import Cart from './Components/Checkout/Cart/Cart'
 import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
 import OrderConfirmation from './Components/Checkout/Orders/OrderConfirmationContainer';
-
+import Chat from './Components/Chat/Chat'
+import ProductsContainer from './Components/Products/ProductsContainer'
 
 export default (
     <Switch>
         <Route exact path= '/' component={Home} />
         <Route path= '/admin' component={Admin} />
-        <Route path= '/opentok' component={OpenTok} />
-        <Route path= '/otclient' component={OTClient} />
-        <Route path= '/othls' component={OTHLS} />
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
-        <Route path= '/order-confirmation' component={OrderConfirmation} />
+        <Route path= '/products' component={ProductsContainer} />
+
     </Switch>
 )

@@ -2,22 +2,22 @@ const express = require('express')
 const sessions = require('express-session')
 require('dotenv').config()
 const massive = require('massive')
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET } = process.env
 const OpenTok = require('opentok')
 const authc = require('./controllers/AuthController')
 const ctrlm = require('./controllers/MerchantController')
 const streamc= require('./controllers/StreamController.js')
 const MoltinGateway = require('@moltin/sdk').gateway
-//user tracking with sockets
-let ws = require('ws')
-let geoip = require('geoip-lite')
-let useragent = require('useragent')
-// let wss = new ws.Server({ server: server, path: '/', clientTracking: false, maxPayload: 1024 })
+const Twilio = require('twilio')
+const chance = new require('chance')()
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET, TWILIO_CHAT_SERVICE_SID, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET } = process.env
 
+const Moltin = MoltinGateway({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+})
 
-
-// var app = require('express')();
-// var app = connect();
+const AccessToken = Twilio.jwt.AccessToken
+const ChatGrant = AccessToken.ChatGrant
 
 const app = express()
 
@@ -40,21 +40,8 @@ app.use(
     })
 );
 
-
-
-// http.listen(3000, function(){
-//   console.log('listening on *:3000');
-// });
-
-
-// const app = express();
 app.use(express.json())
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
-
-const Moltin = MoltinGateway({
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET
-})
 
 
 massive(DB_CONNECTION).then(db => {
@@ -103,7 +90,6 @@ app.post('/products', (req, res) => {
         res.status(200).send(product)
       })
 })
-
 
 
 
@@ -164,7 +150,7 @@ app.get('/startBroadcast/:sid', (req, res) => {
                 }
             ]
         },
-        maxDuration: 600,
+        maxDuration: 120,
         resolution: '1280x720'
     }
     opentok.startBroadcast(sessionId, broadcastOptions, (error, broadcast) => {
@@ -217,7 +203,6 @@ app.get('/stopArchive', (req, res) => {
     })
 })
 
-//Authentication endpoints
 
 app.post('/user/register', authc.register) 
 app.post('/user/login', authc.login)
@@ -270,44 +255,21 @@ app.post('/products', (req, res) => {
         res.status(200).send(product)
       })
 })
+//Twilio Chat
+app.get('/token', function (req, res) {
+    const token = new AccessToken(
+        TWILIO_ACCOUNT_SID,
+        TWILIO_API_KEY,
+        TWILIO_API_SECRET,
+    )
 
-//tracking site visits to website
-// let users = {}
-// let userCount = 0
-// let userLastID = 0
+    token.identity = chance.name()
+    token.addGrant(new ChatGrant({
+        serviceSid: TWILIO_CHAT_SERVICE_SID
+    }))
 
-// setInterval(() => console.log(`Users online: $(userCount)`), 10*1000)
-
-// wss.on('connection', socket => {
-//     userCount++
-  
-//     let id = userLastID++
-//     let ip = socket.upgradeReq.headers['x-real-ip'] || socket.upgradeReq.connection.remoteAddress
-//     let user = users[id] = {
-//       id: id,
-//       host: socket.upgradeReq.headers['host'],
-//       ip: ip,
-//       ipgeo: geoip.lookup(ip),
-//       ua: useragent.lookup(socket.upgradeReq.headers['user-agent']).toJSON(),
-//       date: Date.now(),
-//       updated: Date.now()
-//     }
-  
-//     socket.once('close', () => {
-//       delete users[id]
-//       userCount--
-//     })
-//   })
-  
-//   wss.on('error', err => console.error(err))
-
-//   app.get('/analytics.js', (req, res) => {
-//     let trackerjs = `var socket = new WebSocket('${config.wshost}');`
-  
-//     res.set('Content-Type', 'application/javascript')
-//     res.send(trackerjs)
-//   })
-
-
-
-
+    res.send({
+        identity: token.identity,
+        jwt: token.toJwt()
+    })
+})

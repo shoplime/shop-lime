@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Suspense, memo } from 'react'
+import React, { memo } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ImageZoom from 'react-medium-image-zoom'
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
+// import ImageZoom from 'react-medium-image-zoom'
 
 
 const BuyBox = (props) => {
@@ -52,7 +53,7 @@ const BuyBox = (props) => {
                         />       
                 </div> */}
                 <div>
-                    <ImageZoom zoomMargin='100'
+                    {/* <ImageZoom zoomMargin='100'
                         image={{
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
@@ -63,7 +64,7 @@ const BuyBox = (props) => {
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
                         }}
-                    />
+                    /> */}
 
                 </div>
 
