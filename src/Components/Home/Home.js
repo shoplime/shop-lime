@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
-import Videos from '../Videos/Videos'
+const Videos = React.lazy(() => import('../Videos/Videos'))
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
 
@@ -117,15 +117,6 @@ const Home = () => {
             </div>   
 
             <div className='body-container'>
-            {<p>
-                {
-                    user
-                    ?
-                    <p>True</p>
-                    :
-                    <p>False</p>
-                }
-            </p>}
                 <div className='player-container'>
                     <ReactPlayer
                         url={hls}

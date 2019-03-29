@@ -7,12 +7,7 @@ import {Link} from 'react-router-dom'
 
 const styles = theme => ({
   button: {
-    // margin: theme.spacing.unit,
-    // padding: '0 20%'
-    // marginRight: '20%', 
-    // marginLeft: '0',
-    // margin: '0px'
-    
+    margin: theme.spacing.unit,
   },
 });
 
@@ -23,16 +18,14 @@ function TextButtons(props) {
       {
         !user
         ?
-      <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
-        Login
-      </Button>
+          <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
+            Login
+          </Button>
         :
-        <></>
+          <Button className={classes.button}>
+            <Link to='/cart' style={{ textDecoration: 'none', color: '#388e3c'}}><CartCounter/></Link>
+          </Button>  
       }
-      <Button className={classes.button}>
-        <Link to='/cart' style={{ textDecoration: 'none', color: '#388e3c'}}><CartCounter/></Link>
-      </Button>
-      
     </div>
   );
 }
