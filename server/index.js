@@ -12,7 +12,7 @@ const MoltinGateway = require('@moltin/sdk').gateway
 let ws = require('ws')
 let geoip = require('geoip-lite')
 let useragent = require('useragent')
-let wss = new ws.Server({ server: server, path: '/', clientTracking: false, maxPayload: 1024 })
+// let wss = new ws.Server({ server: server, path: '/', clientTracking: false, maxPayload: 1024 })
 
 
 
@@ -272,41 +272,41 @@ app.post('/products', (req, res) => {
 })
 
 //tracking site visits to website
-let users = {}
-let userCount = 0
-let userLastID = 0
+// let users = {}
+// let userCount = 0
+// let userLastID = 0
 
-setInterval(() => console.log(`Users online: $(userCount)`), 10*1000)
+// setInterval(() => console.log(`Users online: $(userCount)`), 10*1000)
 
-wss.on('connection', socket => {
-    userCount++
+// wss.on('connection', socket => {
+//     userCount++
   
-    let id = userLastID++
-    let ip = socket.upgradeReq.headers['x-real-ip'] || socket.upgradeReq.connection.remoteAddress
-    let user = users[id] = {
-      id: id,
-      host: socket.upgradeReq.headers['host'],
-      ip: ip,
-      ipgeo: geoip.lookup(ip),
-      ua: useragent.lookup(socket.upgradeReq.headers['user-agent']).toJSON(),
-      date: Date.now(),
-      updated: Date.now()
-    }
+//     let id = userLastID++
+//     let ip = socket.upgradeReq.headers['x-real-ip'] || socket.upgradeReq.connection.remoteAddress
+//     let user = users[id] = {
+//       id: id,
+//       host: socket.upgradeReq.headers['host'],
+//       ip: ip,
+//       ipgeo: geoip.lookup(ip),
+//       ua: useragent.lookup(socket.upgradeReq.headers['user-agent']).toJSON(),
+//       date: Date.now(),
+//       updated: Date.now()
+//     }
   
-    socket.once('close', () => {
-      delete users[id]
-      userCount--
-    })
-  })
+//     socket.once('close', () => {
+//       delete users[id]
+//       userCount--
+//     })
+//   })
   
-  wss.on('error', err => console.error(err))
+//   wss.on('error', err => console.error(err))
 
-  app.get('/analytics.js', (req, res) => {
-    let trackerjs = `var socket = new WebSocket('${config.wshost}');`
+//   app.get('/analytics.js', (req, res) => {
+//     let trackerjs = `var socket = new WebSocket('${config.wshost}');`
   
-    res.set('Content-Type', 'application/javascript')
-    res.send(trackerjs)
-  })
+//     res.set('Content-Type', 'application/javascript')
+//     res.send(trackerjs)
+//   })
 
 
 

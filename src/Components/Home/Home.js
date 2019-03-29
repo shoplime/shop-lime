@@ -5,7 +5,6 @@ import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
 import Chat from './../Chat/Chat'
 import './Home.scss'
-import {Link} from 'react-router-dom';
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
 import axios from 'axios';
@@ -133,7 +132,7 @@ const Home = () => {
                     <h3>RECENTLY LIVE</h3>
                 </div>
                 <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} user={user}/>
+                    <Videos handleOpen={handleOpen} handleError={handleError} user={user}/>
                 </Suspense>
                 
                 
@@ -142,8 +141,6 @@ const Home = () => {
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
                 
-                
-
             </div>   
         </div>
     )
