@@ -14,6 +14,8 @@ class MessageList extends Component {
 
   componentDidUpdate = () => {
     this.node.scrollTop = this.node.scrollHeight
+    this.props.scrollToBottom()
+    // console.log(this.node.scrollTop, this.node.scrollHeight)
   }
 
   render() {

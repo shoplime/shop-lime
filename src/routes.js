@@ -16,12 +16,8 @@ export default (
     <Switch>
         <Route exact path= '/' component={Home} />
         <Route path= '/admin' component={Admin} />
-        <Route path= '/opentok' component={OpenTok} />
-        <Route path= '/otclient' component={OTClient} />
-        <Route path= '/othls' component={OTHLS} />
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
         <Route path= '/order-confirmation' component={OrderConfirmation} />
-        <Route path='/chat' component={Chat} />
     </Switch>
 )

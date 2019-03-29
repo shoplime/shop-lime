@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MessageForm from './MessageForm'
 import MessageList from './MessageList'
 import TwilioChat from 'twilio-chat'
+import { animateScroll } from "react-scroll";
 import $ from 'jquery'
 import './Chat.scss'
 
@@ -23,6 +24,12 @@ class Chat extends Component {
       .catch((error) => {
         this.addMessage({ body: `Error: ${error.message}` })
       })
+  }
+
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: "message-wrapper"
+    });
   }
 
   getToken = () => {
@@ -121,8 +128,8 @@ class Chat extends Component {
   render() {
     return (
       <div className='chat-container'>
-        <div className='messages'>
-          <MessageList messages={this.state.messages} />
+        <div className='messages' id='message-wrapper'>
+          <MessageList messages={this.state.messages} scrollToBottom={this.scrollToBottom} />
         </div>
         <MessageForm onMessageSend={this.handleNewMessage} />
       </div>
