@@ -18,9 +18,10 @@ function TextButtons(props) {
       {
         !user
         ?
-          <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
-            Login
-          </Button>
+          // <Button onClick={() => { handleOpen(true); handleError('') }} className={classes.button}>
+          //   Login
+          // </Button>
+          <></>
         :
           <Button className={classes.button}>
             <Link to='/cart' style={{ textDecoration: 'none', color: '#388e3c'}}><CartCounter/></Link>

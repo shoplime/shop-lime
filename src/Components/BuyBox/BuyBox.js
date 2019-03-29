@@ -70,10 +70,10 @@ const BuyBox = () => {
                 {/* <img src='https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg' alt='' />   */}
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
-                LIME SQUEEZER
+                    LIME SQUEEZER
                 <p>$25</p>
                 <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large'>
-                BUY NOW
+                    BUY NOW
                 </Button>
             </Grid>
         </Grid>

@@ -38,7 +38,7 @@ class Videos extends React.Component {
     }
 
     render() {
-        const { classes, user, handleOpen } = this.props;
+        const { classes, user, handleOpen, handleError } = this.props;
         const { spacing } = this.state;
 
         return (
@@ -58,7 +58,7 @@ class Videos extends React.Component {
                                         </>
                                         :
                                         <>
-                                            <button onClick={() => handleOpen(true)} className='video-card'>
+                                            <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
                                             </button>
                                             <p>{tile.author}</p>
                                         </>
