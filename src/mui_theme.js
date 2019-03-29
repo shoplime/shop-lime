@@ -12,7 +12,7 @@ export default createMuiTheme({
             light: '#fafafa'
         },
         text: {
-            primary: "#66bb6a"
+            primary: "#388e3c"
             // primary: "#fafafa"
         },
         common: {

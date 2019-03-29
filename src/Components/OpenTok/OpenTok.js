@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
+import Dashboard from '../Dashboard/Dashboard'
 
 class OpenTok extends Component {
     constructor(props) {
@@ -14,6 +15,8 @@ class OpenTok extends Component {
             archiveUrl: 'https://s3.us-west-1.amazonaws.com/lime-archive/46286302/a26e1bad-7288-410c-bb7a-79c722577558/archive.mp4?response-content-disposition=inline&X-Amz-Security-Token=AgoGb3JpZ2luEDkaCXVzLXdlc3QtMSKAAh0m8MTND3mx3BV6UznV%2BVf6DpBKhYWlp91T2NjItqHd6ZLheeDl3Ig%2BQaguYSmn%2Bl26WT4I0j23mUDbJC1hJeBV%2Fw%2F0fFh%2FzYkY7hPrNPvgEA%2FeyUdOantKoAO3hv1LIDxJildz1t7PJYah51Oe6tUXycv6DJE%2BBWCRtHe0Z0X%2FdAv2lLoLS7hBfpHT6dY%2FECwq02XcZOf1jPWIMVZMQr05sKS5ch0LqKwe0C6SRncX9tH7InfmNNd273daobUqUneUCe%2BU%2BlfC1B9ITcAXwpmjOQHfiMshbnXhtHT5CRI3FarOkNhzTL12GYUkHQNNer%2BxFin%2BuD%2Bysh%2BhVLW9Cu4q5AMIjv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwwNzc5NzU0MDUzMDIiDFtKV2F%2FixJq19K5Siq4A2wXc4ZJzb6lrlBak6Aj2A1frSj7hwY1sSMLFpZCnMejMODMxbLNpQaYSAwu0azpSD%2BJ3l5ZIQlGV9kaWmfM7zs8AATFQVSC2pSNPB6qLno9IS9jXOLOs572%2BlNaPk490O4onNHC7cGvQT%2BfoHbjOyMRGJffnGWFJNbZfRoypbU9Sg5yQvtQ9Swm2fOnaj5GcLNKwqVfPfsNWJJxvPUGqsts7xcCtxOjBNMo7RpVfFroAc%2Bkps%2Bn7TMgNJ6%2BxdnOZzuOa2615r13UwdjRjHS%2FFWqw9q%2BMWxdHcJbVw3dfyuhdQurXaRlQUMmThQN4eCRejFBCEmsVZ8nAvZzYVRrEQqO2I0DZP5lcoJz2lPm%2FB2QyAqcvEvuVvUBkTc1Tri0EPC6fVsADPAzTFc2usdjlf%2FKiAYZaBtLD185UoSMW2Ira4HC%2FKakfBuNQgBY9TB18X4nwGthU7e3Ft5kRNkYL%2BkDTLJVV6VUfhGFwZXF3VNtWX34pkpp1yIin4cafoQ5jZNYpj5bmY5nz%2F%2Ffn%2FNfsuVYzje2U84gNsAXFZeeBuN5anDAR%2FJIPl2CMtfUC%2FQxMeyaUOZ5C9a3MM200%2BQF&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20190322T165614Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAREJ5SIL3L6BPIIWR%2F20190322%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Signature=b8d04900c2cf78c62f41e94fe217dad2fe64ecabfa849e2fb2f244a2ee78e099'
         };
     }
+
+    
 
     componentWillMount() {
         axios.get('/getKey')
@@ -62,9 +65,24 @@ class OpenTok extends Component {
     }
 
     startBroadcast = () => {
-        axios.get(`/startBroadcast/${this.state.sessionId}`)
-        .then(res => console.log('broadcast started'))
-    }
+        const {streamName, product, sessionId} = this.props; 
+        console.log("sessID", this.props.sessionId)
+        axios
+            .get(`/startBroadcast/${this.props.sessionId}`)
+            .then(res => {
+                console.log('broadcast started')
+                console.log("props", streamName, product, sessionId)
+        axios
+            .post('/admin/newStream', {
+                        name: streamName,
+                        session_id: sessionId, 
+                        product_id: product 
+                                            })
+                })
+                .catch(err => {
+                console.log(err);
+              })
+            }
     
     stopBroadcast = () => {
         axios.get('/stopBroadcast')
@@ -154,8 +172,11 @@ class OpenTok extends Component {
                         <h4>{this.state.token}</h4>
                         <button onClick={() => {this.generateToken()}} >Generate Token</button>
                         <button onClick={() => {this.startPublish()}} >Start Publish - Session and Token</button>
-                    </div>)
+                    </div>)   
                 }
+                <div>
+                    <Dashboard/>
+                </div>
             </div>
         );
     }

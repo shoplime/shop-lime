@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, Suspense, useEffect, memo } from 'react'
 import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
@@ -17,30 +17,28 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-import CartCounter from '../Checkout/Cart/CartCounter';
-
-// const Nav = React.lazy(() => import('../Nav/Nav'))
-// const Nav = React.lazy(() => import('../Nav/Nav'))
+const Videos = React.lazy(() => import('../Videos/Videos'))
 
 
 
 const Home = () => {
     
-    // const [count, setCount] = useState(0);
     const [checkout, setCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
     const [email, handleEmail] = useState('')
     const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
+    const [user, handleUser] = useState(false)
     
     const [hls, setHLS] = useState('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8')
     const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true)
 
     useEffect(() => {
-        // document.title = `You clicked ${count} times`;
-    });
+        getUser()
+    }, [user]);
+
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
     };
@@ -50,6 +48,15 @@ const Home = () => {
     const toggleMuted = () => {
         setMuted(muted === false ? true : false)
     };
+    const getUser = async () => {
+        await axios.get('/user/fetchuser')
+            .then(() => {
+                handleUser(true)
+            })
+            .catch(() => {
+                handleUser(false)
+            })
+    }
     const register = async () => {
         const isEmail = AuthLogic.validateEmail(email)
         const isPassword = AuthLogic.validatePassword(password)
@@ -62,7 +69,8 @@ const Home = () => {
             await axios.post('/user/register', {email, password})
                 .then(() => {
                     handleError('Success!')
-                    handleOpen(false)   
+                    handleOpen(false) 
+                    handleUser(true)  
                 })
                 .catch(() => {
                     handleError('EMAIL ALREADY EXISTS!')
@@ -73,41 +81,43 @@ const Home = () => {
         await axios.post('/user/login', {email, password})
             .then(() => {
                 handleOpen(false)
+                handleUser(true)
             })
             .catch(() => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
-    
 
     return (
-        
         <div>
-            {/* <Suspense fallback={<div>loading...</div>}>
-                <Nav />
-            </Suspense> */}
-            <MuiThemeProvider theme={theme}>
-                <AppBar color="secondary">
-                    <Toolbar>
-                        {/* <MenuIcon></MenuIcon> */}
-                        <Typography variant="h5">
-                            Shop Lime
-                        </Typography>
-                        <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
-                        <Link to='/cart'><CartCounter /></Link>
-                    </Toolbar>
-                </AppBar>
-            </MuiThemeProvider>
+            <div className='header-container'>
+            
+                <Modal open={open} onClose={() => handleOpen(false)}>
+                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                </Modal>
+
+                <MuiThemeProvider theme={theme}>
+                    <AppBar color="secondary">
+                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                            {/* <MenuIcon></MenuIcon> */}
+                            <Typography variant="h5">
+                                Shop Lime
+                            </Typography>
+                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
+                        </Toolbar>
+                    </AppBar>
+                </MuiThemeProvider>
+            </div>   
 
 
             <div className='body-container'>
                 <div className='player-container'>
                     <ReactPlayer
                         url={hls}
-                        playing={true}
+                        playing={false}
                         controls={true}
                         volume={0.8}
-                        muted={false}
+                        muted={true}
                         pip={false}
                         width={'100%'}
                         height={'100%'}
@@ -117,20 +127,24 @@ const Home = () => {
                             }
                         }}
                     />
-                    <input onChange={e => setHLS(e.target.value)} value={hls} />
-                </div>
+                    {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
                 <BuyBox/>
                 <ProductDesc/>
+                </div>
+                <div className='recently-live'>
+                    <h3>RECENTLY LIVE</h3>
+                </div>
+                <Suspense fallback={<></>}>
+                    <Videos handleOpen={handleOpen} user={user}/>
+                </Suspense>
                 
-                <div>
+                
+                {/* <div>
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div>
+                </div> */}
                 
                 
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
 
             </div>   
         </div>
