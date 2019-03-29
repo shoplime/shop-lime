@@ -16,17 +16,18 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 const Nav = React.lazy(() => import('../Nav/Nav'))
-// const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
     
     const [checkout, setCheckout] = useState(false);
+    const [openCheckout, handleOpenCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
     const [email, handleEmail] = useState('')
@@ -108,7 +109,7 @@ const Home = () => {
                         <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                             {/* <MenuIcon></MenuIcon> */}
                             <Typography variant="h5">
-                                Shop Lime
+                                SHOPLIME
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
@@ -144,8 +145,9 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <BuyBox/>
-                    <ProductDesc/>
+                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                    <ProductDesc />
                 </div>
                 {/* <button onClick={togglePlaying}>Play/Pause</button> */}
                 {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
