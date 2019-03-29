@@ -13,7 +13,7 @@ const styles = theme => ({
         border: 'none',
         boxShadow: 'none',
         textAlign: 'left',
-        marginBottom: '10px',
+        marginBottom: '10px', 
         // marginTop: '10px',
         marginRight: '0px',
         padding: '0px 5%',

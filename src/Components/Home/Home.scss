@@ -19,6 +19,7 @@
   margin-top: 4%;
   margin-bottom: 20%;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  background-color: white;
   overflow: hidden;
 }
 
@@ -38,9 +39,13 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  color: black;
+  font-family: 'Montserrat';
+  color: #1b5e20;
   border-bottom: 1px solid #1b5e20;
   margin-bottom: 50px;
+  h3{
+    font-weight: 900;
+  }
 }
 
 .chat-wrapper {
