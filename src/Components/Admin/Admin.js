@@ -11,7 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import EventName from './Stepper/EventName'
 import SelectProduct from './Stepper/SelectProduct'
 import OpenTok from './../OpenTok/OpenTok'
+import ProductImage from './../Checkout/Products/ProductImage'
 import axios from 'axios'
+
 
 
 
@@ -34,12 +36,54 @@ const styles = theme => ({
 
 
 class Admin extends React.Component {
-  state = {
+  constructor(props){
+    super(props)
+    this.state = {
     activeStep: 0,
     apiKey: '',
     sessionId: '',
-    token: ''
+    token: '',
+    product: {},
+    products: [],
+    name: '',
+    imageId:''
   };
+  this.handleChange = this.handleChange.bind(this)
+}
+
+componentDidMount(){
+  axios.get('/products')
+  .then(res => {
+    console.log(res.data.data)
+    console.log("quest",res.data.data[0].relationships.main_image.data.id)
+    // let imgId = res.data.data.relationships.main_image.data.id.link.href
+    this.setState({
+      products: res.data.data,
+      imageId: res.data.data[0].relationships.main_image.data.id
+    })
+  })
+}
+
+handleSelect = (product) => {
+  product.selected = !product.selected 
+  const index = this.state.products.findIndex(stateproduct =>
+  stateproduct.id === product.id)
+  this.setState(prevState => {
+    prevState.products.splice(index, 1, product)
+    return {
+    products: [
+      ...prevState.products
+    ],
+  }});
+  // document.getElementById('panel'+ id).classList.toggle('highlight') //*
+  axios.get(`/products/${product.id}`)
+  .then(res => {
+    console.log("res",res.data.data.id)
+    this.setState({
+      product: res.data.data.id
+    })
+  })
+}
   
   handleNext = () => {
     const steps = this.getSteps();
@@ -62,6 +106,12 @@ class Admin extends React.Component {
     }
    
   };
+
+  handleChange(prop, val) {
+    this.setState({
+        [prop]:val
+    })
+  }
   
   handleBack = () => {
     this.setState(state => ({
@@ -85,11 +135,16 @@ getStepContent = (step) => {
         return <EventName 
         handleNext={this.handleNext} 
         handleBack={this.handleBack}
+        handleChangeFn={this.handleChange}
         />;
       case 1:
         return <SelectProduct
         handleNext={this.handleNext} 
         handleBack={this.handleBack}
+        eventName={this.state.name}
+        product={this.state.product}
+        products={this.state.products}
+        handleSelectFn={this.handleSelect}
         />;
       case 2:
         return;
@@ -102,9 +157,14 @@ getStepContent = (step) => {
     const { classes } = this.props;
     const steps = this.getSteps();
     const { activeStep } = this.state;
+    console.log("Admin State", this.state)
 
     return (
       <div className={classes.root}>
+      <img
+      src={this.state.imageId.link.href} 
+      />
+      {/* {this.state.imageId} */}
         {activeStep < steps.length && (
 
           <Stepper activeStep={activeStep} orientation="vertical">
@@ -144,6 +204,11 @@ getStepContent = (step) => {
             apiKey = {this.state.apiKey}
             sessionId = {this.state.sessionId}
             token = {this.state.token}
+            product={this.state.product}
+            streamName={this.state.name}
+            products={this.state.products}
+
+
             />
             <Button onClick={this.handleReset} className={classes.button}>
               Reset

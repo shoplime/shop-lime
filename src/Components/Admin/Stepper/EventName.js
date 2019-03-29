@@ -29,35 +29,19 @@ const styles = theme => ({
       this.state = {
           name: '',
       };
-      this.createStreamName = this.createStreamName.bind(this)
-      this.handleChange = this.handleChange.bind(this)
+      
   }
 
-  createStreamName(){
-    axios.post('/admin/newStream',
-    {
-      name:this.state.name,
-    })
-    .then(res => {
-      console.log(res.data)
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
 
-  handleChange(prop, val) {
-    this.setState({
-        [prop]:val
-    })
-  }
+
+  
 
   
   render() {
 
   console.log(this.state)
         
-    const { classes } = this.props;
+    const { classes, handleChangeFn } = this.props;
     return (
       <div>
        <TextField
@@ -66,8 +50,7 @@ const styles = theme => ({
         className={classNames(classes.textField, classes.dense)}
         margin="dense"
         variant="outlined"
-        onBlur={this.createStreamName}
-        onChange={(e)=>this.handleChange('name', e.target.value)}
+        onChange={(e)=> handleChangeFn('name', e.target.value)}
        />
       </div>
     )

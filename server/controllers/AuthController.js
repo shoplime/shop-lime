@@ -78,15 +78,13 @@ module.exports = {
 
     getUser: (req, res) => {
         try{
-
-            const { user } = req.session
+            const { user } = req.session 
             
             if (user) {
                 res.status(200).send(user)
             } else {
                 res.sendStatus(401);
             }
-
         }
         catch(err){
             console.log(err)

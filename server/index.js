@@ -13,9 +13,6 @@ const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, C
 
 
 
-const app = express();
-app.use(express.json())
-const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 const Moltin = MoltinGateway({
     client_id: CLIENT_ID,
@@ -25,10 +22,15 @@ const Moltin = MoltinGateway({
 const AccessToken = Twilio.jwt.AccessToken
 const ChatGrant = AccessToken.ChatGrant
 
-massive(DB_CONNECTION).then(db => {
-    app.set('db', db)
-    app.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
-})
+const app = express()
+
+//initializing socket 
+
+app.get('/', function(req, res){
+    res.send('<h1>Hello world</h1>');
+});
+
+var http = require('http').Server(app);
 
 //Setting up sessions / middleware
 
@@ -40,6 +42,29 @@ app.use(
         maxAge: null
     })
 );
+
+
+
+// http.listen(3000, function(){
+//   console.log('listening on *:3000');
+// });
+
+
+// const app = express();
+app.use(express.json())
+const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
+
+const Moltin = MoltinGateway({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET
+})
+
+
+massive(DB_CONNECTION).then(db => {
+    app.set('db', db)
+    http.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
+})
+
 
 //moltin
 app.get('/products', (req, res) => {
@@ -195,16 +220,15 @@ app.get('/stopArchive', (req, res) => {
 })
 
 
-//Authentication endpoints
-app.post('/user/register', authc.register)
+app.post('/user/register', authc.register) 
 app.post('/user/login', authc.login)
 app.post('/user/logout', authc.logout)
 app.get('/user/fetchuser', authc.getUser)
 
-//Adding Merchants
+//Adding Merchants 
 app.post('/admin/register', ctrlm.addMerchant)
 
-//Create Stream
+//Creating Stream
 app.post('/admin/newStream', streamc.createStream)
 
 //moltin

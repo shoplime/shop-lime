@@ -9,8 +9,7 @@ import Cart from './Components/Checkout/Cart/Cart'
 import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
 import OrderConfirmation from './Components/Checkout/Orders/OrderConfirmationContainer';
 import Chat from './Components/Chat/Chat'
-
-
+import ProductsContainer from './Components/Products/ProductsContainer'
 
 export default (
     <Switch>
@@ -18,6 +17,7 @@ export default (
         <Route path= '/admin' component={Admin} />
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
-        <Route path= '/order-confirmation' component={OrderConfirmation} />
+        <Route path= '/products' component={ProductsContainer} />
+
     </Switch>
 )

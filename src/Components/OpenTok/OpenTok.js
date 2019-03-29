@@ -3,6 +3,7 @@ import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
 import MobileView from './../MobileView/MobileView'
+import Dashboard from '../Dashboard/Dashboard'
 
 class OpenTok extends Component {
     constructor(props) {
@@ -13,14 +14,14 @@ class OpenTok extends Component {
         };
     }
 
-    // componentWillMount() {
-    //     axios.get('/getKey')
-    //     .then(res => {
-    //         this.setState({
-    //             apiKey: res.data
-    //         })
-    //     })
-    // }
+    componentWillMount() {
+        axios.get('/getKey')
+        .then(res => {
+            this.setState({
+                apiKey: res.data
+            })
+        })
+    }
 
     // componentWillUnmount() {
     //     this.sessionHelper.disconnect();
@@ -61,9 +62,24 @@ class OpenTok extends Component {
     }
 
     startBroadcast = () => {
-        axios.get(`/startBroadcast/${this.props.sessionId}`)
-        .then(res => console.log('broadcast started'))
-    }
+        const {streamName, product, sessionId} = this.props; 
+        console.log("sessID", this.props.sessionId)
+        axios
+            .get(`/startBroadcast/${this.props.sessionId}`)
+            .then(res => {
+                console.log('broadcast started')
+                console.log("props", streamName, product, sessionId)
+        axios
+            .post('/admin/newStream', {
+                        name: streamName,
+                        session_id: sessionId, 
+                        product_id: product 
+                                            })
+                })
+                .catch(err => {
+                console.log(err);
+              })
+            }
     
     stopBroadcast = () => {
         axios.get('/stopBroadcast')
@@ -155,8 +171,11 @@ class OpenTok extends Component {
                         <h4>{this.state.token}</h4>
                         <button onClick={() => {this.generateToken()}} >Generate Token</button>
                         <button onClick={() => {this.startPublish()}} >Start Publish - Session and Token</button>
-                    </div>)
+                    </div>)   
                 }
+                <div>
+                    <Dashboard/>
+                </div>
             </div>
         );
     }
