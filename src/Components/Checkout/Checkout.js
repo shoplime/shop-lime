@@ -7,7 +7,6 @@ constructor(props){
     super(props)
 }
 onToken = async() => {
-    console.log(this.props)
     let {token} = await this.props.stripe.createToken({name: "Name"});
     await fetch("/charge", {
       method: "POST",

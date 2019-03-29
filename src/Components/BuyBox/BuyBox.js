@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, memo } from 'react'
+import React, { memo } from 'react'
 import './BuyBox.scss'
 
 const BuyBox = () => {

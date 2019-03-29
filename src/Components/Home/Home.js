@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Suspense, memo } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-import Chat from './../Chat/Chat'
+// import Chat from './../Chat/Chat'
 import './Home.scss'
 import {Link} from 'react-router-dom';
 import ProductDesc from '../ProductDesc/ProductDesc'
@@ -11,20 +11,22 @@ import BuyBox from '../BuyBox/BuyBox'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-const Nav = React.lazy(() => import('../Nav/Nav'))
+import CartCounter from '../Checkout/Cart/CartCounter';
+
+// const Nav = React.lazy(() => import('../Nav/Nav'))
 // const Nav = React.lazy(() => import('../Nav/Nav'))
 
 
 
 const Home = () => {
     
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
     const [checkout, setCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
@@ -92,9 +94,11 @@ const Home = () => {
                             Shop Lime
                         </Typography>
                         <LoginButton handleOpen={handleOpen} handleError={handleError} fullWidth={true}></LoginButton>
+                        <Link to='/cart'><CartCounter /></Link>
                     </Toolbar>
                 </AppBar>
             </MuiThemeProvider>
+
 
             <div className='body-container'>
                 <div className='player-container'>

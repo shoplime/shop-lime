@@ -34,7 +34,7 @@ export const UpdateCart = (ID, quantity) =>
 
 export const GetCartItems = () => Moltin.Cart().Items();
 
-export const Checkout = data => Moltin.Cart().Checkout(data);
+export const Checkout = (customer, billing, shipping) => Moltin.Cart().Checkout(customer, billing, shipping);
 
 export const GetOrder = ID => Moltin.Orders.Get(ID);
 

@@ -26,7 +26,8 @@ export default createMuiTheme({
             ].join(','),
         h5: {
             fontWeight: 600
-        }
+        },
+        useNextVariants: true
         
     },
     props: {
