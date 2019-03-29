@@ -1,26 +1,35 @@
-.Chat {
+.chat-container {
   border-radius: 3px;
   height: 100%;
   width: 300px;
+  display: flex;
+  flex-direction: column;  
+}
+
+.messages {
+  height: 100%;
+  width: 100%;
   margin: .5em;
   font-size: 13px;
-  display: flex;
-  flex-direction: column;
+  overflow-y: scroll;
 }
-  
-.Chat .MessageList {
+
+.chat-container .MessageList {
   box-sizing: border-box;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  position:relative;
+  overflow-y: visible;
 }
 
-.Chat .MessageForm {
+.chat-container .MessageForm {
+  // position: fixed;
   // background: #eee;
-  // border-top: 1px solid #ccc;
   // border-radius: 0 0 3px 3px;
   // box-sizing: border-box;
   // flex: 0 0 30px;
+  margin-bottom: 20px;
 }

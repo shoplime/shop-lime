@@ -120,8 +120,10 @@ class Chat extends Component {
 
   render() {
     return (
-      <div className="Chat">
-        <MessageList messages={this.state.messages} />
+      <div className='chat-container'>
+        <div className='messages'>
+          <MessageList messages={this.state.messages} />
+        </div>
         <MessageForm onMessageSend={this.handleNewMessage} />
       </div>
     )
