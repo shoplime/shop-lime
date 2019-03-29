@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+import CheckoutForm from '../Checkout/Checkout/CheckoutForm';
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 
@@ -127,7 +128,8 @@ const Home = () => {
                         }}
                     />
                     {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
-                <BuyBox/>
+                <BuyBox toggleCheckout={toggleCheckout}/>
+                {(checkout)?<CheckoutForm toggleCheckout={toggleCheckout}/>:null}
                 <ProductDesc/>
                 </div>
                 <div className='recently-live'>

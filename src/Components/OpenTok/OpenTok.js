@@ -175,7 +175,7 @@ class OpenTok extends Component {
                     </div>)   
                 }
                 <div>
-                    <Dashboard/>
+                    {/* <Dashboard/> */}
                 </div>
             </div>
         );

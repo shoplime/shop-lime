@@ -3,9 +3,16 @@ import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // import ImageZoom from 'react-medium-image-zoom'
+import { connect } from 'react-redux';
+import * as api from '../../moltin';
 
 
-const BuyBox = () => {
+const BuyBox = (props) => {
+
+    const addToCart = (id, quantity) => {
+        // api.AddCart(id, quantity)
+        props.toggleCheckout()
+    }
 
     return (
 
@@ -72,7 +79,7 @@ const BuyBox = () => {
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
                     LIME SQUEEZER
                 <p>$25</p>
-                <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large'>
+                <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large' onClick={addToCart}>
                     BUY NOW
                 </Button>
             </Grid>
@@ -80,4 +87,8 @@ const BuyBox = () => {
     )
 }
 
-export default memo(BuyBox) 
+const mapStateToProps = ({ products }) => ({
+    products
+  });
+  
+  export default connect(mapStateToProps)(BuyBox);

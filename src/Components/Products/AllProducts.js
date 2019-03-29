@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import ProductImage from './ProductImage';
+import { connect } from 'react-redux';
 import * as api from '../../moltin';
 
 
