@@ -10,9 +10,9 @@ const BuyBox = () => {
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
-            <Grid item>
-            <div className='image-item'>
-                <div className='thumbnail-container'>
+            <Grid item style={{ marginRight: '4%' }}>
+                <div className='image-item'>
+                {/* <div className='thumbnail-container'>
                         <ImageZoom zoomMargin='40'
                             image={{
                                 src: 'https://cdn.pixabay.com/photo/2016/02/25/16/21/fruit-1222428_960_720.png',
@@ -48,9 +48,8 @@ const BuyBox = () => {
                                 src: 'https://cdn.dribbble.com/users/1822658/screenshots/5491233/baby_lemon_head_2x.png',
                                 alt: 'Golden Gate Bridge',
                             }}
-                        />
-                    
-                </div>
+                        />       
+                </div> */}
                 <div>
                     <ImageZoom zoomMargin='100'
                         image={{
@@ -70,15 +69,13 @@ const BuyBox = () => {
             </div>
                 {/* <img src='https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg' alt='' />   */}
             </Grid>
-            <Grid item className='prod-desc' style={{}}>
+            <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
                 LIME SQUEEZER
                 <p>$25</p>
                 <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large'>
                 BUY NOW
                 </Button>
             </Grid>
-            {/* <Grid item>
-            </Grid> */}
         </Grid>
     )
 }

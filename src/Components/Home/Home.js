@@ -15,18 +15,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
-const Videos = React.lazy(() => import('../Videos/Videos'))
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-
-const Nav = React.lazy(() => import('../Nav/Nav'))
-// const Nav = React.lazy(() => import('../Nav/Nav'))
-
+const Videos = React.lazy(() => import('../Videos/Videos'))
 
 
 const Home = () => {
     
-    const [count, setCount] = useState(0);
     const [checkout, setCheckout] = useState(false);
     
     const [open, handleOpen] = useState(false);
@@ -94,9 +89,6 @@ const Home = () => {
 
     return (
         <div>
-            {/* <Suspense fallback={<div>loading...</div>}>
-                <Nav />
-            </Suspense> */}
             <div className='header-container'>
             
                 <Modal open={open} onClose={() => handleOpen(false)}>
@@ -140,7 +132,9 @@ const Home = () => {
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
-                <Videos handleOpen={handleOpen} user={user}/>
+                <Suspense fallback={<></>}>
+                    <Videos handleOpen={handleOpen} user={user}/>
+                </Suspense>
                 
                 
                 {/* <div>
