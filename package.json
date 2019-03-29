@@ -7,6 +7,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "@moltin/sdk": "^3.19.0",
     "@sendgrid/mail": "^6.3.1",
     "aws-sdk": "^2.423.0",

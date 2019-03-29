@@ -7,8 +7,7 @@ import OTClient from './Components/OTClient/OTClient'
 import OTHLS from './Components/OTHLS/OTHLS'
 import Cart from './Components/Checkout/Cart/Cart'
 import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
-import OrderConfirmation from './Components/Checkout/Orders/OrderConfirmationContainer';
-
+import ProductsContainer from './Components/Products/ProductsContainer'
 
 export default (
     <Switch>
@@ -19,6 +18,7 @@ export default (
         <Route path= '/othls' component={OTHLS} />
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
-        <Route path= '/order-confirmation' component={OrderConfirmation} />
+        <Route path= '/products' component={ProductsContainer} />
+
     </Switch>
 )
