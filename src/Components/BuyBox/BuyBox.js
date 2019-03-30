@@ -53,7 +53,7 @@ const BuyBox = (props) => {
                         />       
                 </div> */}
                 <div>
-                    {/* <ImageZoom zoomMargin='100'
+                    <ImageZoom zoomMargin='100'
                         image={{
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
@@ -64,12 +64,10 @@ const BuyBox = (props) => {
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
                         }}
-                    /> */}
-
+                    />
                 </div>
 
             </div>
-                {/* <img src='https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg' alt='' />   */}
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
                     LIME SQUEEZER

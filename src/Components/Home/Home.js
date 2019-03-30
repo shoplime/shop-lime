@@ -43,6 +43,13 @@ const Home = () => {
     useEffect(() => {
         getUser()
     }, [user]);
+    useEffect(() => {
+        axios.get('/homeStream')
+        .then(res => {
+            const { name, product_id, hls } = res.data[0]
+            setHLS(hls)
+        })
+    })
 
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)

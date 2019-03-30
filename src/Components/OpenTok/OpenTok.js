@@ -69,16 +69,17 @@ class OpenTok extends Component {
             .then(res => {
                 console.log('broadcast started')
                 console.log("props", streamName, product, sessionId)
-        axios
-            .post('/admin/newStream', {
-                        name: streamName,
-                        session_id: sessionId, 
-                        product_id: product 
-                                            })
-                })
-                .catch(err => {
-                console.log(err);
-              })
+            axios
+                .post('/admin/newStream', {
+                    name: streamName,
+                    session_id: sessionId, 
+                    product_id: product,
+                    hls: res.data.broadcastUrls.hls
+                    })
+            })
+            .catch(err => {
+            console.log(err);
+            })
             }
     
     stopBroadcast = () => {
