@@ -37,13 +37,31 @@ const Home = () => {
     const [user, handleUser] = useState(false)
     
     const [hls, setHLS] = useState('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8')
+    const [archive, setArchive] = useState('')
     const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true);
     const [chatDisplay, setChatDisplay] = useState(false);
+    const [live, setLive] = useState(false)
+    const [pastStreams, setPastStreams] = useState([])
 
     useEffect(() => {
         getUser()
     }, [user]);
+    useEffect(() => {
+        axios.get('/homeStreams')
+        .then(res => {
+            if(res.data[0].status === 'live'){
+                const { name, product_id, hls } = res.data[0]
+                setHLS(hls)
+                setLive(true)
+            } else {
+                const { name, archive_id, product_id } = res.data[0]
+                setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
+                setLive(false)
+            }
+            
+        })
+    })
 
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
@@ -122,10 +140,13 @@ const Home = () => {
             <div className='body-container'>
                 <div className='player-container'>
                     <div className='player-wrapper'>
-                        <ReactPlayer
+                        {
+                            (live ?
+                            <ReactPlayer
                             className='react-player'
                             url={hls}
                             playing={true}
+                            loop={true}
                             controls={false}
                             volume={0.8}
                             muted={muted}
@@ -138,6 +159,21 @@ const Home = () => {
                                 }
                             }}
                             />
+                            :
+                            <ReactPlayer
+                            className='react-player'
+                            url={archive}
+                            playing={true}
+                            loop={true}
+                            controls={false}
+                            volume={0.8}
+                            muted={muted}
+                            pip={false}
+                            width={'100%'}
+                            height={'100%'}
+                            />
+                            )
+                        }
                         <div className='overlay'>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                             <div className='right-overlay'>

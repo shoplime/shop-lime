@@ -85,49 +85,49 @@ handleSelect = (product) => {
   })
 }
   
-  handleNext = () => {
-    const steps = this.getSteps();
-    if (this.state.activeStep < steps.length - 1) {
-      this.setState(state => ({
-        activeStep: state.activeStep + 1,
-      }));
-    } else {
-      axios.get(`/startPublish`)
-        .then(res => {
-            const { apiKey, sessionId, token } = res.data
-            console.log(res.data)
-            this.setState({
-              apiKey: apiKey,
-              sessionId: sessionId,
-              token: token,
-              activeStep: this.state.activeStep + 1
-            })
-        })
-    }
-   
-  };
-
-  handleChange(prop, val) {
-    this.setState({
-        [prop]:val
-    })
-  }
-  
-  handleBack = () => {
+handleNext = () => {
+  const steps = this.getSteps();
+  if (this.state.activeStep < steps.length - 1) {
     this.setState(state => ({
-      activeStep: state.activeStep - 1,
+      activeStep: state.activeStep + 1,
     }));
-  };
-  
-  handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };
-  
-   getSteps = () => {
-    return ['1. Input a Name For Shop Lime Event', '2. Select Product', '3. Setup Broadcast'];
+  } else {
+    axios.get(`/startPublish`)
+      .then(res => {
+          const { apiKey, sessionId, token } = res.data
+          console.log(res.data)
+          this.setState({
+            apiKey: apiKey,
+            sessionId: sessionId,
+            token: token,
+            activeStep: this.state.activeStep + 1
+          })
+      })
   }
+  
+};
+
+handleChange(prop, val) {
+  this.setState({
+      [prop]:val
+  })
+}
+
+handleBack = () => {
+  this.setState(state => ({
+    activeStep: state.activeStep - 1,
+  }));
+};
+
+handleReset = () => {
+  this.setState({
+    activeStep: 0,
+  });
+};
+
+  getSteps = () => {
+  return ['1. Input a Name For Shop Lime Event', '2. Select Product', '3. Setup Broadcast'];
+}
   
 getStepContent = (step) => {
     switch (step) {
