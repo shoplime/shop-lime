@@ -1,0 +1,26 @@
+.Message {
+    line-height: 1.5em;
+    color: white;
+    text-align: right;
+    margin: 5px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    // background: white;
+    // opacity: .5;
+  }
+  
+.Message.log {
+    color: #bbb;
+}
+
+.Message .author {
+    font-weight: bold;
+    color: rgb(202, 202, 202);
+    margin: 0 5px 0 0;
+}
+
+.Message.me .author {
+    color: green;
+}
+  

@@ -83,7 +83,7 @@ function getSteps() {
 class CheckoutForm extends Component {
 
   state = {
-    activeStep: 0,
+    activeStep: 0
   };
 
   getStepContent(stepIndex) {
@@ -106,39 +106,6 @@ class CheckoutForm extends Component {
       e.preventDefault();
     }
   };
-
-  handleNewSubmit = values => {
-    CheckoutTemplate.customer.name = values.name;
-    CheckoutTemplate.customer.email = values.email;
-    
-    CheckoutTemplate.billing_address.first_name = values.billing_firstname;
-    CheckoutTemplate.billing_address.last_name = values.billing_lastname;
-    CheckoutTemplate.billing_address.line_1 = values.billing_address_1;
-    CheckoutTemplate.billing_address.line_2 = values.billing_address_2;
-    CheckoutTemplate.billing_address.city = values.billing_state;
-    CheckoutTemplate.billing_address.county = values.billing_postcode;
-    CheckoutTemplate.billing_address.country = values.billing_country;
-    
-    CheckoutTemplate.shipping_address.first_name = values.shipping_firstname;
-    CheckoutTemplate.shipping_address.last_name = values.shipping_lastname;
-    CheckoutTemplate.shipping_address.line_1 = values.shipping_address_1;
-    CheckoutTemplate.shipping_address.line_2 = values.shipping_address_2;
-    CheckoutTemplate.shipping_address.city = values.shipping_state;
-    CheckoutTemplate.shipping_address.county = values.shipping_postcode;
-    CheckoutTemplate.shipping_address.country = values.shipping_country;
-    
-    PaymentTemplate.first_name = values.card_first_name;
-    PaymentTemplate.last_name = values.card_last_name;
-    PaymentTemplate.number = values.number;
-    PaymentTemplate.month = values.month;
-    PaymentTemplate.year = values.year;
-    PaymentTemplate.verification_value = values.card_cvc;
-    console.log(CheckoutTemplate)
-    
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
-  }
 
   mySubmit = values => {
     CheckoutTemplate.customer.name = values.name;
@@ -199,7 +166,9 @@ class CheckoutForm extends Component {
 
       .catch(e => {
         console.log(e);
-      });
+      })
+      this.handleReset()
+      this.props.toggleComplete()
   };
 
   handleNext = () => {

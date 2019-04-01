@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory();
 
-const middleware = [thunk.withExtraArgument(api), routerMiddleware(history)];
+const middleware = [thunk.withExtraArgument(api), routerMiddleware(history), thunk];
 const enhancers = [];
 
 // if (process.env.NODE_ENV === 'development') {

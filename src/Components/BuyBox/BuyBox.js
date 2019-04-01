@@ -3,6 +3,8 @@ import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // import ImageZoom from 'react-medium-image-zoom'
+import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
+import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import * as api from '../../moltin';
 
@@ -14,6 +16,7 @@ const BuyBox = (props) => {
         props.toggleCheckout()
     }
 
+    const {openCheckout, handleOpenCheckout} = props;
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
@@ -58,7 +61,7 @@ const BuyBox = (props) => {
                         />       
                 </div> */}
                 <div>
-                    {/* <ImageZoom zoomMargin='100'
+                    <ImageZoom zoomMargin='100'
                         image={{
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
@@ -69,17 +72,16 @@ const BuyBox = (props) => {
                             src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
                             alt: 'Golden Gate Bridge',
                         }}
-                    /> */}
+                    />
 
                 </div>
 
             </div>
-                {/* <img src='https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg' alt='' />   */}
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
                     LIME SQUEEZER
                 <p>$25</p>
-                <Button style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px'}} variant="contained" color="primary" size='large' onClick={addToCart}>
+                <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
             </Grid>
