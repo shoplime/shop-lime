@@ -5,6 +5,7 @@ import Admin from './Components/Admin/Admin'
 import Cart from './Components/Checkout/Cart/Cart'
 import CheckoutContainer from './Components/Checkout/Checkout/CheckoutContainer'
 import ProductsContainer from './Components/Products/ProductsContainer'
+import MobileHome from './Components/MobileHome/MobileHome'
 
 export default (
     <Switch>
@@ -13,6 +14,7 @@ export default (
         <Route path= '/cart' component={Cart} />
         <Route path= '/checkout' component={CheckoutContainer} />
         <Route path= '/products' component={ProductsContainer} />
+        <Route path= '/mobilehome' component={MobileHome} />
 
     </Switch>
 )
