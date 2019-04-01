@@ -133,7 +133,7 @@ class CheckoutForm extends Component {
     PaymentTemplate.month = values.month;
     PaymentTemplate.year = values.year;
     PaymentTemplate.verification_value = values.card_cvc;
-    console.log(CheckoutTemplate, PaymentTemplate)
+    // console.log(CheckoutTemplate, PaymentTemplate)
 
     this.props.dispatch(dispatch => {
       dispatch({ type: SUBMIT_PAYMENT });
@@ -143,7 +143,7 @@ class CheckoutForm extends Component {
       .Checkout(CheckoutTemplate.customer, CheckoutTemplate.billing_address, CheckoutTemplate.shipping_address)
 
       .then(order => {
-        console.log(order)
+        // console.log(order)
         api.OrderPay(order.data.id, PaymentTemplate);
         api.DeleteCart();
       })
