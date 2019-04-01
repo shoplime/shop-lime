@@ -54,8 +54,8 @@ class Admin extends React.Component {
 componentDidMount(){
   axios.get('/products')
   .then(res => {
-    console.log(res.data.data)
-    console.log("quest",res.data.data[0].relationships.main_image.data.id)
+    // console.log(res.data.data)
+    // console.log("quest",res.data.data[0].relationships.main_image.data.id)
     // let imgId = res.data.data.relationships.main_image.data.id.link.href
     this.setState({
       products: res.data.data,
@@ -78,7 +78,7 @@ handleSelect = (product) => {
   // document.getElementById('panel'+ id).classList.toggle('highlight') //*
   axios.get(`/products/${product.id}`)
   .then(res => {
-    console.log("res",res.data.data.id)
+    // console.log("res",res.data.data.id)
     this.setState({
       product: res.data.data.id
     })
@@ -95,7 +95,6 @@ handleNext = () => {
     axios.get(`/startPublish`)
       .then(res => {
           const { apiKey, sessionId, token } = res.data
-          console.log(res.data)
           this.setState({
             apiKey: apiKey,
             sessionId: sessionId,
@@ -157,7 +156,7 @@ getStepContent = (step) => {
     const { classes } = this.props;
     const steps = this.getSteps();
     const { activeStep } = this.state;
-    console.log("Admin State", this.state)
+    // console.log("Admin State", this.state)
 
     return (
       <div className={classes.root}>

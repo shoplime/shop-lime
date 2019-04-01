@@ -25,8 +25,6 @@ module.exports = {
         
                 session.user = { ...newUser } 
                 res.status(201).send(session.user)
-                console.log('Session User', session.user)
-
         } 
         catch(err){
             console.log(err)
