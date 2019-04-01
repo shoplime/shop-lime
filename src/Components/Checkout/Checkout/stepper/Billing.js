@@ -9,14 +9,14 @@ const Billing = (props) => {
             noValidate
             onSubmit={props.handleSubmit}
             onKeyDown={props.handleKeyDown}>
-              <fieldset className="billing collapsed">
+              <fieldset className="billing collapsed border">
                 <div className="form-header inactive">
-                  <h2>Billing address</h2>
+                  <h2>Billing Address</h2>
                 </div>
                 <div className="form-content">
                   <div className="form-fields">
                     <label className="input-wrap firstname required">
-                      <span className="hide-content">First name</span>
+                      <span className="hide-content">First Name: </span>
                       <Field
                         component="input"
                         required="required"
@@ -27,7 +27,7 @@ const Billing = (props) => {
                       />
                     </label>
                     <label className="input-wrap lastname required">
-                      <span className="hide-content">Last name</span>
+                      <span className="hide-content">Last Name: </span>
                       <Field
                         component="input"
                         required="required"
@@ -38,7 +38,7 @@ const Billing = (props) => {
                       />
                     </label>
                     <label className="input-wrap address-1 required">
-                      <span className="hide-content">Address line 1</span>
+                      <span className="hide-content">Address: </span>
                       <Field
                         component="input"
                         required="required"
@@ -49,7 +49,7 @@ const Billing = (props) => {
                       />
                     </label>
                     <label className="input-wrap state required">
-                      <span className="hide-content">State or county</span>
+                      <span className="hide-content">State or County: </span>
                       <Field
                         component="input"
                         required="required"
@@ -60,7 +60,7 @@ const Billing = (props) => {
                       />
                     </label>
                     <label className="input-wrap postcode required">
-                      <span className="hide-content">Postcode</span>
+                      <span className="hide-content">Postcode: </span>
                       <Field
                         component="input"
                         required="required"
@@ -72,7 +72,7 @@ const Billing = (props) => {
                     </label>
                     <div className="input-wrap country">
                       <label className="required select-fallback">
-                        <span className="hide-content">Country</span>
+                        <span className="hide-content">Country: </span>
                         <Field
                           component="select"
                           id="billing_country"

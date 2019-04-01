@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import CheckoutForm from '../Checkout/Checkout/CheckoutForm';
+import Cart from '../Checkout/Cart/Cart';
 import Complete from '../Checkout/Checkout/stepper/Complete'
 
 const styles = theme => ({
@@ -18,12 +18,14 @@ const styles = theme => ({
         fontWeight: theme.typography.fontWeightRegular,
     },
     details: {
-        background: '#c8e6c9',
+        background: 'white',
         border: 'none',
         boxShadow: 'none',
         textAlign: 'left',
         marginBottom: '20px',
-        boxShadow: 'inset 0px 16px 12px -10px #a5d6a7, inset 0px -16px 12px -10px #a5d6a7'   
+        borderTop: 'black solid 1px',
+        width: '85.5%',
+        marginLeft: '5%'
     }
     
 });
@@ -43,8 +45,8 @@ function SimpleExpansionPanel(props) {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                     </Typography> */}
-                    {(complete)?<Complete toggleCheckout={handleOpenCheckout}/>:
-                    <CheckoutForm toggleComplete={toggleSuccess}/>}
+                    {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>:
+                    <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
 
                 </ExpansionPanelDetails>
             </ExpansionPanel>

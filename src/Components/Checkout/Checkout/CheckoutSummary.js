@@ -5,6 +5,8 @@ import CheckoutItems from './CheckoutItems';
 import { FETCH_PRODUCTS_START, FETCH_PRODUCTS_END } from '../../../ducks/products';
 import { FETCH_CART_START, FETCH_CART_END } from '../../../ducks/cart';
 
+import './Checkout.scss'
+
 var api = require('../../../moltin.js');
 
 function mapStateToProps(state) {
@@ -51,10 +53,7 @@ class CheckoutSummary extends Component {
             <div className="checkout-summary">
               <div className="form-header">
                 <h2>
-                  Summary<span className="hide-content">
-                    {' '}
-                    of your order, ready for checkout.
-                  </span>
+                  My Cart
                 </h2>
               </div>
               <div className="checkout-items">

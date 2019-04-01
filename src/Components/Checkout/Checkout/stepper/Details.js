@@ -9,14 +9,14 @@ const Details = (props) => {
             noValidate
             onSubmit={props.handleSubmit}
             onKeyDown={props.handleKeyDown}>
-              <fieldset className="details">
+              <fieldset className="details border">
                 <div className="form-header">
-                  <h2>Your details</h2>
+                  <h2>Your Details</h2>
                 </div>
                 <div className="form-content">
                   <div className="form-fields">
                     <label className="input-wrap name required">
-                      <span className="hide-content">Name</span>
+                      <span className="hide-content">Name: </span>
                       <Field
                         component="input"
                         className="name"
@@ -28,7 +28,7 @@ const Details = (props) => {
                       />
                     </label>
                     <label className="input-wrap email required">
-                      <span className="hide-content">Email address</span>
+                      <span className="hide-content">Email address: </span>
                       <Field
                         component="input"
                         className="email"
