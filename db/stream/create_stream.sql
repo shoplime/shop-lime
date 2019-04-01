@@ -2,10 +2,16 @@ INSERT INTO streams (
     name,
     session_id,
     product_id,
-    hls
+    hls,
+    broadcast_id,
+    status,
+    created_at
 ) values (
     ${name},
     ${session_id},
     ${product_id},
-    ${hls}
+    ${hls},
+    ${broadcast_id},
+    ${status},
+    ${created_at}
 );

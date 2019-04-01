@@ -2,9 +2,9 @@ module.exports = {
     createStream: async (req, res) => {
         const db = req.app.get('db');
         
-        const {name, session_id, product_id, hls} = req.body;
+        const {name, session_id, product_id, hls, broadcast_id, status, created_at} = req.body;
         console.log("req", req.body)
-        db.stream.create_stream({name, session_id, product_id, hls})
+        db.stream.create_stream({name, session_id, product_id, hls, broadcast_id, status, created_at})
         .then(() => res.sendStatus(200))
         .catch((err) => res.status(500).send(console.log(err)))
         
@@ -16,11 +16,26 @@ module.exports = {
         .then(() => res.sendStatus(200))
         .catch((err) => res.status(500).send('Error adding merchant'))
     },
-    getLivestream: async (req, res) => {
+    getHomeStreams: async (req, res) => {
         const db = req.app.get('db')
-        db.stream.get_livestream()
-        .then((stream) => res.status(200).send(stream))
+        db.stream.get_home_streams()
+        .then((streams) => res.status(200).send(streams))
         .catch((err) => res.status(500).send(err))
+    },
+    saveArchive: async (req, res) => {
+        const db = req.app.get('db')
+        const {session_id, archive_id} = req.body
+        db.stream.save_archive({session_id, archive_id})
+        .then(() => res.sendStatus(200))
+        .catch((err) => res.status(500).send(err))
+    },
+    updateStreamStatus: async (req, res) => {
+        const db = req.app.get('db')
+        const {session_id, status} = req.body
+        db.stream.update_stream_status({session_id, status})
+        .then(() => res.sendStatus(200))
+        .catch((err) => res.status(500).send(err))
+
     }
     
 }

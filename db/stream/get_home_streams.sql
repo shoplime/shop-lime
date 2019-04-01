@@ -1,3 +1,3 @@
 select * from streams
 order by id desc
-limit 1;
+limit 10;
