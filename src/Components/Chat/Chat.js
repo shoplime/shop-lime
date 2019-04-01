@@ -53,7 +53,6 @@ class Chat extends Component {
   getChannelMessages = () => {
     this.state.channel.getMessages()
     .then(messages => {
-      console.log(messages)
       const totalMessages = messages.items.length;
       const channelMessages = messages.items.map(message => {
         return {author: message.author, body: message.body}
@@ -61,20 +60,15 @@ class Chat extends Component {
       this.setState({
         messages: channelMessages
       })
-      console.log(channelMessages)
-      console.log('Total Messages:' + totalMessages);
     })
   }
 
   joinGeneralChannel = (chatClient) => {
     return new Promise((resolve, reject) => {
       chatClient.getSubscribedChannels().then(() => {
-        console.log(chatClient)
         chatClient.getChannelByUniqueName('lime').then((channel) => {
-          console.log(channel)
           this.addMessage({ body: 'Joining general channel...' })
           this.setState({ channel })
-          console.log(this.state)
           channel.join().then(() => {
             this.addMessage({ body: `Joined general channel as ${this.state.username}` })
             this.getChannelMessages()
@@ -101,7 +95,6 @@ class Chat extends Component {
     this.setState({
       messages: [...this.state.messages, messageData],
     })
-    console.log(this.state)
   }
 
   handleNewMessage = (text) => {

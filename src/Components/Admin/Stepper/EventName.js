@@ -38,9 +38,6 @@ const styles = theme => ({
 
   
   render() {
-
-  console.log(this.state)
-        
     const { classes, handleChangeFn } = this.props;
     return (
       <div>

@@ -110,7 +110,6 @@ class AddProduct extends Component {
 
   render() {
     const { classes, product, products, handleSelectFn } = this.props;
-    console.log(this.state)
     return (
       <div>
         <div>{this.state.product.name}</div>

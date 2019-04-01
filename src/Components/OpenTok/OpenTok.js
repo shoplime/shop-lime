@@ -24,7 +24,6 @@ class OpenTok extends Component {
                 apiKey: res.data
             })
         })
-        console.log(this.state)
     }
 
     // componentWillUnmount() {
@@ -55,12 +54,9 @@ class OpenTok extends Component {
 
     startBroadcast = () => {
         const {streamName, product, sessionId} = this.props; 
-        console.log("sessID", this.props.sessionId)
         axios
             .get(`/startBroadcast/${this.props.sessionId}`)
             .then(res => {
-                console.log('broadcast started')
-                console.log("props", streamName, product, sessionId)
             axios
                 .post('/admin/newStream', {
                     name: streamName,
@@ -123,12 +119,9 @@ class OpenTok extends Component {
 
     startLivestream = () => {
         const {streamName, product, sessionId} = this.props; 
-        console.log("sessID", this.props.sessionId)
         axios
             .get(`/startBroadcast/${this.props.sessionId}`)
             .then(res => {
-                console.log('broadcast started')
-                console.log("props", streamName, product, sessionId)
                 axios
                     .post('/admin/newStream', {
                         name: streamName,
