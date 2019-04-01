@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
+import CheckoutForm from '../Checkout/Checkout/CheckoutForm';
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'

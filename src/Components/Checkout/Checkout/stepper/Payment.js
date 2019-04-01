@@ -90,9 +90,9 @@ const Payment = (props) => {
                       />
                     </label>
                   </div>
-                  <button type="submit" className="pay" aria-live="polite">
+                  {/* <button type="submit" className="pay" aria-live="polite">
                     <span className="copy">Pay</span>
-                  </button>
+                  </button> */}
                 </div>
               </fieldset>
         </form>

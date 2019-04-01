@@ -83,7 +83,7 @@ function getSteps() {
 class CheckoutForm extends Component {
 
   state = {
-    activeStep: 0,
+    activeStep: 0
   };
 
   getStepContent(stepIndex) {
@@ -133,7 +133,7 @@ class CheckoutForm extends Component {
     PaymentTemplate.month = values.month;
     PaymentTemplate.year = values.year;
     PaymentTemplate.verification_value = values.card_cvc;
-
+    console.log(CheckoutTemplate, PaymentTemplate)
 
     this.props.dispatch(dispatch => {
       dispatch({ type: SUBMIT_PAYMENT });
@@ -143,6 +143,7 @@ class CheckoutForm extends Component {
       .Checkout(CheckoutTemplate.customer, CheckoutTemplate.billing_address, CheckoutTemplate.shipping_address)
 
       .then(order => {
+        console.log(order)
         api.OrderPay(order.data.id, PaymentTemplate);
         api.DeleteCart();
       })
@@ -165,7 +166,9 @@ class CheckoutForm extends Component {
 
       .catch(e => {
         console.log(e);
-      });
+      })
+      this.handleReset()
+      this.props.toggleComplete()
   };
 
   handleNext = () => {
@@ -219,14 +222,15 @@ class CheckoutForm extends Component {
 
                         <Typography component={'span'}>{this.getStepContent(activeStep)}</Typography>
                         <div>
-                          <Button
+                          {activeStep === 0?<Button onClick={this.props.toggleCheckout}
+                            className={classes.backButton}>Return</Button>:<Button
                             disabled={activeStep === 0}
                             onClick={this.handleBack}
                             className={classes.backButton}
                           >
                             Back
-                          </Button>
-                          {activeStep === steps.length - 1 ? <Button variant="contained" color="primary" onClick={this.mySubmit} type="submit" className="pay" aria-live="polite">
+                          </Button>}
+                          {activeStep === steps.length - 1 ? <Button variant="contained" color="primary" onClick={this.props.handleSubmit(this.mySubmit)} type="submit" className="pay" aria-live="polite">
                           Pay
                           </Button>:
                           <Button variant="contained" color="primary" onClick={this.handleNext}>

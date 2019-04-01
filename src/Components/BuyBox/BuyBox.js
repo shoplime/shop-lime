@@ -2,12 +2,20 @@ import React, { memo } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import ImageZoom from 'react-medium-image-zoom'
-import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 // import ImageZoom from 'react-medium-image-zoom'
+import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
+import ImageZoom from 'react-medium-image-zoom'
+import { connect } from 'react-redux';
+import * as api from '../../moltin';
 
 
 const BuyBox = (props) => {
+
+    const addToCart = (id, quantity) => {
+        // api.AddCart(id, quantity)
+        props.toggleCheckout()
+    }
+
     const {openCheckout, handleOpenCheckout} = props;
     return (
 
@@ -81,4 +89,8 @@ const BuyBox = (props) => {
     )
 }
 
-export default memo(BuyBox) 
+const mapStateToProps = ({ products }) => ({
+    products
+  });
+  
+  export default connect(mapStateToProps)(BuyBox);
