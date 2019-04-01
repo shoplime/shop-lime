@@ -77,11 +77,7 @@ class CartItems extends Component{
 
           var background = product.background_colour;
 
-          var TotalPriceHidden = 'hidden';
 
-          if (item.quantity > 1) {
-            TotalPriceHidden = '';
-          }
 
           return (
             <div className="cart-item" key={item.id}>
@@ -100,18 +96,18 @@ class CartItems extends Component{
 
                 <div className="cart-quantity">
                   <div className="quantity-input">
-                    <p className="hide-content">Product quantity.</p>
-                    <p className="hide-content">
+                    {/* <p className="hide-content">Product quantity.</p> */}
+                    {/* <p className="hide-content">
                       Change the quantity by using the buttons, or alter the
                       input directly.
-                    </p>
+                    </p> */}
                     <button
                       type="button"
                       className="decrement number-button"
                       onClick={() => {
                         cart_decrement(item.id, item.quantity);
                       }}>
-                      <span className="hide-content">Decrement quantity</span>
+                      {/* <span className="hide-content">-</span> */}
                       <span aria-hidden="true">-</span>
                     </button>
                     <input
@@ -132,20 +128,20 @@ class CartItems extends Component{
                       onClick={() => {
                         cart_increment(item.id, item.quantity);
                       }}>
-                      <span className="hide-content">Increment quantity</span>
+                      {/* <span className="hide-content">Increment quantity</span> */}
                       <span aria-hidden="true">+</span>
                     </button>
                   </div>
                 </div>
                 <div className="cart-price">
                   <p className="price">
-                    <span className={`item-price ${TotalPriceHidden}`}>
-                      <span className="hide-content">Price per item </span>$<span className="product-price">
+                    {/* <span className={`item-price ${TotalPriceHidden}`}>
+                      $<span className="product-price">
                         {item.unit_price.amount / 100}
                       </span>
                       <span aria-hidden="true"> / </span>
-                    </span>
-                    <span className="hide-content">Product subtotal </span>$<span className="total-product-price">
+                    </span> */}
+                    $<span className="total-product-price">
                       {item.unit_price.amount / 100 * item.quantity}
                     </span>
                   </p>
@@ -158,27 +154,7 @@ class CartItems extends Component{
                   onClick={() => {
                     cart_edit(item.id, 0);
                   }}>
-                  <span className="hide-content">Delete item</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 15.55635 15.55635">
-                    <rect
-                      fill="currentColor"
-                      x="-2.22183"
-                      y="6.77817"
-                      width="20"
-                      height="2"
-                      transform="translate(7.77817 -3.22183) rotate(45)"
-                    />
-                    <rect
-                      fill="currentColor"
-                      x="-2.22183"
-                      y="6.77817"
-                      width="20"
-                      height="2"
-                      transform="translate(18.77817 7.77817) rotate(135)"
-                    />
-                  </svg>
+                  <i class="fas fa-times"></i>
                 </button>
               </div>
             </div>

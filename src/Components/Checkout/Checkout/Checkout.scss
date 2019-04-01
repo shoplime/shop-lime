@@ -1,0 +1,123 @@
+@import './../../variables';
+
+.cart {
+    font-family: 'montserrat';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+.cart button {
+    border: none;
+    font-size: 20px;
+}
+.cart-items input {
+    border: none;
+    font-size: 20px;
+    width:25px;
+    margin-left:13px;
+}
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin-left: 9%;
+    // border: solid black 1px;
+
+}
+#cart-header-1 {
+    margin-right: 25px;
+}
+.cart-item {
+    display: flex;
+    border-top: solid black 2px;
+    margin: 10px 0;
+    height: 150px;
+    justify-content: space-between;
+    width: 55vw;
+}
+.cart-items img {
+    margin-top: 30%;
+    width: 100px;
+    
+}
+.cart-details {
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-right: 10px;
+    // border: solid black 1px;
+    width: 100%;
+}
+.cart-delete {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 40px;
+}
+.checkout-form {
+    width: 100%;
+    background-color: #eeeeee;
+}
+.form-header {
+    text-align:center;
+    font-family: 'montserrat';
+
+}
+.form-fields {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    line-height: 30px;
+    font-family: 'montserrat';
+}
+.form-fields input {
+    border: none;
+    background: transparent;
+    border-bottom: solid 1px black;
+    outline: none;
+}
+.form-fields select {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    // border: solid 1px black;
+    outline: none;
+}
+.border {
+    border: none;
+    width: 50vw;
+}
+#next {
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #388e3c;
+    font-family: 'Montserrat';
+    color: white;
+}
+.form-buttons {
+    margin: 10px;
+    width:50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.complete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.complete button{
+    width: 17%;
+    height: 40px;
+    background-color: #388e3c;
+    font-family: 'Montserrat';
+    color: white;
+    border: none;
+    font-size: 20px;
+}
