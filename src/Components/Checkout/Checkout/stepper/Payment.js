@@ -9,14 +9,14 @@ const Payment = (props) => {
             noValidate
             onSubmit={props.handleSubmit}
             onKeyDown={props.handleKeyDown}>
-            <fieldset className="payment collapsed">
+            <fieldset className="payment collapsed border">
                 <div className="form-header inactive">
-                  <h2>Payment details</h2>
+                  <h2>Payment Details</h2>
                 </div>
                 <div className="form-content">
                   <div className="form-fields">
                     <label className="input-wrap name">
-                      <span className="hide-content">First Name on card</span>
+                      <span className="hide-content">First Name on Card: </span>
                       <Field
                         component="input"
                         required="required"
@@ -27,7 +27,7 @@ const Payment = (props) => {
                       />
                     </label>
                     <label className="input-wrap name">
-                      <span className="hide-content">Last Name on card</span>
+                      <span className="hide-content">Last Name on Card: </span>
                       <Field
                         component="input"
                         required="required"
@@ -38,7 +38,7 @@ const Payment = (props) => {
                       />
                     </label>
                     <label className="input-wrap card required">
-                      <span className="hide-content">Card number</span>
+                      <span className="hide-content">Card Number: </span>
                       <Field
                         component="input"
                         required="required"
@@ -51,7 +51,7 @@ const Payment = (props) => {
                     </label>
                     <div className="input-wrap expiry-month">
                       <label className="select-fallback required">
-                        <span className="hide-content">Card expiry month</span>
+                        <span className="hide-content">Card Expiry Month: </span>
                         <Field
                         component="input"
                         required="required"
@@ -65,7 +65,7 @@ const Payment = (props) => {
                     </div>
                     <div className="input-wrap expiry-year">
                       <label className="select-fallback required">
-                        <span className="hide-content">Card expiry year</span>
+                        <span className="hide-content">Card Expiry Year: </span>
                           <Field
                         component="input"
                         required="required"
@@ -78,7 +78,7 @@ const Payment = (props) => {
                       </label>
                     </div>
                     <label className="input-wrap cvc required">
-                      <span className="hide-content">CVC code</span>
+                      <span className="hide-content">CVC Code: </span>
                       <Field
                         component="input"
                         required="required"

@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 // Import Components
-import CheckoutSummary from './CheckoutSummary';
+// import CheckoutSummary from './CheckoutSummary';
 import Details from './stepper/Details';
 import Billing from './stepper/Billing';
 import Shipping from './stepper/Shipping';
@@ -193,11 +193,12 @@ class CheckoutForm extends Component {
     const { classes } = this.props;
     const steps = getSteps();
     const { activeStep } = this.state;
+    const { toggleCheckout, openCheckout } = this.props;
     return (
       <main role="main" id="container" className="main-container push">
         <section className="checkout">
           <div className="content">
-            <CheckoutSummary />
+            {/* <CheckoutSummary /> */}
 
               <div className={classes.root}>
 
@@ -220,9 +221,9 @@ class CheckoutForm extends Component {
                   ) : (
                       <div>
 
-                        <Typography component={'span'}>{this.getStepContent(activeStep)}</Typography>
-                        <div>
-                          {activeStep === 0?<Button onClick={this.props.toggleCheckout}
+                        <Typography component={'span'} className='cart-content'>{this.getStepContent(activeStep)}</Typography>
+                        <div className='form-buttons'>
+                          {activeStep === 0?<Button onClick={()=>toggleCheckout(!openCheckout)}
                             className={classes.backButton}>Return</Button>:<Button
                             disabled={activeStep === 0}
                             onClick={this.handleBack}
@@ -230,10 +231,10 @@ class CheckoutForm extends Component {
                           >
                             Back
                           </Button>}
-                          {activeStep === steps.length - 1 ? <Button variant="contained" color="primary" onClick={this.props.handleSubmit(this.mySubmit)} type="submit" className="pay" aria-live="polite">
+                          {activeStep === steps.length - 1 ? <Button variant="contained" className='pay' onClick={this.props.handleSubmit(this.mySubmit)} type="submit" className="pay" color='primary' aria-live="polite">
                           Pay
                           </Button>:
-                          <Button variant="contained" color="primary" onClick={this.handleNext}>
+                          <Button variant="contained" id='next' onClick={this.handleNext}>
                             Next
                           </Button>}
                         </div>
