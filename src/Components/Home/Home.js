@@ -44,24 +44,27 @@ const Home = () => {
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([])
 
+    const [heroID, setHeroID] = useState('')
+
     useEffect(() => {
         getUser()
     }, [user]);
     useEffect(() => {
-        axios.get('/homeStreams')
-        .then(res => {
-            if(res.data[0].status === 'live'){
-                const { name, product_id, hls } = res.data[0]
-                setHLS(hls)
-                setLive(true)
-            } else {
-                const { name, archive_id, product_id } = res.data[0]
-                setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
-                setLive(false)
-            }
-            
-        })
-    })
+       axios.get('/homeStreams')
+            .then(res => {
+                if (res.data[0].status === 'live') {
+                    const { name, product_id, hls } = res.data[0]
+                    setHLS(hls)
+                    setLive(true)
+                    setHeroID(res.data[0].product_id)
+                } else {
+                    const { name, archive_id, product_id } = res.data[0]
+                    setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
+                    setLive(false)
+                    setHeroID(res.data[0].product_id)
+                }
+            })
+    },)
 
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
@@ -182,7 +185,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} />
                     <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                     <ProductDesc />
                 </div>

@@ -2,7 +2,7 @@ const MoltinGateway = require('@moltin/sdk').gateway;
 
 let  client_id = 'S23caP7og6NgnJcwQ36Q1H2SC6tnu3GVnBm6V8zK53';
 
-let client_secret_id = process.env.REACT_APP_MOLTIN_CLIENT_SECRET_ID;
+let client_secret_id = process.env.REACT_APP_MOLTIN_CLIENT_SECRET_ID; 
 
 const Moltin = MoltinGateway({
     client_id,
@@ -12,7 +12,7 @@ const Moltin = MoltinGateway({
 export const GetProducts = () =>
   Moltin.Products.With('files, main_images, collections').All();
 
-export const GetProduct = ID => Moltin.Products.Get(ID);
+export const GetProduct = ID => Moltin.Products.With(['main_image']).Get(ID);
 
 export const GetCategories = () => Moltin.Categories.With('products').All();
 

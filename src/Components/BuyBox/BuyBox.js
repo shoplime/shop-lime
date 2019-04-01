@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,13 +10,35 @@ import * as api from '../../moltin';
 
 
 const BuyBox = (props) => {
+    
+    const {openCheckout, handleOpenCheckout, heroID} = props;
 
-    const addToCart = (id, quantity) => {
+    const [productDetails, setProductDetails] = useState({}) 
+    const [imgID, setImgID] = useState('') 
+
+    
+
+   
+   useEffect(() => {
+       getImage()
+    //    const mProduct = api.GetProduct(heroID)
+    //    console.log('mproduct', mProduct)
+    // //    console.log('mproductid', mProduct.included.main_images[0].id)
+    //    {mProduct.included && setImgID(mProduct.included.main_images[0].id)}
+    //    {mProduct.included && console.log('mproductid', mProduct.included.main_images[0].id)}
+        
+    }, [heroID])
+    const getImage = async () => {
+        const mProduct = await api.GetProduct(heroID)
+        setImgID(mProduct.included.main_images[0].link.href)
+        setProductDetails(mProduct)   
+        console.log(mProduct)
+    }
+   
+     const addToCart = (id, quantity) => {
         // api.AddCart(id, quantity)
         props.toggleCheckout()
     }
-
-    const {openCheckout, handleOpenCheckout} = props;
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
@@ -63,7 +85,7 @@ const BuyBox = (props) => {
                 <div>
                     <ImageZoom zoomMargin='100'
                         image={{
-                            src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                            src: `${imgID}`,
                             alt: 'Golden Gate Bridge',
                             className: 'img-zoom',
                             
@@ -79,8 +101,9 @@ const BuyBox = (props) => {
             </div>
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
-                    LIME SQUEEZER
-                <p>$25</p>
+                
+                {productDetails.data && <h3>{productDetails.data.name}</h3>}
+                {productDetails && <p>${productDetails.data.name}</p>}
                 <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
