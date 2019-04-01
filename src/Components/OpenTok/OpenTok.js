@@ -69,26 +69,37 @@ class OpenTok extends Component {
             .then(res => {
                 console.log('broadcast started')
                 console.log("props", streamName, product, sessionId)
-        axios
-            .post('/admin/newStream', {
-                        name: streamName,
-                        session_id: sessionId, 
-                        product_id: product 
-                                            })
-                })
-                .catch(err => {
-                console.log(err);
-              })
+            axios
+                .post('/admin/newStream', {
+                    name: streamName,
+                    session_id: sessionId, 
+                    product_id: product,
+                    hls: res.data.broadcastUrls.hls,
+                    broadcast_id: res.data.id,
+                    status: 'live',
+                    created_at: res.data.createdAt
+                    })
+            })
+            .catch(err => {
+            console.log(err);
+            })
             }
     
     stopBroadcast = () => {
         axios.get('/stopBroadcast')
-        .then(res => console.log('broadcast ended'))
+        .then(res => {
+            axios.put('/updateStreamStatus', {
+                session_id: res.data.sessionId,
+                status: 'active'
+            })
+            .then(() => console.log('status updated'))
+            console.log('broadcast ended')
+        })
     }
 
     startArchive = () => {
         const data = {
-            sessionId: `${this.props.sessionId}`,
+            sessionId: this.props.sessionId,
             resolution: '1280x720',
             outputMode: 'composed'
         }
@@ -100,7 +111,10 @@ class OpenTok extends Component {
             this.setState({
                 archive: res.data.id
             })
-            console.log(this.state)
+            axios.put(`/saveArchive/`, {
+                session_id: this.props.sessionId,
+                archive_id: res.data.id
+            })
         })
         .catch(err => {alert('Error starting archive')})
     }
@@ -124,12 +138,12 @@ class OpenTok extends Component {
     //check s3 restrictions and make sure you wont get charged to much
     //add boradcasting parts to form and have broadcast dashboard with stop archive and broadcast
     //figure archive table and connection to products
-    saveArchive = () => {
-        const { apiKey, archiveId } = this.state
-        axios.post('/saveArchive', {
-            archiveUrl: `https://lime-archive.s3.amazonaws.com/${apiKey}/${archiveId}/archive.mp4`
-        })
-    }
+    // saveArchive = () => {
+    //     const { apiKey, archiveId } = this.state
+    //     axios.post('/saveArchive', {
+    //         archiveUrl: `https://lime-archive.s3.amazonaws.com/${apiKey}/${archiveId}/archive.mp4`
+    //     })
+    // }
 
     render() {
         const {apiKey, sessionId, token} = this.props;
@@ -174,7 +188,7 @@ class OpenTok extends Component {
                     </div>)   
                 }
                 <div>
-                    <Dashboard/>
+                    {/* <Dashboard/> */}
                 </div>
             </div>
         );

@@ -174,6 +174,7 @@ app.get('/stopBroadcast', (req, res) => {
         } else {
             app.set('broadcastID', null)
             console.log('broadcast object from stopBroadcast', broadcast)
+
             res.json(broadcast)
         }
     })
@@ -190,6 +191,9 @@ app.post('/startArchive', (req, res) => {
         }
     })
 })
+
+app.put('/saveArchive', streamc.saveArchive)
+app.put('/updateStreamStatus', streamc.updateStreamStatus)
 
 app.get('/stopArchive', (req, res) => {
     const { archiveId } = req.query;
@@ -214,6 +218,7 @@ app.post('/admin/register', ctrlm.addMerchant)
 
 //Creating Stream
 app.post('/admin/newStream', streamc.createStream)
+app.get('/homeStreams', streamc.getHomeStreams)
 
 //moltin
 app.get('/products', (req, res) => {
