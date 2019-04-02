@@ -48,11 +48,9 @@ class OTClient extends Component {
     generateToken = () => {
         axios.get(`/generateToken/${this.state.sessionId}`)
         .then(res => {
-            console.log(res)
             this.setState({
                 token: res.data
             })
-            console.log(this.state)
         })
     }
 

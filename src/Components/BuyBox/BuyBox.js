@@ -33,7 +33,7 @@ const BuyBox = (props) => {
    
      const addToCart = (id, quantity) => {
         // api.AddCart(id, quantity)
-        props.toggleCheckout()
+        handleOpenCheckout(!openCheckout)
     }
     
     return (
@@ -101,7 +101,9 @@ const BuyBox = (props) => {
                 <p></p>
                 {productDetails.data && <h3>{productDetails.data.name}</h3>}
                 <p>${price/100}</p>
-                <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                {/* <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'></Button> */}
+                    
+                <Button onClick={addToCart}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
                 

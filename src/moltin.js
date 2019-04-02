@@ -8,7 +8,6 @@ let client_secret_id = process.env.CLIENT_SECRET;
 
 const Moltin = MoltinGateway({
     client_id,
-    client_secret_id
 });
 
 export const GetProducts = () =>

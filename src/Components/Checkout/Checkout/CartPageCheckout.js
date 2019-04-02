@@ -20,6 +20,7 @@ import Details from './stepper/Details';
 import Billing from './stepper/Billing';
 import Shipping from './stepper/Shipping';
 import Payment from './stepper/Payment';
+import Complete from './stepper/Complete'
 
 function mapStateToProps(state) {
   return { push: state.push };
@@ -83,7 +84,8 @@ function getSteps() {
 class CheckoutForm extends Component {
 
   state = {
-    activeStep: 0
+    activeStep: 0,
+    checkoutButton: false
   };
 
   getStepContent(stepIndex) {
@@ -168,7 +170,7 @@ class CheckoutForm extends Component {
         console.log(e);
       })
       this.handleReset()
-      this.props.toggleComplete()
+      // this.props.toggleComplete()
   };
 
   handleNext = () => {
@@ -196,10 +198,9 @@ class CheckoutForm extends Component {
     const { toggleCheckout, openCheckout } = this.props;
     return (
       <main role="main" id="container" className="main-container push">
+        {/* {this.state.checkoutButton?<button>Checkout</button>} */}
         <section className="checkout">
           <div className="content">
-            {/* <CheckoutSummary /> */}
-
               <div className={classes.root}>
 
                 <Stepper activeStep={activeStep} alternativeLabel>
@@ -215,7 +216,7 @@ class CheckoutForm extends Component {
                   {this.state.activeStep === steps.length ? (
                     <div>
 
-                      <Typography className={classes.instructions}>All steps completed</Typography>
+                      <Complete />
                       <Button onClick={this.handleReset}>Reset</Button>
                     </div>
                   ) : (
@@ -223,8 +224,7 @@ class CheckoutForm extends Component {
 
                         <Typography component={'span'} className='cart-content'>{this.getStepContent(activeStep)}</Typography>
                         <div className='form-buttons'>
-                          {activeStep === 0?<Button onClick={()=>toggleCheckout(!openCheckout)}
-                            className={classes.backButton}>Return</Button>:<Button
+                          {activeStep === 0?null:<Button
                             disabled={activeStep === 0}
                             onClick={this.handleBack}
                             className={classes.backButton}

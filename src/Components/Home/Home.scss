@@ -30,6 +30,7 @@
 .player-wrapper {
   background-color: black;
   position: relative;
+  min-height: 33vw;
   width: 100%;
   overflow: hidden;
 }
@@ -77,7 +78,35 @@
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+}
+
+.title-overlay {
+  color: white;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.subtitle-overlay {
+  color: white;
+  width: 100%;
+  position: absolute;
+  top: 35px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.left-overlay {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: space-between;
 }
 
 .right-overlay {
@@ -103,4 +132,41 @@
 
 .react-player {
   align-self: center;
+}
+
+.live-pulse {
+  margin-right: 5px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: red;
+  box-shadow: 0 0 0 darkred;
+  animation: pulse 2s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+    box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
 }

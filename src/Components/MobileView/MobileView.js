@@ -21,7 +21,7 @@ class MobileView extends Component{
         axios.get(`/startPublish`)
         .then(res => {
             const { apiKey, sessionId, token } = res.data
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({
                 apiKey: apiKey,
                 sessionId: sessionId,

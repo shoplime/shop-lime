@@ -1,5 +1,4 @@
 import React, { useState, Suspense, useEffect, memo } from 'react'
-import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
@@ -16,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
-import CheckoutForm from '../Checkout/Checkout/CheckoutForm';
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
@@ -180,6 +178,18 @@ const Home = () => {
                             )
                         }
                         <div className='overlay'>
+                            <div className='title-overlay'>
+                                <h3 style={{margin: '10px 15px'}}>The World's Greatest Lime Squeezer</h3>
+                                {live &&
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <div className='live-pulse'></div>
+                                    <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
+                                </div>}
+                                
+                            </div>
+                            <div className='subtitle-overlay'>
+                                <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p>
+                            </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                             <div className='right-overlay'>
                                 <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
@@ -191,9 +201,6 @@ const Home = () => {
                     <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                     <ProductDesc />
                 </div>
-                {/* <button onClick={togglePlaying}>Play/Pause</button> */}
-                {/* <input onChange={e => setHLS(e.target.value)} value={hls} /> */}
-                
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
