@@ -53,17 +53,23 @@ class Videos extends React.Component {
                                 {
                                         user
                                         ?
-                                        <>
+                                        <div>
                                             <button className='video-card'>
                                             </button>
-                                            <p>{stream.name}</p>
-                                        </>
+                                            <div className='video-details'>
+                                                 <p>{stream.name}</p>
+
+                                            </div>
+                                        </div>
                                         :
-                                        <>
+                                        <div>
                                             <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
                                             </button>
-                                            <p>{stream.name}</p>
-                                        </>
+                                            <div className='video-details'>
+                                                 <p>{stream.name}</p>
+
+                                            </div>
+                                        </div>
                                     }
 
                                     </div>
