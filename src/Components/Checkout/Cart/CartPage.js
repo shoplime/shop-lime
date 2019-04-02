@@ -7,17 +7,31 @@ import CartHeader from './CartHeader';
 import CartItems from './CartItems';
 import CartPageCheckout from '../Checkout/CartPageCheckout'
 import '../Checkout/Checkout.scss'
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from '../../../mui_theme';
 
 import { GetProducts } from '../../../ducks/products';
 import { GetCartItems } from '../../../ducks/cart';
 
 class Cart extends Component{
-    
+    constructor(props){
+        super(props)
+        this.state = {
+            toggleCheckout: false,
+        }       
+    }    
     componentDidMount() {
         this.props.GetProducts();
         this.props.GetCartItems();
     }
-
+    toggleCheckout = () => {
+        this.setState({
+            toggleCheckout: !this.state.toggleCheckout
+        })
+    }
     render(){
         const { cart, products } = this.props;
         const { toggleComplete, toggleCheckout, openCheckout } = this.props;
@@ -31,29 +45,55 @@ class Cart extends Component{
                     var subtotal = '$' + cart.cart.meta.display_price.with_tax.amount / 100;
                     return(
                         <div className='cart'>
-                            <CartHeader/>
-                            <div className='cart-header'>
-                                <div id='cart-header-1'>Product</div>
-                                <div id='cart-header-2'>Quantity</div>
-                                <div>Price</div>
-                            </div>
-                            <div className='cart-items'>
-                                <CartItems/>
-                            </div>
-                            <div className='cart-subtotal'>
-                                {'Subtotal of all products '}
-                                <span>{subtotal}</span>
-                            </div>
-                            <div className='CheckoutForm'>
+                            <MuiThemeProvider theme={theme}>
+                                <AppBar color="secondary">
+                                    <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                        {/* <MenuIcon></MenuIcon> */}
+                                        <Typography variant="h5">
+                                            SHOPLIME
+                                        </Typography>
+                                    </Toolbar>
+                                </AppBar>
+                            </MuiThemeProvider>
+                            {this.state.toggleCheckout? 
+                                <div className='CheckoutForm-2'>
+                                    <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout} toggleCheckout={this.toggleCheckout}/>
+                                </div>:
+                                <div>
+                                    <div className='cart-header-2'>
+                                        <div id='cart-header-1'>Product</div>
+                                        <div id='cart-header-2'>Quantity</div>
+                                        <div>Price</div>
+                                    </div>
+                                    <div className='cart-items'>
+                                        <CartItems/>
+                                    </div>
+                                    <div className='cart-subtotal'>
+                                        {'Subtotal of all products '}
+                                        <span>{subtotal}</span>
+                                    </div> 
+                                    <button onClick={this.toggleCheckout} className='cart-button'>Checkout</button>
+                                </div>
+                            }
+                            {/* <div className='CheckoutForm'>
                                 <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout}/>
-                            </div>
+                            </div> */}
                         </div>
                     )
                 }
                 else{
                 return(
                     <div>
-                        {/* <CartHeader/> */}
+                        <MuiThemeProvider theme={theme}>
+                            <AppBar color="secondary">
+                                <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                    {/* <MenuIcon></MenuIcon> */}
+                                    <Typography variant="h5">
+                                        SHOPLIME
+                                    </Typography>
+                                </Toolbar>
+                            </AppBar>
+                        </MuiThemeProvider>                        
                         <div>
                             <p>Look's like your cart is empty!</p>
                             <Link to='/'>Start Shoping</Link>
@@ -63,7 +103,16 @@ class Cart extends Component{
             } else{
                 return(
                     <div>
-                        <CartHeader/>
+                        <MuiThemeProvider theme={theme}>
+                            <AppBar color="secondary">
+                                <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                    {/* <MenuIcon></MenuIcon> */}
+                                    <Typography variant="h5">
+                                        SHOPLIME
+                                    </Typography>
+                                </Toolbar>
+                            </AppBar>
+                        </MuiThemeProvider>
                         <p>Loading...</p>
                     </div>
                 )
