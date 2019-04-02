@@ -2,6 +2,7 @@ import React, { useState, Suspense, useEffect, memo } from 'react'
 import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
+import SwipeableViews from 'react-swipeable-views';
 import ReactPlayer from 'react-player';
 import Chat from './../Chat/Chat'
 import './MobileHome.scss'
@@ -13,7 +14,7 @@ import AppBar from '@material-ui/core/AppBar';
 // import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import LoginButton from './Button';
+import LoginButton from './../Home/Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
@@ -21,6 +22,9 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import ImageZoom from 'react-medium-image-zoom'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -42,6 +46,7 @@ const MobileHome = () => {
     const [chatDisplay, setChatDisplay] = useState(false);
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([])
+    const [streams, setStreams] = useState([])
 
     useEffect(() => {
         getUser()
@@ -49,15 +54,16 @@ const MobileHome = () => {
     useEffect(() => {
         axios.get('/homeStreams')
         .then(res => {
-            if(res.data[0].status === 'live'){
-                const { name, product_id, hls } = res.data[0]
-                setHLS(hls)
-                setLive(true)
-            } else {
-                const { name, archive_id, product_id } = res.data[0]
-                setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
-                setLive(false)
-            }
+            setStreams(res.data)
+            // if(res.data[0].status === 'live'){
+            //     const { name, product_id, hls } = res.data[0]
+            //     setHLS(hls)
+            //     setLive(true)
+            // } else {
+            //     const { name, archive_id, product_id } = res.data[0]
+            //     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
+            //     setLive(false)
+            // }
         })
     })
 
@@ -114,104 +120,107 @@ const MobileHome = () => {
     }
 
     return (
-        <div>
-            <div className='header-container'>
-            
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
-
-                <MuiThemeProvider theme={theme}>
-                    <AppBar color="secondary">
-                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                SHOPLIME
-                            </Typography>
-                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
-                        </Toolbar>
-                    </AppBar>
-                </MuiThemeProvider>
-            </div>   
-
-
-            <div className='body-container'>
-                <div className='player-container'>
-                    <div className='player-wrapper'>
-                        {
-                            (live ?
-                            <ReactPlayer
-                            className='react-player'
-                            url={hls}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            config={{
-                                file: {
-                                    forceHLS: true
-                                }
-                            }}
-                            />
-                            :
-                            <ReactPlayer
-                            className='react-player'
-                            url={archive}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            />
+        <div className='m-body-container'>
+        <div className='m-header'>LIME</div>
+            <SwipeableViews containerStyle={{height: '100vh'}} axis="y" resistance>
+                {
+                    streams.map((stream, i) => {
+                        if(stream.status === 'live'){
+                            return (
+                                <div className='m-body-wrapper' key={i}>
+                                    <div className='m-player-wrapper'>
+                                        <ReactPlayer
+                                        className='m-react-player'
+                                        url={stream.hls}
+                                        playing={true}
+                                        loop={true}
+                                        controls={false}
+                                        volume={0.8}
+                                        muted={muted}
+                                        pip={false}
+                                        width={'100%'}
+                                        height={'100%'}
+                                        config={{
+                                            file: {
+                                                forceHLS: true
+                                            }
+                                        }}
+                                        />
+                                        <div className='m-overlay'>
+                                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>
+                                            <div className='right-overlay'>
+                                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                                {chatDisplay && <div className='m-chat-wrapper'><Chat /></div>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='m-product-wrapper'>
+                                        <ImageZoom zoomMargin='50'
+                                            image={{
+                                                src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                                                alt: 'Golden Gate Bridge',
+                                                className: 'img-zoom',
+                                            }}
+                                            zoomImage={{
+                                                src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                                                alt: 'Golden Gate Bridge',
+                                            }}
+                                        />
+                                        <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
+                                                LIME SQUEEZER
+                                            <p>$25</p>
+                                            <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                                                BUY NOW
+                                            </Button>
+                                        </Grid>
+                                    </div>
+                                </div>
+                            )
+                        } else {
+                            const archiveUrl = `https://lime-archive.s3.amazonaws.com/46286302/${stream.archive_id}/archive.mp4`
+                            return (
+                                <div className='m-body-wrapper' key={i}>
+                                    <div className='m-player-wrapper'>
+                                        <ReactPlayer
+                                        className='m-react-player'
+                                        url={archiveUrl}
+                                        playing={true}
+                                        loop={true}
+                                        controls={false}
+                                        volume={0.8}
+                                        muted={muted}
+                                        pip={false}
+                                        width={'100%'}
+                                        height={'100%'}
+                                        />
+                                        <div className='m-overlay'>
+                                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>
+                                            <div className='right-overlay'>
+                                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='m-product-wrapper'>
+                                        <img src='https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg' alt='Golden Gate Bridge' className='m-product-img'/>
+                                        <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
+                                                LIME SQUEEZER
+                                            <p>$25</p>
+                                            <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                                                BUY NOW
+                                            </Button>
+                                        </Grid>
+                                    </div>
+                                </div>
                             )
                         }
-                        <div className='overlay'>
-                            <div className='title-overlay'>
-                                <h3 style={{margin: '10px 15px'}}>The World's Greatest Lime Squeezer</h3>
-                                {live &&
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className='live-pulse'></div>
-                                    <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
-                                </div>}
-                                
-                            </div>
-                            <div className='subtitle-overlay'>
-                                <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p>
-                            </div>
-                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
-                            <div className='right-overlay'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
-                            </div>
-                        </div>
-                    </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
-                    <ProductDesc />
-                </div>
-                <div className='recently-live'>
-                    <h3>RECENTLY LIVE</h3>
-                </div>
-                <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user}/>
-                </Suspense>
-                
-                
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
-                </div>
+                    })
+                }
+            </SwipeableViews>
         </div>
     )
 }
 
 export default memo(MobileHome)
 
+                

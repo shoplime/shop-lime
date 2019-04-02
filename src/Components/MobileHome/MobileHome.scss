@@ -1,34 +1,56 @@
 @import './../variables';
 
-.body-container{
+.m-header {
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 0 20%;
-  margin-top: 50px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }
 
-
-.player-container {
+.m-body-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  margin-top: 4%;
-  margin-bottom: 20%;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  background-color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  background-color: #fff;
 }
 
-.player-wrapper {
-  background-color: black;
-  position: relative;
-  min-height: 33vw;
+.m-body-wrapper {
+  height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+.m-player-wrapper {
+  width: 200%;
+  position: relative;
+  right: 50%;
+}
+
+.m-react-player {
+  background-color: black;
+}
+
+.m-overlay {
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  z-index: 1;
+}
+
+.m-product-wrapper {
+  display: flex;
+  width: 100%;
+  height: 200px;
+}
+
+.m-product-img {
+  height: 150px;
 }
 
 .header-container{
@@ -50,7 +72,7 @@
   }
 }
 
-.chat-wrapper {
+.m-chat-wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -120,9 +142,7 @@
   color: #ffffff;
 }
 
-.react-player {
-  align-self: center;
-}
+
 
 .live-pulse {
   margin-right: 5px;
