@@ -1,5 +1,4 @@
 import React, { useState, Suspense, useEffect, memo } from 'react'
-import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';

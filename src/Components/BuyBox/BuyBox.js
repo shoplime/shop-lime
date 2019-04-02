@@ -13,7 +13,7 @@ const BuyBox = (props) => {
 
     const addToCart = (id, quantity) => {
         // api.AddCart(id, quantity)
-        props.toggleCheckout()
+        handleOpenCheckout(!openCheckout)
     }
 
     const {openCheckout, handleOpenCheckout} = props;
@@ -81,7 +81,7 @@ const BuyBox = (props) => {
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
                     LIME SQUEEZER
                 <p>$25</p>
-                <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                <Button onClick={addToCart}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
             </Grid>
