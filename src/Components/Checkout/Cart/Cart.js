@@ -12,6 +12,12 @@ import { GetProducts } from '../../../ducks/products';
 import { GetCartItems } from '../../../ducks/cart';
 
 class Cart extends Component{
+    constructor(){
+        super()
+        this.state = {
+            reRender: false
+        }
+    }
     
     componentDidMount() {
         this.props.GetProducts();
@@ -51,14 +57,15 @@ class Cart extends Component{
                     )
                 }
                 else{
-                return(
-                    <div>
-                        {/* <CartHeader/> */}
+                    return(
+                        <div>
+                        {/* {this.setState({reRender: !this.state.reRender})} */}
                         <div>
                             <p>Look's like your cart is empty!</p>
                             <Link to='/'>Start Shoping</Link>
                         </div>
-                    </div>)
+                    </div>
+                )
                 }
             } else{
                 return(
