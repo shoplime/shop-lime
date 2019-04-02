@@ -17,7 +17,7 @@ import theme from '../../mui_theme'
 import { connect } from 'react-redux';
 import { updateUser } from './../../ducks/user'
 import axios from 'axios'
-
+import './Login.scss'
 
 const buttonStyle = {
     marginTop: '10px',
@@ -84,8 +84,8 @@ const Login = (props) => {
         await axios.post('/user/login', {email, password})
             .then(res => {
                 console.log(res.data)
-                this.props.updateUser(res.data)
-                this.props.history.push('/admin');
+                props.updateUser(res.data)
+                props.history.push('/admin');
             })
             .catch(() => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
@@ -93,43 +93,45 @@ const Login = (props) => {
     }
     const { classes } = props;
     return (
-        <MuiThemeProvider theme={theme}>    
-            <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography className={classes.typography} component="h1" variant="h5">
-                        Sign in to unlock content
-                    </Typography>
-                    <form className={classes.form} >
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
-                            <Input onChange={(e) => handleEmail(e.target.value)} id="email" type="email" name="email" autoComplete="email" autoFocus />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
-                            <Input onChange={(e) => handlePassword(e.target.value)} style={{ marginBottom: '30px' }} name="password" type="password" id="password" autoComplete="current-password" />
-                        </FormControl>
-                        <Button
-                            onClick={() => login()} 
-                            type="button"                      
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            className={classes.typography}
-                        >
-                            Sign in
-                        </Button>
-                        <div className='login-error'>
-                            <p>{loginError}</p>
-                        </div>
-                    </form>
-                </Paper>
-            </main>
-        </MuiThemeProvider>
+        <div className='login-container'>
+            <MuiThemeProvider theme={theme}>    
+                <main className={classes.main}>
+                    <CssBaseline />
+                    <Paper className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography className={classes.typography} component="h1" variant="h5">
+                            Dashboard Login
+                        </Typography>
+                        <form className={classes.form} >
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel className={classes.typography} htmlFor="email">Email Address</InputLabel>
+                                <Input onChange={(e) => handleEmail(e.target.value)} id="email" type="email" name="email" autoComplete="email" autoFocus />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
+                                <Input onChange={(e) => handlePassword(e.target.value)} style={{ marginBottom: '30px' }} name="password" type="password" id="password" autoComplete="current-password" />
+                            </FormControl>
+                            <Button
+                                onClick={() => login()} 
+                                type="button"                      
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                className={classes.typography}
+                            >
+                                Sign in
+                            </Button>
+                            <div className='login-error'>
+                                <p>{loginError}</p>
+                            </div>
+                        </form>
+                    </Paper>
+                </main>
+            </MuiThemeProvider>
+        </div>
     );
 }
 
