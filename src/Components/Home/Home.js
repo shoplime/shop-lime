@@ -1,5 +1,4 @@
 import React, { useState, Suspense, useEffect, memo } from 'react'
-import OrderModal from '../OrderModal/OrderModal';
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
@@ -41,26 +40,32 @@ const Home = () => {
     const [muted, setMuted] = useState(true);
     const [chatDisplay, setChatDisplay] = useState(false);
     const [live, setLive] = useState(false)
-    const [pastStreams, setPastStreams] = useState([])
+    const [pastStreams, setPastStreams] = useState([]) 
+
+    const [heroID, setHeroID] = useState('')
 
     useEffect(() => {
         getUser()
     }, [user]);
     useEffect(() => {
-        axios.get('/homeStreams')
-        .then(res => {
-            if(res.data[0].status === 'live'){
-                const { name, product_id, hls } = res.data[0]
-                setHLS(hls)
-                setLive(true)
-            } else {
-                const { name, archive_id, product_id } = res.data[0]
-                setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
-                setLive(false)
-            }
-        })
-    })
-
+       axios.get('/homeStreams')
+            .then(res => {
+                if (res.data[0].status === 'live') {
+                    const { name, product_id, hls } = res.data[0]
+                    setHLS(hls)
+                    setLive(true)
+                    setHeroID(res.data[0].product_id)
+                    setPastStreams(res.data)
+                } else {
+                    const { name, archive_id, product_id } = res.data[0]
+                    setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
+                    setLive(false)
+                    setHeroID(res.data[0].product_id)
+                    setPastStreams(res.data)
+                }
+            })
+    },[])
+    console.log(pastStreams)
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
     };
@@ -192,7 +197,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} />
                     <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                     <ProductDesc />
                 </div>
@@ -200,7 +205,7 @@ const Home = () => {
                     <h3>RECENTLY LIVE</h3>
                 </div>
                 <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user}/>
+                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
                 </Suspense>
                 
                 

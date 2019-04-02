@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,13 +10,32 @@ import * as api from '../../moltin';
 
 
 const BuyBox = (props) => {
+    
+    const {openCheckout, handleOpenCheckout, heroID} = props;
 
-    const addToCart = (id, quantity) => {
-        // api.AddCart(id, quantity)
-        props.toggleCheckout()
+    const [productDetails, setProductDetails] = useState({}) 
+    const [imgID, setImgID] = useState('') 
+    const [price, setPrice] = useState('') 
+
+   
+   useEffect(() => {
+       if(heroID){
+           getImage()
+       }     
+    }, [heroID])
+    const getImage = async () => {
+        const mProduct = await api.GetProduct(heroID)
+        await setProductDetails(mProduct) 
+        console.log(mProduct)     
+        await setImgID(mProduct.included.main_images[0].link.href)
+        await setPrice(mProduct.data.price[0].amount)
     }
-
-    const {openCheckout, handleOpenCheckout} = props;
+   
+     const addToCart = (id, quantity) => {
+        // api.AddCart(id, quantity)
+        handleOpenCheckout(!openCheckout)
+    }
+    
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
@@ -63,7 +82,7 @@ const BuyBox = (props) => {
                 <div>
                     <ImageZoom zoomMargin='100'
                         image={{
-                            src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                            src: `${imgID}`,
                             alt: 'Golden Gate Bridge',
                             className: 'img-zoom',
                             
@@ -79,11 +98,20 @@ const BuyBox = (props) => {
             </div>
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
-                    LIME SQUEEZER
-                <p>$25</p>
-                <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                <p></p>
+                {productDetails.data && <h3>{productDetails.data.name}</h3>}
+                <p>${price/100}</p>
+                {/* <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'></Button> */}
+                    
+                <Button onClick={addToCart}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
+                
+                    
+
+                
+
+                
             </Grid>
         </Grid>
     )

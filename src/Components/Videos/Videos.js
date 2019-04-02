@@ -20,7 +20,7 @@ const styles = theme => ({
     },
 });
 
-class Videos extends React.Component {
+class Videos extends React.Component { 
     state = {
         spacing: '16',
         videos: []
@@ -36,32 +36,40 @@ class Videos extends React.Component {
     handleClick = () => {
 
     }
+    
 
     render() {
-        const { classes, user, handleOpen, handleError } = this.props;
+        const { classes, user, handleOpen, handleError, pastStreams } = this.props;
         const { spacing } = this.state;
+        
 
         return (
             
             <Grid container className={classes.root} spacing={16}>
                     <Grid item xs={12}>
                         <Grid container className={classes.demo} justify="space-between" spacing={Number(spacing)}>
-                            {tileData.map((tile, index) => (
+                            {pastStreams.map((stream, index) => (
                                 <div key={index}>              
                                 {
-                                        // user
-                                        // ?
-                                        // <>
-                                        //     <button className='video-card'>
-                                        //     </button>
-                                        //     <p>{tile.author}</p>
-                                        // </>
-                                        // :
-                                        <>
+                                        user
+                                        ?
+                                        <div>
+                                            <button className='video-card'>
+                                            </button>
+                                            <div className='video-details'>
+                                                 <p>{stream.name}</p>
+
+                                            </div>
+                                        </div>
+                                        :
+                                        <div>
                                             <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
                                             </button>
-                                            <p>{tile.author}</p>
-                                        </>
+                                            <div className='video-details'>
+                                                 <p>{stream.name}</p>
+
+                                            </div>
+                                        </div>
                                     }
 
                                     </div>
