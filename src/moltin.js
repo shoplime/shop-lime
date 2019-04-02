@@ -1,10 +1,7 @@
 const MoltinGateway = require('@moltin/sdk').gateway;
 
-
 let client_id = '5aQC7J6yyUxpv8XZj2RVpsG7qScEOxz3UTw6lH4peu';
 let client_secret_id = process.env.CLIENT_SECRET;
-
-
 
 const Moltin = MoltinGateway({
     client_id,
