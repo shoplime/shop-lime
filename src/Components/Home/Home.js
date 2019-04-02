@@ -41,6 +41,7 @@ const Home = () => {
     const [chatDisplay, setChatDisplay] = useState(false);
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([]) 
+     
 
     const [heroID, setHeroID] = useState('')
 
@@ -56,12 +57,14 @@ const Home = () => {
                     setLive(true)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
+                    
                 } else {
                     const { name, archive_id, product_id } = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
+                    
                 }
             })
     },[])
@@ -199,7 +202,7 @@ const Home = () => {
                     </div>
                     <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} />
                     <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
-                    <ProductDesc />
+                    <ProductDesc heroID={heroID}/>
                 </div>
                 <div className='recently-live'>
                     <h3>RECENTLY LIVE</h3>

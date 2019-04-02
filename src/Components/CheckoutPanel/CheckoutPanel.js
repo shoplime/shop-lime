@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 function SimpleExpansionPanel(props) {
-    const { classes, openCheckout, handleOpenCheckout } = props;
+    const { classes, openCheckout, handleOpenCheckout } = props; 
     const [complete, toggleComplete] = useState(false);
     const toggleSuccess = () => {
         toggleComplete(complete === false ? true : false)

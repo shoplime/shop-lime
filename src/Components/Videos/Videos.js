@@ -46,33 +46,30 @@ class Videos extends React.Component {
         return (
             
             <Grid container className={classes.root} spacing={16}>
-                    <Grid item xs={12}>
-                        <Grid container className={classes.demo} justify="space-between" spacing={Number(spacing)}>
+                <Grid item xs={12}>
+                        <Grid container className={classes.demo} justify="space-between" spacing={Number(spacing)}> 
                             {pastStreams.map((stream, index) => (
                                 <div key={index}>              
                                 {
-                                        user
-                                        ?
-                                        <div>
-                                            <button className='video-card'>
-                                            </button>
-                                            <div className='video-details'>
-                                                 <p>{stream.name}</p>
-
-                                            </div>
+                                    user
+                                    ?
+                                    <div>
+                                        <button className='video-card'>
+                                        </button>
+                                        <div className='video-details'>
+                                                <p>{stream.name}</p>
                                         </div>
-                                        :
-                                        <div>
-                                            <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
-                                            </button>
-                                            <div className='video-details'>
-                                                 <p>{stream.name}</p>
-
-                                            </div>
-                                        </div>
-                                    }
-
                                     </div>
+                                    :
+                                    <div>
+                                        <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
+                                        </button>
+                                        <div className='video-details'>
+                                                <p>{stream.name}</p>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
                             ))}
                         </Grid>
                     </Grid>

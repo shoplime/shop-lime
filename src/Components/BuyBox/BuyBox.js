@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useState, Suspense } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -80,18 +80,20 @@ const BuyBox = (props) => {
                         />       
                 </div> */}
                 <div>
-                    <ImageZoom zoomMargin='100'
-                        image={{
-                            src: `${imgID}`,
-                            alt: 'Golden Gate Bridge',
-                            className: 'img-zoom',
-                            
-                        }}
-                        zoomImage={{
-                            src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
-                            alt: 'Golden Gate Bridge',
-                        }}
-                    />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ImageZoom zoomMargin='100'
+                            image={{
+                                src: `${imgID}`,
+                                alt: '',
+                                className: 'img-zoom',
+                                
+                            }}
+                            zoomImage={{
+                                src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                                alt: 'Product image zoom',
+                            }}
+                        />
+                    </Suspense>
 
                 </div>
 
