@@ -15,30 +15,27 @@ const BuyBox = (props) => {
 
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 
-
-    
+    const [price, setPrice] = useState('') 
 
    
    useEffect(() => {
-       getImage()
-    //    const mProduct = api.GetProduct(heroID)
-    //    console.log('mproduct', mProduct)
-    // //    console.log('mproductid', mProduct.included.main_images[0].id)
-    //    {mProduct.included && setImgID(mProduct.included.main_images[0].id)}
-    //    {mProduct.included && console.log('mproductid', mProduct.included.main_images[0].id)}
-        
+       if(heroID){
+           getImage()
+       }     
     }, [heroID])
     const getImage = async () => {
         const mProduct = await api.GetProduct(heroID)
-        setImgID(mProduct.included.main_images[0].link.href)
-        setProductDetails(mProduct)   
-        console.log(mProduct)
+        await setProductDetails(mProduct) 
+        console.log(mProduct)     
+        await setImgID(mProduct.included.main_images[0].link.href)
+        await setPrice(mProduct.data.price[0].amount)
     }
    
      const addToCart = (id, quantity) => {
         // api.AddCart(id, quantity)
         props.toggleCheckout()
     }
+    
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
@@ -101,12 +98,18 @@ const BuyBox = (props) => {
             </div>
             </Grid>
             <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
-                
+                <p></p>
                 {productDetails.data && <h3>{productDetails.data.name}</h3>}
-                {productDetails && <p>${productDetails.data.name}</p>}
+                <p>${price/100}</p>
                 <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
+                
+                    
+
+                
+
+                
             </Grid>
         </Grid>
     )
