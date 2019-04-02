@@ -49,14 +49,14 @@ class Videos extends React.Component {
                             {tileData.map((tile, index) => (
                                 <div key={index}>              
                                 {
-                                        user
-                                        ?
-                                        <>
-                                            <button className='video-card'>
-                                            </button>
-                                            <p>{tile.author}</p>
-                                        </>
-                                        :
+                                        // user
+                                        // ?
+                                        // <>
+                                        //     <button className='video-card'>
+                                        //     </button>
+                                        //     <p>{tile.author}</p>
+                                        // </>
+                                        // :
                                         <>
                                             <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
                                             </button>

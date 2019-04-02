@@ -3,8 +3,8 @@ export const UPDATE_USER = 'UPDATE_USER';
 const initialState = {
     user: {
         id: 0,
-        username: '',
-        email: ''
+        email: '',
+        admin: false
     }
 }
 
@@ -12,8 +12,8 @@ export default function(state = initialState, action){
     const { type, payload } = action;
     switch(type) {
         case UPDATE_USER:
-        const { id, username, email } = payload;
-        return {...state, id, username, email }
+        const { id, email, admin } = payload;
+        return {...state, id, email, admin }
         default:
         return state;
     }
