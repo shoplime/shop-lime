@@ -13,6 +13,8 @@ import SelectProduct from './Stepper/SelectProduct'
 import OpenTok from './../OpenTok/OpenTok'
 import ProductImage from './../Checkout/Products/ProductImage'
 import axios from 'axios'
+import { connect } from 'react-redux';
+import { updateUser } from './../../ducks/user'
 
 
 
@@ -49,6 +51,24 @@ class Admin extends React.Component {
     imageId:''
   };
   this.handleChange = this.handleChange.bind(this)
+}
+
+componentWillMount(){
+    const {id, admin} = this.props;
+    if(!id){
+        axios.get('/user/fetchuser')
+        .then(res => {
+            this.props.updateUser(res.data);
+        })
+        .catch(err => {
+            this.props.history.push('/login');
+        })
+    } else if (admin === false) {
+      this.props.history.push('/login');
+      alert('Please log in with an admin account')
+    } else {
+
+    }
 }
 
 componentDidMount(){
@@ -223,4 +243,14 @@ Admin.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withStyles(styles)(Admin);
+function mapStateToProps(state){
+  const { id, admin } = state
+  return {
+      id,
+      admin,
+  };
+};
+
+const adminPermission = connect(mapStateToProps, {updateUser})(Admin);
+
+export default withStyles(styles)(adminPermission);
