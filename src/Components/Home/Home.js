@@ -20,6 +20,7 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import Dashboard from '../Dashboard/Dashboard'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -41,6 +42,7 @@ const Home = () => {
     const [chatDisplay, setChatDisplay] = useState(false);
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([]) 
+    const [reRender, reRenderPage] = useState(false) 
 
     const [heroID, setHeroID] = useState('')
 
@@ -68,7 +70,7 @@ const Home = () => {
     },[])
     console.log(pastStreams)
     const toggleCheckout = () => {
-        setCheckout(checkout === false ? true : false)
+        setCheckout(checkout === false ? true : null)
     };
     const togglePlaying = () => {
         setPlaying(playing === false ? true : false)
@@ -79,6 +81,9 @@ const Home = () => {
     const toggleChat = () => {
         setChatDisplay(chatDisplay === false ? true : false)
     };
+    const pageReRender = () => {
+        reRenderPage(reRender === false ? true : false)
+    }
     const getUser = async () => {
         await axios.get('/user/fetchuser')
             .then(() => {
@@ -198,8 +203,10 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                    <div><BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} /></div>
+                    {/* <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                    } */}
                     <ProductDesc />
                 </div>
                 <div className='recently-live'>
@@ -215,6 +222,9 @@ const Home = () => {
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
                 </div>
+        <div>
+            <Dashboard/>
+        </div>
         </div>
     )
 }
