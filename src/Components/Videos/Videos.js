@@ -40,7 +40,7 @@ class Videos extends React.Component {
     render() {
         const { classes, user, handleOpen, handleError, pastStreams } = this.props;
         const { spacing } = this.state;
-        
+        console.log('past streams', pastStreams)
 
         return (
             
@@ -52,16 +52,18 @@ class Videos extends React.Component {
                                 {
                                     user
                                     ?
-                                    <div>
-                                        <button className='video-card'>
+                                    <div >
+                                            <button className='video-card'>
+                                             <img className='img' src={stream.url} alt=''/>
                                         </button>
                                         <div className='video-details'>
                                                 <p>{stream.name}</p>
                                         </div>
                                     </div>
                                     :
-                                    <div>
-                                        <button onClick={() => { handleOpen(true); handleError('')}} className='video-card'>
+                                        <div >
+                                            <button onClick={() => { handleOpen(true); handleError('') }} className='video-card'>
+                                            <img src={stream.url} alt='' />
                                         </button>
                                         <div className='video-details'>
                                                 <p>{stream.name}</p>
