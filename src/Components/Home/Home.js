@@ -214,16 +214,7 @@ const Home = () => {
                 <Suspense fallback={<></>}>
                     <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
                 </Suspense>
-                
-                
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
                 </div>
-        <div>
-            <Dashboard/>
-        </div>
         </div>
     )
 }

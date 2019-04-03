@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import './Videos.scss'
+import {Link} from 'react-router-dom'
 import { userInfo } from 'os';
 
 const styles = theme => ({
@@ -53,9 +54,9 @@ class Videos extends React.Component {
                                     user
                                     ?
                                     <div >
-                                            <button className='video-card'>
-                                             <img className='img' src={stream.url} alt=''/>
-                                        </button>
+                                            <Link to = {stream.product_id +'/'+ stream.archive_id}><button className='video-card'>
+                                             <img className='img' src={stream.url} alt=''/> 
+                                             </button></Link>
                                         <div className='video-details'>
                                                 <p>{stream.name}</p>
                                         </div>

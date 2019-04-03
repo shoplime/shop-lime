@@ -15,13 +15,14 @@ import LoginButton from '../Home/Button'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
+import Link from 'react-router-dom'
 import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
-const Home = () => {
+const ProductPage = (props) => {
 
     const [checkout, setCheckout] = useState(false);
     const [openCheckout, handleOpenCheckout] = useState(false);
@@ -40,32 +41,35 @@ const Home = () => {
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([])
     const [reRender, reRenderPage] = useState(false)
+    const [streamID, setStreamID] = useState(false)
 
     const [heroID, setHeroID] = useState('')
-
+    
     useEffect(() => {
         getUser()
     }, [user]);
     useEffect(() => {
+        const {productid, streamid} = props.match.params
+        console.log('match params', props.match.params)
+        setHeroID(productid)
+        setStreamID(streamID)
         axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
                     const { name, product_id, hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
-                    setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
 
                 } else {
                     const { name, archive_id, product_id } = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
-                    setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
 
                 }
             })
-    }, [])
+    }, [heroID])
     console.log(pastStreams)
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : null)
@@ -135,7 +139,7 @@ const Home = () => {
                         <Toolbar style={{ justifyContent: 'space-between', padding: '0px 20%' }}>
                             {/* <MenuIcon></MenuIcon> */}
                             <Typography variant="h5">
-                                SHOPLIME, go to live
+                                SHOPLIME
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
@@ -151,7 +155,7 @@ const Home = () => {
                             (live ?
                                 <ReactPlayer
                                     className='react-player1'
-                                    url={hls}
+                                    url={`https://lime-archive.s3.amazonaws.com/46286302/${streamID}/archive.mp4`}
                                     playing={true}
                                     loop={true}
                                     controls={false}
@@ -169,7 +173,7 @@ const Home = () => {
                                 :
                                 <ReactPlayer
                                     className='react-player1'
-                                    url={archive}
+                                    url={`https://lime-archive.s3.amazonaws.com/46286302/${streamID}/archive.mp4`}
                                     playing={true}
                                     loop={true}
                                     controls={false}
@@ -181,7 +185,7 @@ const Home = () => {
                                 />
                             )
                         }
-                        {/* <div className='overlay1'>
+                        <div className='overlay1'>
                             <div className='title-overlay1'>
                                 <h3 style={{ margin: '10px 15px' }}>The World's Greatest Lime Squeezer</h3>
                                 {live &&
@@ -196,18 +200,18 @@ const Home = () => {
                             </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute' /> : <VolumeUp className='mute' />)}</button>
                             <div className='right-overlay1'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                {/* <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
+                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>} */}
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                     
-                        <div className='right-side-video1'>
-                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                        </div>
-                </div>
+                        
+                        <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
                         <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                         <ProductDesc heroID={heroID} />
+                        
+                </div>
                 <div className='recently-live1'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
@@ -225,5 +229,5 @@ const Home = () => {
     )
 }
 
-export default memo(Home)
+export default memo(ProductPage)
 
