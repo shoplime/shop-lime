@@ -20,6 +20,7 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import Dashboard from '../Dashboard/Dashboard'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -220,6 +221,9 @@ const Home = () => {
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
                 </div>
+        <div>
+            <Dashboard/>
+        </div>
         </div>
     )
 }
