@@ -21,5 +21,24 @@ module.exports = {
         return returnObj
     },
 
+    // TYLER'S LOGIC
+
+    handleReset: (activeStep) => {
+        if (activeStep != 0){
+            return true
+        }
+        else{
+            return false
+        }
+    },
+
+    validatePayment: (number) => {
+        if (number.length != 16){
+            return false
+        }
+        else{
+            return true
+        }
+    }
     //JUSTIN'S LOGIC
 }

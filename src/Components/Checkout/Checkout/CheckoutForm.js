@@ -231,7 +231,7 @@ class CheckoutForm extends Component {
                           >
                             Back
                           </Button>}
-                          {activeStep === steps.length - 1 ? <Button variant="contained" className='pay' onClick={this.props.handleSubmit(this.mySubmit)} type="submit" className="pay" color='primary' aria-live="polite">
+                          {activeStep === steps.length - 1 ? <Button variant="contained" className='pay' onClick={this.props.handleSubmit(this.mySubmit)} type="submit" color='primary' aria-live="polite">
                           Pay
                           </Button>:
                           <Button variant="contained" id='next' onClick={this.handleNext}>

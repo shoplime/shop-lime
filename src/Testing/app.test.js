@@ -1,4 +1,4 @@
-import {validateEmail, validatePassword} from './AuthLogic'
+import {validateEmail, validatePassword, handleReset, validatePayment} from './AuthLogic'
 
 describe('Valid emails', () => {
 
@@ -6,11 +6,11 @@ describe('Valid emails', () => {
         let result = validateEmail('m.a@yahoo.com');
         expect(result).toBeTruthy();
     })
-    test('Should be false', () => {
+    test('Should be false if no @', () => {
         let result = validateEmail('michael');
         expect(result).toBeFalsy();
     })
-    test('Should be false', () => {
+    test('Should be false if no .com, etc', () => {
         let result = validateEmail('joe@gmail');
         expect(result).toBeFalsy();
     })
@@ -29,3 +29,30 @@ describe('Valid Password', () => {
     
 })
 
+describe('Handle Reset', () => {
+    
+    test('Should be true', () => {
+        let result = handleReset(3);
+        expect(result).toBeTruthy();
+    })
+    test('Should be false', () => {
+        let result = handleReset(0);
+        expect(result).toBeFalsy();
+    })
+})
+
+describe('Valid Payment', () => {
+    
+    test('Should be true', () => {
+        let result = validatePayment('4242424242424242');
+        expect(result).toBeTruthy();
+    })
+    test('Should be false', () => {
+        let result = validatePayment('mynumber');
+        expect(result).toBeFalsy();
+    })
+    test('Should be false', () => {
+        let result = validatePayment(1234567890);
+        expect(result).toBeFalsy();
+    })
+})
