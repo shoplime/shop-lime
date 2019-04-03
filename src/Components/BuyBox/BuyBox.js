@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useState, Suspense } from 'react'
+import React, { useEffect, useState } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // import ImageZoom from 'react-medium-image-zoom'
-import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import * as api from '../../moltin';
@@ -11,7 +10,7 @@ import * as api from '../../moltin';
 
 const BuyBox = (props) => {
     
-    const {openCheckout, handleOpenCheckout, heroID, reRender, toggleCheckout} = props;
+    const {openCheckout, handleOpenCheckout, heroID } = props;
 
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 

@@ -51,6 +51,7 @@ const Home = () => {
     useEffect(() => {
        axios.get('/homeStreams')
             .then(res => {
+                console.log(res.data)
                 if (res.data[0].status === 'live') {
                     const { name, product_id, hls } = res.data[0]
                     setHLS(hls)

@@ -62,7 +62,7 @@ module.exports = {
             console.log(err)
         }
     },
-    logout: () => {
+    logout: (req, res) => {
         try{
             
             req.session.destroy();
