@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
-import CartHeader from './CartHeader';
 import CartItems from './CartItems';
 import CheckoutForm from '../Checkout/CheckoutForm'
 import '../Checkout/Checkout.scss'
@@ -23,9 +22,6 @@ class Cart extends Component{
         this.props.GetProducts();
         this.props.GetCartItems();
     }
-    // componentDidUpdate(prevProps){
-    //     if(this.props.)
-    // }
 
     render(){
         const { cart, products } = this.props;
@@ -40,7 +36,6 @@ class Cart extends Component{
                     var subtotal = '$' + cart.cart.meta.display_price.with_tax.amount / 100;
                     return(
                         <div className='cart'>
-                            {/* <CartHeader/> */}
                             <div className='cart-header'>
                                 <div id='cart-header-1'>Product</div>
                                 <div id='cart-header-2'>Quantity</div>
@@ -61,8 +56,7 @@ class Cart extends Component{
                 }
                 else{
                     return(
-                        <div>
-                        {/* {this.setState({reRender: !this.state.reRender})} */}
+                    <div>
                         <div>
                             <p>Look's like your cart is empty!</p>
                             <Link to='/'>Start Shoping</Link>
@@ -73,7 +67,6 @@ class Cart extends Component{
             } else{
                 return(
                     <div>
-                        {/* <CartHeader/> */}
                         <p>Loading...</p>
                     </div>
                 )
