@@ -215,7 +215,7 @@ const Home = () => {
                 <Suspense fallback={<></>}>
                     <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
                 </Suspense>
-                </div>
+                </div>        
         </div>
     )
 }
