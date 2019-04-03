@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 function TextButtons(props) {
-  const { classes, handleOpen, handleError, user } = props;
+  const { classes, user } = props;
   return (
     <div>
       {

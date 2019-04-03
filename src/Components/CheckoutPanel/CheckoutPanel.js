@@ -1,9 +1,8 @@
-import React, { useState, Suspense, useEffect, memo } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
 import Cart from '../Checkout/Cart/Cart';
 import Complete from '../Checkout/Checkout/stepper/Complete'
 
@@ -31,16 +30,16 @@ const styles = theme => ({
 });
 
 function SimpleExpansionPanel(props) {
-    const { classes, openCheckout, handleOpenCheckout, toggleCheckout, reRender } = props;
+    const { classes, openCheckout, handleOpenCheckout, reRender } = props;
     const [complete, toggleComplete] = useState(false);
-    const [opened, setOpened] = useState(false);
+    // const [opened, setOpened] = useState(false);
     const toggleSuccess = () => {
         toggleComplete(complete === false ? true : false)
     }
     
-    useEffect(()=>{
-        setOpened(openCheckout)
-    })      
+    // useEffect(()=>{
+    //     setOpened(openCheckout)
+    // })      
     return (
         <div className={classes.root}>
             <ExpansionPanel expanded={openCheckout} square className={classes.root}>
@@ -52,8 +51,6 @@ function SimpleExpansionPanel(props) {
                     </Typography> */}
                     {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout} reRender={reRender}/>:
                     openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
-
-                    {/* {openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>} */}
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         </div>

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
-import CartHeader from './CartHeader';
 import CartItems from './CartItems';
 import CartPageCheckout from '../Checkout/CartPageCheckout'
 import '../Checkout/Checkout.scss'
@@ -57,7 +56,7 @@ class Cart extends Component{
                             </MuiThemeProvider>
                             {this.state.toggleCheckout? 
                                 <div className='CheckoutForm-2'>
-                                    <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout} toggleCheckout={this.toggleCheckout}/>
+                                    <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout} />
                                 </div>:
                                 <div>
                                     <div className='cart-header-2'>
@@ -75,9 +74,6 @@ class Cart extends Component{
                                     <button onClick={this.toggleCheckout} className='cart-button'>Checkout</button>
                                 </div>
                             }
-                            {/* <div className='CheckoutForm'>
-                                <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout}/>
-                            </div> */}
                         </div>
                     )
                 }
@@ -87,7 +83,6 @@ class Cart extends Component{
                         <MuiThemeProvider theme={theme}>
                             <AppBar color="secondary">
                                 <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                                    {/* <MenuIcon></MenuIcon> */}
                                     <Typography variant="h5">
                                         SHOPLIME
                                     </Typography>
@@ -106,7 +101,6 @@ class Cart extends Component{
                         <MuiThemeProvider theme={theme}>
                             <AppBar color="secondary">
                                 <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                                    {/* <MenuIcon></MenuIcon> */}
                                     <Typography variant="h5">
                                         SHOPLIME
                                     </Typography>

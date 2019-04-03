@@ -267,6 +267,7 @@ app.post('/admin/register', ctrlm.addMerchant)
 
 //Creating Stream
 app.post('/admin/newStream', streamc.createStream)
+app.get('/homeStreams', streamc.getHomeStreams)
 
 //moltin
 app.get('/products', (req, res) => {
