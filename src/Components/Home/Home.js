@@ -202,9 +202,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div><BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} /></div>
-                    {/* <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    } */}
+                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} reRender={pageReRender}/></div>
                     <ProductDesc />
                 </div>
                 <div className='recently-live'>

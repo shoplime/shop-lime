@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 function SimpleExpansionPanel(props) {
-    const { classes, openCheckout, handleOpenCheckout, toggleCheckout } = props;
+    const { classes, openCheckout, handleOpenCheckout, toggleCheckout, reRender } = props;
     const [complete, toggleComplete] = useState(false);
     const [opened, setOpened] = useState(false);
     const toggleSuccess = () => {
@@ -50,7 +50,7 @@ function SimpleExpansionPanel(props) {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                     </Typography> */}
-                    {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>:
+                    {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout} reRender={reRender}/>:
                     openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
 
                     {/* {openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>} */}
