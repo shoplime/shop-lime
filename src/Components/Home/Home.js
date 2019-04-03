@@ -21,7 +21,7 @@ import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 import Dashboard from '../Dashboard/Dashboard'
-// const Nav = React.lazy(() => import('../Nav/Nav'))
+const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
@@ -37,7 +37,7 @@ const Home = () => {
     
     const [hls, setHLS] = useState('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8')
     const [archive, setArchive] = useState('')
-    // const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true);
     const [chatDisplay, setChatDisplay] = useState(false);
     const [live, setLive] = useState(false)
@@ -52,14 +52,15 @@ const Home = () => {
     useEffect(() => {
        axios.get('/homeStreams')
             .then(res => {
+                console.log(res.data)
                 if (res.data[0].status === 'live') {
-                    const { hls } = res.data[0]
+                    const { name, product_id, hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
                 } else {
-                    const { archive_id } = res.data[0]
+                    const { name, archive_id, product_id } = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
                     setHeroID(res.data[0].product_id)
@@ -71,9 +72,9 @@ const Home = () => {
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : null)
     };
-    // const togglePlaying = () => {
-    //     setPlaying(playing === false ? true : false)
-    // };
+    const togglePlaying = () => {
+        setPlaying(playing === false ? true : false)
+    };
     const toggleMuted = () => {
         setMuted(muted === false ? true : false)
     };
@@ -202,8 +203,10 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} reRender={pageReRender}/>
+                    <div><BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} /></div>
+                    {/* <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                    } */}
                     <ProductDesc />
                 </div>
                 <div className='recently-live'>
