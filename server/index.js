@@ -30,10 +30,6 @@ const app = express()
 
 //initializing sockets
 
-app.get('/', function(req, res){
-    res.send('<h2>hello world </h2>');
-});
-
 var http = require('http').Server(app);
 
 
@@ -89,6 +85,7 @@ app.use(
 );
 
 app.use(express.json())
+app.use(express.static(`${__dirname}/../build`));
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 // http.listen(4001, () => console.log(`Listening on port 4001`))
