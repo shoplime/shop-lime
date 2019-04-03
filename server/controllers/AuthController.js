@@ -62,12 +62,11 @@ module.exports = {
             console.log(err)
         }
     },
-    logout: () => {
-        try{
-            
+    logout: (req, res) => {
+        console.log('logout hit')
+        try {
             req.session.destroy();
             res.sendStatus(200)
-
         }
         catch(err){
             console.log(err)
