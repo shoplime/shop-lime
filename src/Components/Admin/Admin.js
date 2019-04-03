@@ -15,6 +15,12 @@ import OpenTok from "./../OpenTok/OpenTok";
 import { v4 as randomString } from "uuid";
 import ProductImage from "./../Checkout/Products/ProductImage";
 import axios from "axios";
+import { connect } from 'react-redux';
+import { updateUser } from './../../ducks/user'
+
+
+
+
 
 const styles = theme => ({
   root: {
@@ -62,6 +68,28 @@ class Admin extends React.Component {
     });
   }
 
+  componentWillMount(){
+    const {id, admin} = this.props;
+    if(!admin){
+        axios.get('/user/fetchuser')
+        .then(res => {
+          if(res.data.admin === true){
+            this.props.updateUser(res.data);
+          } else {
+            this.props.history.push('/login');
+          }
+        })
+        .catch(err => {
+            this.props.history.push('/login');
+        })
+    } else if (admin === false) {
+      this.props.history.push('/login');
+      alert('Please log in with an admin account')
+    } else {
+  
+    }
+  }
+
   getSignedRequest = ([file]) => {
     console.log("hit");
     this.setState({ isUploading: true });
@@ -91,7 +119,7 @@ class Admin extends React.Component {
         "Content-Type": file.type
       }
     };
-
+  
     axios
       .put(signedRequest, file, options)
       .then(response => {
@@ -283,4 +311,14 @@ Admin.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(styles)(Admin);
+function mapStateToProps(state){
+  const { id, admin } = state
+  return {
+      id,
+      admin,
+  };
+};
+
+const adminPermission = connect(mapStateToProps, {updateUser})(Admin);
+
+export default withStyles(styles)(adminPermission);

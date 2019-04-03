@@ -50,9 +50,9 @@ module.exports = {
             if (foundUser) {
                 delete user.password
                 session.user = user
-                res.status(200).send(session.user)
                 console.log('Logged in!')
-                
+                console.log(user)
+                res.status(200).send(session.user)
             } else {
                 res.status(401).send('Unauthorized')
             }
