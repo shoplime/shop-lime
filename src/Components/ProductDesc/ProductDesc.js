@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -6,6 +6,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import * as api from '../../moltin';
 
 const styles = theme => ({
     root: {
@@ -24,7 +25,7 @@ const styles = theme => ({
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
-        fontFamily: [
+        fontFamily: [ 
             'montserrat',
             '-apple-system',
             'BlinkMacSystemFont',
@@ -44,7 +45,22 @@ const styles = theme => ({
 });
 
 function SimpleExpansionPanel(props) {
-    const { classes } = props;
+    
+    const { classes, heroID } = props;
+    const [prodDesc, setProdDesc] = useState('')
+
+    useEffect(() => {
+       if(heroID){
+           getImage()
+       }     
+    }, [heroID])
+    const getImage = async () => {
+        const mProduct = await api.GetProduct(heroID)
+        await setProdDesc(mProduct.data.description) 
+        console.log(mProduct.data.description)     
+    }
+
+    console.log('prod Desc', prodDesc)
     return (
         <div className={classes.root}>
             <ExpansionPanel square className={classes.root} style={{ marginRight: '0px', borderTop: '1px solid black'}}>
@@ -53,10 +69,11 @@ function SimpleExpansionPanel(props) {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography className={classes.heading}>
-                        Spicy jalapeno bacon ipsum dolor amet hamburger turkey frankfurter rump porchetta sirloin shankle biltong. Biltong t-bone frankfurter turducken ground round tenderloin ham hamburger sausage. Kielbasa alcatra jowl, pig cow doner corned beef salami ribeye meatball short loin shank hamburger sausage. Prosciutto pig spare ribs doner meatloaf jerky beef hamburger pancetta frankfurter bresaola. Turkey pork biltong doner, spare ribs beef ribs buffalo tenderloin turducken fatback salami beef corned beef. Ribeye pancetta corned beef tail burgdoggen picanha jowl prosciutto short ribs pig sausage tenderloin. Jerky pork loin tongue, brisket salami short loin sirloin picanha ham tri-tip andouille corned beef flank landjaeger.
-                        <br></br>
-                        <br></br>
-                        Bresaola buffalo ribeye shank, spare ribs tri-tip chuck cupim burgdoggen. Pork belly picanha filet mignon ball tip swine pork andouille spare ribs ham hock drumstick. Kielbasa tri-tip meatloaf prosciutto porchetta burgdoggen biltong. Burgdoggen doner meatball bacon t-bone.
+                        
+                       <div>
+                           {prodDesc}
+                       </div>
+
 
                 </Typography>
                 </ExpansionPanelDetails>
