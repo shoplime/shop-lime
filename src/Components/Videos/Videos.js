@@ -3,7 +3,6 @@ import tileData from './TileData';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import './Videos.scss'
 import { userInfo } from 'os';
 

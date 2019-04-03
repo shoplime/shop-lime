@@ -89,7 +89,7 @@ const BuyBox = (props) => {
                                 
                             }}
                             zoomImage={{
-                                src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
+                                src: `${imgID}`,
                                 alt: 'Product image zoom',
                             }}
                         />
