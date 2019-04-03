@@ -9,7 +9,14 @@ const streamc= require('./controllers/StreamController.js')
 const MoltinGateway = require('@moltin/sdk').gateway
 const Twilio = require('twilio')
 const chance = new require('chance')()
-const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET, TWILIO_CHAT_SERVICE_SID, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET } = process.env
+
+
+const { OT_API_KEY, OT_API_SECRET, DB_CONNECTION, SERVER_PORT, SESSION_SECRET, CLIENT_ID, CLIENT_SECRET, TWILIO_CHAT_SERVICE_SID, TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET } = process.env
+
+var connectCounter = 0
+
+
+
 
 const Moltin = MoltinGateway({
     client_id: CLIENT_ID,
@@ -21,9 +28,57 @@ const ChatGrant = AccessToken.ChatGrant
 
 const app = express()
 
-const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
+//initializing sockets
+
+app.get('/', function(req, res){
+    res.send('<h2>hello world </h2>');
+});
+
+var http = require('http').Server(app);
+
+
+var io = require('socket.io')(http);
+
+
+io.on('connection', socket => {
+    console.log('New client connected')
+    connectCounter++; 
+    socket.on("someoneConnected", () => {
+        io.emit("connectCounter", connectCounter)
+        console.log(connectCounter)
+    })
+
+    socket.on('disconnect', () => {
+        connectCounter--;
+        // socket.on("someoneConnected", () => {
+        //     io.emit("connectCounter", connectCounter)
+        //     console.log(connectCounter)
+        
+        
+  console.log(connectCounter)
+  console.log('user disconnected')
+})
+})
+    
+    // console.log(socket.handshake)
+    
+// io.on('connection', socket => {
+//     socket.on('hello', data => {
+//         socket.join(data.hashID)
+//         client.incr(data.hashID, (err, count) => {
+//             io.to(data.hashID).emit
+//             socket.emit('stats', count)
+
+//         })
+//     })
+
+    
+    // disconnect is fired when a client leaves the server
+    
+    
 
 //Setting up sessions / middleware
+
 app.use(
     sessions({
         secret: SESSION_SECRET, 
@@ -31,22 +86,19 @@ app.use(
         saveUninitialized: false,
         maxAge: null
     })
-    );
+);
+
 app.use(express.json())
-app.use(express.static( `${__dirname}/../build` ));
+const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
+
+// http.listen(4001, () => console.log(`Listening on port 4001`))
 
 
 massive(DB_CONNECTION).then(db => {
     app.set('db', db)
     http.listen(SERVER_PORT, () => console.log(`The ship is sailing from port ${SERVER_PORT}`))
 })
-    
-//initializing socket 
-app.get('/', function(req, res){
-    res.send('<h1>Hello world</h1>');
-});
 
-var http = require('http').Server(app);
 
 //moltin
 app.get('/products', (req, res) => {
@@ -89,12 +141,16 @@ app.post('/products', (req, res) => {
       })
 })
 
+
+
+
 //opentok
 app.get('/createSession', (req, res) => {
     opentok.createSession({mediaMode:"routed"}, function(error, session) {
     if (error) {
         console.log("Error creating session:", error)
     } else {
+        console.log(session)
         const sessionId = session.sessionId;
         res.status(200).send(sessionId);
     }
@@ -104,6 +160,7 @@ app.get('/createSession', (req, res) => {
 app.get('/generateToken/:sid', (req, res) => {
     const sessionId = req.params.sid
     const token = opentok.generateToken(sessionId)
+    console.log(token)
     res.status(200).send(token)
 })
 
@@ -112,6 +169,7 @@ app.get('/startPublish', (req, res) => {
         if (error) {
             console.log("Error creating session:", error)
         } else {
+            console.log(session)
             const sessionId = session.sessionId;
             const token = opentok.generateToken(sessionId)
             const apiKey = OT_API_KEY
@@ -151,6 +209,7 @@ app.get('/startBroadcast/:sid', (req, res) => {
             res.status(500).send('There was an error')
         } else {
             app.set('broadcastID', broadcast.id)
+            console.log('broadcast object from startBroadcast', broadcast)
             res.json(broadcast)
         }
     })
@@ -164,6 +223,7 @@ app.get('/stopBroadcast', (req, res) => {
             res.status(500).send('There was an error stopping the broadcast')
         } else {
             app.set('broadcastID', null)
+            console.log('broadcast object from stopBroadcast', broadcast)
             res.json(broadcast)
         }
     })
@@ -175,6 +235,7 @@ app.post('/startArchive', (req, res) => {
         if(error){
             return res.status(400).send('there was an error starting the archive')
         } else {
+            console.log('start archive', archive)
             res.json(archive)
         }
     })
@@ -189,6 +250,7 @@ app.get('/stopArchive', (req, res) => {
         if(error){
             return res.status(400).send('there was an error stopping the archive')
         } else {
+            console.log('stop archive', archive)
             res.json(archive)
         }
     })
@@ -205,7 +267,6 @@ app.post('/admin/register', ctrlm.addMerchant)
 
 //Creating Stream
 app.post('/admin/newStream', streamc.createStream)
-app.get('/homeStreams', streamc.getHomeStreams)
 
 //moltin
 app.get('/products', (req, res) => {
@@ -265,3 +326,40 @@ app.get('/token', function (req, res) {
         jwt: token.toJwt()
     })
 })
+
+
+//Amazon
+
+const aws = require('aws-sdk');
+
+app.get('/api/signs3', (req, res) => {
+    aws.config = {
+      // region: 'us-west-1',
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    };
+  
+    const s3 = new aws.S3();
+    const fileName = req.query['file-name'];
+    const fileType = req.query['file-type'];
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: 'public-read',
+    };
+  
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
+      };
+  
+      return res.send(returnData);
+    });
+  })

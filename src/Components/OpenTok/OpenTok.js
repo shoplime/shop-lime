@@ -53,7 +53,8 @@ class OpenTok extends Component {
     // }
 
     startBroadcast = () => {
-        const {streamName, product, sessionId} = this.props; 
+        const {streamName, product, sessionId, imgUrl} = this.props;
+         
         axios
             .get(`/startBroadcast/${this.props.sessionId}`)
             .then(res => {
@@ -65,8 +66,10 @@ class OpenTok extends Component {
                     hls: res.data.broadcastUrls.hls,
                     broadcast_id: res.data.id,
                     status: 'live',
-                    created_at: res.data.createdAt
+                    created_at: res.data.createdAt,
+                    url: imgUrl
                     })
+
             })
             .catch(err => {
             console.log(err);
@@ -118,7 +121,7 @@ class OpenTok extends Component {
     }
 
     startLivestream = () => {
-        const {streamName, product, sessionId} = this.props; 
+        const {streamName, product, sessionId, imgUrl} = this.props; 
         axios
             .get(`/startBroadcast/${this.props.sessionId}`)
             .then(res => {
@@ -130,7 +133,8 @@ class OpenTok extends Component {
                         hls: res.data.broadcastUrls.hls,
                         broadcast_id: res.data.id,
                         status: 'live',
-                        created_at: res.data.createdAt
+                        created_at: res.data.createdAt,
+                        url: imgUrl
                         })
                 })
                 .then(() => {
