@@ -11,7 +11,7 @@ import * as api from '../../moltin';
 
 const BuyBox = (props) => {
     
-    const {openCheckout, handleOpenCheckout, heroID} = props;
+    const {openCheckout, handleOpenCheckout, heroID, reRender, toggleCheckout} = props;
 
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 
@@ -22,7 +22,7 @@ const BuyBox = (props) => {
        if(heroID){
            getImage()
        }     
-    }, [heroID])
+    }, [heroID, openCheckout])
     const getImage = async () => {
         const mProduct = await api.GetProduct(heroID)
         await setProductDetails(mProduct) 
@@ -31,9 +31,10 @@ const BuyBox = (props) => {
         await setPrice(mProduct.data.price[0].amount)
     }
    
-     const addToCart = (id, quantity) => {
-        // api.AddCart(id, quantity)
-        handleOpenCheckout(!openCheckout)
+     const addToCart = async (id, quantity) => {
+       await api.AddCart(id, quantity)
+    //    reRender()
+      if (openCheckout===false){ handleOpenCheckout(!openCheckout) }
     }
     
     return (
@@ -105,7 +106,7 @@ const BuyBox = (props) => {
                 <p>${price/100}</p>
                 {/* <Button onClick={() => handleOpenCheckout(!openCheckout)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'></Button> */}
                     
-                <Button onClick={addToCart}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
+                <Button onClick={()=>addToCart(props.heroID,1)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
                 </Button>
                 

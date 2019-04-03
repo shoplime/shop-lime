@@ -31,11 +31,16 @@ const styles = theme => ({
 });
 
 function SimpleExpansionPanel(props) {
-    const { classes, openCheckout, handleOpenCheckout } = props; 
+    const { classes, openCheckout, handleOpenCheckout, toggleCheckout } = props;
     const [complete, toggleComplete] = useState(false);
+    const [opened, setOpened] = useState(false);
     const toggleSuccess = () => {
         toggleComplete(complete === false ? true : false)
-    }        
+    }
+    
+    useEffect(()=>{
+        setOpened(openCheckout)
+    })      
     return (
         <div className={classes.root}>
             <ExpansionPanel expanded={openCheckout} square className={classes.root}>
@@ -46,8 +51,9 @@ function SimpleExpansionPanel(props) {
                         sit amet blandit leo lobortis eget.
                     </Typography> */}
                     {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>:
-                    <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
+                    openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
 
+                    {/* {openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>} */}
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         </div>

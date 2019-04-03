@@ -21,6 +21,7 @@ class ProductsContainer extends Component {
 
     if (!fetched) {
       this.props.GetProducts();
+      console.log(this.props)
     }
   }
 

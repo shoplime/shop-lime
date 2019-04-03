@@ -150,7 +150,6 @@ class AddProduct extends Component {
             </ExpansionPanel>
           ))
         }
-        <button onClick={() => {this.props.handleNext()}}>next</button>
       </div>
     )
   }

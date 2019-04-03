@@ -38,7 +38,7 @@ class Videos extends React.Component {
     
 
     render() {
-        const { classes, user, handleOpen, handleError, pastStreams } = this.props;
+        const { classes, user, handleOpen, handleError, pastStreams } = this.props; 
         const { spacing } = this.state;
         console.log('past streams', pastStreams)
 

@@ -45,6 +45,7 @@ const AllProducts = props => {
                       className="product-image"
                       style={{ background: background }}>
                       <ProductImage product={product} products={products} />
+                      <p>{product.id}</p>
                     </div>
                     <div className="overlay">
                       <div
