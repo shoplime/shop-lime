@@ -55,10 +55,14 @@ class Admin extends React.Component {
 
 componentWillMount(){
     const {id, admin} = this.props;
-    if(!id){
+    if(!admin){
         axios.get('/user/fetchuser')
         .then(res => {
+          if(res.data.admin === true){
             this.props.updateUser(res.data);
+          } else {
+            this.props.history.push('/login');
+          }
         })
         .catch(err => {
             this.props.history.push('/login');
