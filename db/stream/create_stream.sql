@@ -5,7 +5,8 @@ INSERT INTO streams (
     hls,
     broadcast_id,
     status,
-    created_at
+    created_at,
+    url
 ) values (
     ${name},
     ${session_id},
@@ -13,5 +14,6 @@ INSERT INTO streams (
     ${hls},
     ${broadcast_id},
     ${status},
-    ${created_at}
+    ${created_at},
+    ${url}
 );
