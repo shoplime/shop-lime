@@ -19,8 +19,7 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
-import Dashboard from '../Dashboard/Dashboard'
-const Nav = React.lazy(() => import('../Nav/Nav'))
+import logo from './shoplime-logo.png'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
@@ -124,7 +123,7 @@ const Home = () => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
-
+    console.log('Past Streams9', pastStreams[0])
     return (
         <div>
             <div className='header-container'>
@@ -138,7 +137,9 @@ const Home = () => {
                         <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                             {/* <MenuIcon></MenuIcon> */}
                             <Typography variant="h5">
-                                SHOPLIME
+                                <div className='logo-container'>
+                                    <img src={logo} alt=''/>
+                                </div>
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
@@ -186,7 +187,7 @@ const Home = () => {
                         }
                         <div className='overlay'>
                             <div className='title-overlay'>
-                                <h3 style={{margin: '10px 15px'}}>The World's Greatest Lime Squeezer</h3>
+                                {pastStreams[0] && <h3 style={{margin: '10px 15px'}}>{pastStreams[0].name}</h3>}
                                 {live &&
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <div className='live-pulse'></div>
@@ -195,7 +196,7 @@ const Home = () => {
                                 
                             </div>
                             <div className='subtitle-overlay'>
-                                <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p>
+                                {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
                             </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                             <div className='right-overlay'>

@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     width: 100%;
     height: auto;
     padding: 40px 0px;
@@ -15,7 +15,8 @@
     color: black;
     object-fit: fill; 
     .img-zoom{
-        height: 200px;   
+        height: 200px; 
+        // width: 80%;  
     }
     h3{
         margin: 0;
@@ -40,6 +41,7 @@
 .image-item{
     display: flex;
     flex-direction: row;
+    // width: 80%
     // align-items: flex-start;
     // justify-content: center;
 }
@@ -61,3 +63,4 @@
         // width: 100%;   
     }
 }
+

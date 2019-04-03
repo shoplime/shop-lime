@@ -39,7 +39,7 @@ const BuyBox = (props) => {
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
-            <Grid item style={{ marginRight: '4%' }}>
+            <Grid item style={{ marginRight: '0' }}>
                 <div className='image-item'>
                 {/* <div className='thumbnail-container'>
                         <ImageZoom zoomMargin='40'
@@ -99,7 +99,7 @@ const BuyBox = (props) => {
 
             </div>
             </Grid>
-            <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
+            <Grid item className='prod-desc' style={{marginLeft: '0'}}>
                 <p></p>
                 {productDetails.data && <h3>{productDetails.data.name}</h3>}
                 <p>${price/100}</p>
