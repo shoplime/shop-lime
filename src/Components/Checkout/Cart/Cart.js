@@ -23,6 +23,9 @@ class Cart extends Component{
         this.props.GetProducts();
         this.props.GetCartItems();
     }
+    // componentDidUpdate(prevProps){
+    //     if(this.props.)
+    // }
 
     render(){
         const { cart, products } = this.props;
@@ -70,7 +73,7 @@ class Cart extends Component{
             } else{
                 return(
                     <div>
-                        <CartHeader/>
+                        {/* <CartHeader/> */}
                         <p>Loading...</p>
                     </div>
                 )

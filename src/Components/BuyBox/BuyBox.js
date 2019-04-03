@@ -34,7 +34,7 @@ const BuyBox = (props) => {
      const addToCart = async (id, quantity) => {
        await api.AddCart(id, quantity)
     //    reRender()
-       handleOpenCheckout(!openCheckout)
+      if (openCheckout===false){ handleOpenCheckout(!openCheckout) }
     }
     
     return (

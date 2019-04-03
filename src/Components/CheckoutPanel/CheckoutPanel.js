@@ -51,8 +51,9 @@ function SimpleExpansionPanel(props) {
                         sit amet blandit leo lobortis eget.
                     </Typography> */}
                     {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>:
-                    <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
+                    openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
 
+                    {/* {openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>} */}
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         </div>
