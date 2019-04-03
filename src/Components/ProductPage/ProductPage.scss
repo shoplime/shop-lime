@@ -1,6 +1,6 @@
 @import './../variables';
 
-.body-container{
+.body-container1{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,31 +13,31 @@
   }
 }
 
-.player-container {
+.player-container1 {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   position: relative;
   margin-top: 4%;
-  margin-bottom: 20%;
+  // margin-bottom: 20%;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   background-color: white;
   overflow: hidden;
 }
-.right-side-video{
+.right-side-video1{
     flex-direction: column;
     width: 50%;
 }
 
-.player-wrapper {
+.player-wrapper1 {
   background-color: black;
   position: relative;
   min-height: 33vw;
   width: 100%;
   overflow: hidden;
 }
-.recently-live{
+.recently-live1{
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -54,7 +54,7 @@
   }
 }
 
-.chat-wrapper {
+.chat-wrapper1 {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
 }
 
-.overlay {
+.overlay1 {
   position: absolute;
   top: 0;
   height: 100%;
@@ -75,7 +75,7 @@
   justify-content: space-between;
 }
 
-.title-overlay {
+.title-overlay1 {
   color: white;
   width: 100%;
   position: absolute;
@@ -85,7 +85,7 @@
   align-items: center;
 }
 
-.subtitle-overlay {
+.subtitle-overlay1 {
   color: white;
   width: 100%;
   position: absolute;
@@ -95,7 +95,7 @@
   align-items: center;
 }
 
-.left-overlay {
+.left-overlay1 {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -103,14 +103,14 @@
   align-items: space-between;
 }
 
-.right-overlay {
+.right-overlay1 {
   display: flex;
   width: 100%;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.icon-button {
+.icon-button1 {
   background: none;
   border: none;
   align-self: flex-end;
@@ -124,11 +124,11 @@
   color: #ffffff;
 }
 
-.react-player {
+.react-player1 {
   align-self: center;
 }
 
-.live-pulse {
+.live-pulse1 {
   margin-right: 5px;
   display: block;
   width: 15px;
