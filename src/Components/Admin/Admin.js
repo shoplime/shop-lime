@@ -54,21 +54,25 @@ class Admin extends React.Component {
 }
 
 componentWillMount(){
-    const {id, admin} = this.props;
-    if(!id){
-        axios.get('/user/fetchuser')
-        .then(res => {
-            this.props.updateUser(res.data);
-        })
-        .catch(err => {
-            this.props.history.push('/login');
-        })
-    } else if (admin === false) {
-      this.props.history.push('/login');
-      alert('Please log in with an admin account')
-    } else {
+  const {id, admin} = this.props;
+  if(!admin){
+      axios.get('/user/fetchuser')
+      .then(res => {
+        if(res.data.admin === true){
+          this.props.updateUser(res.data);
+        } else {
+          this.props.history.push('/login');
+        }
+      })
+      .catch(err => {
+          this.props.history.push('/login');
+      })
+  } else if (admin === false) {
+    this.props.history.push('/login');
+    alert('Please log in with an admin account')
+  } else {
 
-    }
+  }
 }
 
 componentDidMount(){
