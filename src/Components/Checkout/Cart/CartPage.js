@@ -11,15 +11,18 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../../mui_theme';
+import CompleteCart from '../Checkout/stepper/CompleteCart'
 
 import { GetProducts } from '../../../ducks/products';
 import { GetCartItems } from '../../../ducks/cart';
+
 
 class Cart extends Component{
     constructor(props){
         super(props)
         this.state = {
             toggleCheckout: false,
+            toggleComplete: false
         }       
     }    
     componentDidMount() {
@@ -31,9 +34,14 @@ class Cart extends Component{
             toggleCheckout: !this.state.toggleCheckout
         })
     }
+    toggleComplete = () => {
+        this.setState({
+            toggleComplete: !this.state.toggleComplete
+        })
+    }
     render(){
         const { cart, products } = this.props;
-        const { toggleComplete, toggleCheckout, openCheckout } = this.props;
+        const { toggleCheckout, openCheckout } = this.props;
 
         if (
             cart.fetched === true &&
@@ -48,15 +56,21 @@ class Cart extends Component{
                                 <AppBar color="secondary">
                                     <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                                         {/* <MenuIcon></MenuIcon> */}
-                                        <Typography variant="h5">
-                                            SHOPLIME
+                                        <Typography variant="h5" id='shopLime'>
+                                            <Link to='/'>SHOPLIME</Link>
+                                        </Typography>
+                                        <Typography variant="h3" style={{fontSize: '18px', marginLeft: '600px', textDecoration: 'none'}} id='viewLive'>
+                                            <Link to='/'>LIVE</Link>
                                         </Typography>
                                     </Toolbar>
                                 </AppBar>
                             </MuiThemeProvider>
-                            {this.state.toggleCheckout? 
+                            {(this.state.toggleComplete === true)
+                               ? <div className='complete-2'><CompleteCart /></div>
+                            
+                                :this.state.toggleCheckout? 
                                 <div className='CheckoutForm-2'>
-                                    <CartPageCheckout toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout} />
+                                    <CartPageCheckout toggleComplete={this.toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout} />
                                 </div>:
                                 <div>
                                     <div className='cart-header-2'>

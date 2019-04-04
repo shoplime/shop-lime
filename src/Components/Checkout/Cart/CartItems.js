@@ -75,7 +75,6 @@ class CartItems extends Component{
             return product.id === item.product_id;
           });
           var product = productArray[0];
-
           var background = product.background_colour;
 
 
@@ -113,6 +112,7 @@ class CartItems extends Component{
                     </button>
                     <input
                       className="quantity"
+                      id='quantity'
                       name="number"
                       type="number"
                       min="1"
