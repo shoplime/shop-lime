@@ -192,3 +192,38 @@
   color:  #388e3c;
   font-family: 'Montserrat';
 }
+.live-pulse-2 {
+  // margin-right: 5px;
+  // display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: red;
+  box-shadow: 0 0 0 darkred;
+  animation: pulse 2s infinite;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+    box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
