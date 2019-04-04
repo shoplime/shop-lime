@@ -10,6 +10,7 @@ function mapStateToProps(state) {
 }
 
 class CartItems extends Component{
+
     render(){
         var cart_decrement = (ID, quantity) => {
             this.props.dispatch(dispatch => {

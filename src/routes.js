@@ -14,7 +14,7 @@ export default (
         <Route path= '/admin' component={Admin} />
         <Route path= '/cart' component={CartPage} />
         <Route path= '/checkout' component={CheckoutContainer} />
-        <Route path= '/mobilehome' component={MobileHome} />  
+        {/* <Route path= '/mobilehome' component={MobileHome} />   */}
         <Route path= '/login' component={Login} />
         <Route path= '/product' component={ProductPage} />
     </Switch>

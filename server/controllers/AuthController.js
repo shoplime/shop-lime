@@ -67,7 +67,6 @@ module.exports = {
             
             req.session.destroy();
             res.sendStatus(200)
-
         }
         catch(err){
             console.log(err)

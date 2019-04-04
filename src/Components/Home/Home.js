@@ -19,7 +19,7 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
-import Dashboard from '../Dashboard/Dashboard'
+import ViewCounter from '../ViewCounter/ViewCounter'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -186,16 +186,18 @@ const Home = () => {
                         }
                         <div className='overlay'>
                             <div className='title-overlay'>
-                                <h3 style={{margin: '10px 15px'}}>The World's Greatest Lime Squeezer</h3>
+                                <div className='title-wrapper'>
+                                    <h3 style={{margin: '0'}}>The World's Greatest Lime</h3>
+                                </div>
                                 {live &&
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <div className='live-pulse'></div>
                                     <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
                                 </div>}
-                                
                             </div>
                             <div className='subtitle-overlay'>
-                                <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p>
+                                {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
+                                <ViewCounter />
                             </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                             <div className='right-overlay'>
@@ -221,9 +223,6 @@ const Home = () => {
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
                 </div>
-        <div>
-            <Dashboard/>
-        </div>
         </div>
     )
 }
