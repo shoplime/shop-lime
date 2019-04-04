@@ -212,8 +212,6 @@ class OpenTok extends Component {
                         </OTSession>
                     </div>
                 </div>
-                <div>
-                </div>
             </div>
         );
     }

@@ -315,7 +315,6 @@ class Admin extends React.Component {
         )}
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>Preview</Typography>
             <OpenTok
               apiKey={this.state.apiKey}
               sessionId={this.state.sessionId}
