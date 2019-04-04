@@ -15,12 +15,9 @@ const styles = theme => ({
         boxShadow: 'none',
         textAlign: 'left',
         marginBottom: '10px', 
-        // marginTop: '10px',
         marginRight: '0px',
         padding: '0px 5%',
-        
-        
-       
+ 
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),

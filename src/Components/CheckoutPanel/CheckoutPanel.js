@@ -32,7 +32,6 @@ const styles = theme => ({
 function SimpleExpansionPanel(props) {
     const { classes, openCheckout, handleOpenCheckout, reRender } = props;
     const [complete, toggleComplete] = useState(false);
-    // const [opened, setOpened] = useState(false);
     const toggleSuccess = () => {
         toggleComplete(complete === false ? true : false)
     }
@@ -44,11 +43,6 @@ function SimpleExpansionPanel(props) {
         <div className={classes.root}>
             <ExpansionPanel expanded={openCheckout} square className={classes.root}>
                 <ExpansionPanelDetails className={classes.details}>
-                    
-                    {/* <Typography style={{color: 'white'}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                    </Typography> */}
                     {(complete)?<Complete toggleCheckout={handleOpenCheckout} openCheckout={openCheckout} reRender={reRender}/>:
                     openCheckout && <Cart toggleComplete={toggleSuccess} toggleCheckout={handleOpenCheckout} openCheckout={openCheckout}/>}
                 </ExpansionPanelDetails>

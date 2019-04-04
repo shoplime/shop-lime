@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     width: 100%;
     height: auto;
     padding: 40px 0px;
@@ -15,7 +15,8 @@
     color: black;
     object-fit: fill; 
     .img-zoom{
-        height: 200px;   
+        height: 200px; 
+        // width: 80%;  
     }
     h3{
         margin: 0;
@@ -29,8 +30,6 @@
     font-weight: 800;
     letter-spacing: 1.1px;
     font-size: 1.4em;
-    // margin-left: 85px;
-    // margin-right: 85px;
     p{
        margin: 5px 0px;
        font-weight: 400; 
@@ -40,24 +39,18 @@
 .image-item{
     display: flex;
     flex-direction: row;
-    // align-items: flex-start;
-    // justify-content: center;
 }
 .thumbnail-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    // object-fit: scale-down;
     width: 50px;
     padding: 20px 0px;
-    // height: 80px;
 
     .thumbnails{
         max-height: 100px; 
-        max-width: 100%;
-        // border: 1px solid black; 
-        // object-fit: cover;
-        // width: 100%;   
+        max-width: 100%;  
     }
 }
+

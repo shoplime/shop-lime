@@ -2,7 +2,6 @@ import React, { useState, Suspense, useEffect, memo } from 'react'
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-import Chat from './../Chat/Chat'
 import './ProductPage.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
@@ -15,14 +14,13 @@ import LoginButton from '../Home/Button'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
-import { Chat as ChatIcon } from '@material-ui/icons'
-import Close from '@material-ui/icons/Close'
+import logo from '../Home/shoplime-logo.png'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 import { Link } from 'react-router-dom'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
-const Home = (props) => {
+const ProductPage = (props) => {
 
     const [checkout, setCheckout] = useState(false);
     const [openCheckout, handleOpenCheckout] = useState(false);
@@ -41,32 +39,33 @@ const Home = (props) => {
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([])
     const [reRender, reRenderPage] = useState(false)
+    const [streamID, setStreamID] = useState('')
+    const [streamName, setStreamName] = useState('')
 
     const [heroID, setHeroID] = useState('')
-
+    
     useEffect(() => {
+        const {productid, streamid, name} = props.match.params
         getUser()
-    }, [user]);
-    useEffect(() => {
+        setHeroID(productid)
+        setStreamID(streamid)
+        setStreamName(name)
         axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
-                    const { name, product_id, hls } = res.data[0]
+                    const { hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
-                    setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
 
                 } else {
-                    const { name, archive_id, product_id } = res.data[0]
-                    setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
+
                     setLive(false)
-                    setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
 
                 }
             })
-    }, [])
+    }, [heroID, streamID, props.match.params])
     console.log(pastStreams)
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : null)
@@ -134,12 +133,11 @@ const Home = (props) => {
                 <MuiThemeProvider theme={theme}>
                     <AppBar color="secondary">
                         <Toolbar style={{ justifyContent: 'space-between', padding: '0px 20%' }}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5" id='shopLime'>
-                                <Link to='/'>SHOPLIME</Link>
-                            </Typography>
-                            <Typography variant="h3" style={{fontSize: '18px', marginLeft: '600px', textDecoration: 'none'}} id='viewLive'>
-                                <Link to='/'>LIVE</Link>
+                            <div className='logo-container'>
+                                <Link to='/'><img src={logo} alt='' /></Link>
+                            </div>
+                            <Typography variant="h3" style={{fontSize: '10px', marginLeft: '30%', textDecoration: 'none', padding: '5px', display: 'flex', flexDirection: 'row'}} id='viewLive'>
+                                <Link to='/' style={{fontSize: '13px', color: 'red'}}>GO TO LIVE STREAM <div className='live-pulse-2' style={{float: 'right', marginTop: '2px', marginLeft: '7px'}}></div></Link>
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
@@ -155,7 +153,7 @@ const Home = (props) => {
                             (live ?
                                 <ReactPlayer
                                     className='react-player1'
-                                    url={hls}
+                                    url={`https://lime-archive.s3.amazonaws.com/46286302/${streamID}/archive.mp4`}
                                     playing={true}
                                     loop={true}
                                     controls={false}
@@ -173,7 +171,7 @@ const Home = (props) => {
                                 :
                                 <ReactPlayer
                                     className='react-player1'
-                                    url={archive}
+                                    url={`https://lime-archive.s3.amazonaws.com/46286302/${streamID}/archive.mp4`}
                                     playing={true}
                                     loop={true}
                                     controls={false}
@@ -185,9 +183,9 @@ const Home = (props) => {
                                 />
                             )
                         }
-                        {/* <div className='overlay1'>
+                        <div className='overlay1'>
                             <div className='title-overlay1'>
-                                <h3 style={{ margin: '10px 15px' }}>The World's Greatest Lime Squeezer</h3>
+                                <h3 style={{ margin: '10px 15px' }}>{streamName}</h3>
                                 {live &&
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div className='live-pulse'></div>
@@ -195,39 +193,34 @@ const Home = (props) => {
                                     </div>}
 
                             </div>
-                            <div className='subtitle-overlay1'>
+                            {/* <div className='subtitle-overlay1'>
                                 <p style={{ margin: '0 17px', fontSize: '14px' }}>by <span style={{ fontWeight: 'bolder' }}>Nike</span></p>
-                            </div>
+                            </div> */}
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute' /> : <VolumeUp className='mute' />)}</button>
                             <div className='right-overlay1'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                {/* <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
+                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>} */}
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                     
-                        <div className='right-side-video1'>
-                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                        </div>
-                </div>
+                        
+                        <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
                         <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                         <ProductDesc heroID={heroID} />
+                        
+                </div>
                 <div className='recently-live1'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
                 <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams} />
+                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams} heroID={heroID} streamID={streamID} />
                 </Suspense>
 
-
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
             </div>
         </div>
     )
 }
 
-export default memo(Home)
+export default memo(ProductPage)
 
