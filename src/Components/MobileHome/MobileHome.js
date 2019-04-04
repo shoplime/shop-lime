@@ -34,43 +34,12 @@ class MobileHome extends Component{
             this.setState({
                 streams: res.data
             })
-            // const p_names = res.data.map(stream => {
-            //     return this.getName(stream.product_id)
-            // })
-            // const p_images = res.data.map(stream => {
-            //     return this.getImage(stream.product_id)
-            // })
-            // const p_prices = res.data.map(stream => {
-            //     return this.getPrice(stream.product_id)
-            // })
-            // this.setState({
-            //     prodNames: p_names,
-            //     prodImages: p_images,
-            //     prodPrices: p_prices
-            // })
             res.data.forEach(async (stream) => {
                 this.getProductInfo(stream.product_id)
             })
             console.log(this.state)
         })
     }
-
-    // getName = async (product) => {
-    //     console.log('moltin product hit')
-    //     const mProduct = await api.GetProduct(product)
-    //     console.log(mProduct.data.name)
-    //     return mProduct.data.name
-    // }
-    // getImage = async (product) => {
-    //     console.log('moltin product hit')
-    //     const mProduct = await api.GetProduct(product)
-    //     return mProduct.included.main_images[0].link.href
-    // }
-    // getPrice = async (product) => {
-    //     console.log('moltin product hit')
-    //     const mProduct = await api.GetProduct(product)
-    //     return mProduct.data.price[0].amount
-    // }
 
     getProductInfo = async (product) => {
         console.log('moltin hit')
@@ -81,16 +50,6 @@ class MobileHome extends Component{
         const newImages = [...prodImages, mProduct.included.main_images[0].link.href]
         const newPrices = [...prodPrices, mProduct.data.price[0].amount]
         console.log(newNames, newImages, newPrices)
-
-        // const newName = mProduct.data.name
-        // const newImage = mProduct.included.main_images[0].link.href
-        // const newPrice = mProduct.data.price[0].amount
-        // console.log(newName, newImage, newPrice)
-        // await this.setState({
-        //     prodNames: [...this.state.names, newName],
-        //     prodImages: [...this.state.images, newImage],
-        //     prodPrices: [...this.state.prices, newPrice]
-        // })
 
         this.setState({
             prodNames: newNames,

@@ -1,3 +1,6 @@
+const Filter = require('bad-words')
+const filter = new Filter();
+
 module.exports = {
     
     //MIKE'S LOGIC
@@ -39,9 +42,14 @@ module.exports = {
         else{
             return true
         }
-    }
+    },
     
     //JUSTIN'S LOGIC
-    
+    validatePrice: (price) => {
+        return (price/100).toFixed(0)
+    },
+    validateWordFilter: (word) => {
+        return filter.clean(word)
+    }
 
 }

@@ -1,4 +1,4 @@
-import {validateEmail, validatePassword, handleReset, validatePayment} from './AuthLogic'
+import {validateEmail, validatePassword, handleReset, validatePayment, validatePrice, validateWordFilter} from './AuthLogic'
 
 describe('Valid emails', () => {
 
@@ -55,4 +55,31 @@ describe('Valid Payment', () => {
         let result = validatePayment(1234567890);
         expect(result).toBeFalsy();
     })
+})
+
+describe('Format Price from Cents', () => {
+    test('Should round up to 0 decimal places', () => {
+        let result = validatePrice(12365)
+        expect(result).toEqual('124')
+    })
+    test('Should keep at 0 decimal places', () => {
+        let result = validatePrice(12300)
+        expect(result).toEqual('123')
+    })
+    test('Should round down 0 decimal places', () => {
+        let result = validatePrice(12325)
+        expect(result).toEqual('123')
+    })
+})
+
+describe('Filter Bad Words', () => {
+    test('Bad Word Filtered', () => {
+        let result = validateWordFilter('ahole')
+        expect(result).toEqual('*****')
+    })
+    test('Good Word Not Filtered', () => {
+        let result = validateWordFilter('DevMountain')
+        expect(result).toEqual('DevMountain')
+    })
+    
 })
