@@ -74,10 +74,10 @@ const Login = (props) => {
     const [loginError, handleError] = useState('')
     
     const login = async () => {
-        console.log(email, password)
+       
         await axios.post('/user/login', {email, password})
             .then(res => {
-                console.log(res.data)
+               
                 props.updateUser(res.data)
                 props.history.push('/admin');
             })

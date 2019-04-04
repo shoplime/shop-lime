@@ -1,11 +1,9 @@
 import React, { useState, useEffect, Suspense, memo } from 'react'
-import tileData from './TileData';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import './Videos.scss'
-import { userInfo } from 'os';
-
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
     root: {
@@ -23,21 +21,19 @@ const styles = theme => ({
 class Videos extends React.Component { 
     state = {
         spacing: '16',
-        videos: []
+        videos: [],
+        product_id: ''
     };
-    getVideos = () => {
-        // axios.get
-    }
     handleChange = key => (event, value) => {
         this.setState({
             [key]: value,
         });
     };
-    handleClick = () => {
-
+    handleClick = (stream) => {
+        this.props.history.push(`/${stream.product_id}/${stream.archive_id}/${stream.name}`)
+        window.scrollTo(0, 0)   
     }
-    
-    
+
     
     render() {
         const { classes, user, handleOpen, handleError, pastStreams } = this.props; 
@@ -54,9 +50,9 @@ class Videos extends React.Component {
                                     user
                                     ?
                                     <div >
-                                        <button className='video-card' >
-                                             <img className='img' src={stream.url} alt=''/>
-                                        </button>
+                                            <button onClick={() => this.handleClick(stream)} className='video-card'>
+                                             <img className='img' src={stream.url} alt=''/> 
+                                             </button>
                                         <div className='video-details'>
                                                 <p>{stream.name}</p>
                                         </div>
@@ -84,4 +80,4 @@ Videos.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Videos);
+export default withStyles(styles)(withRouter(Videos));

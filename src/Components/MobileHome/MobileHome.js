@@ -21,7 +21,6 @@ class MobileHome extends Component{
             loginError: '',
             user: false,
             streams: [],
-            productDetails: {},
             prodNames: [],
             prodImages: [],
             prodPrices: []
@@ -35,7 +34,20 @@ class MobileHome extends Component{
                 streams: res.data
             })
             res.data.forEach(async (stream) => {
-                this.getProductInfo(stream.product_id)
+                await this.getProductInfo(stream.product_id)
+                .then((mProduct) => {
+                    const newStreams = [...this.state.streams]
+                    newStreams.map(stream => {
+                        if(stream.product_id === mProduct.data.id){
+                            return Object.assign(stream, {pName: mProduct.data.name, pImg: mProduct.included.main_images[0].link.href, pPrice: mProduct.data.price[0].amount})
+                        } else {
+                            return stream
+                        }
+                    })
+                    this.setState({
+                        streams: newStreams
+                    })
+                })
             })
             console.log(this.state)
         })
@@ -43,21 +55,8 @@ class MobileHome extends Component{
 
     getProductInfo = async (product) => {
         console.log('moltin hit')
-        const { prodNames, prodImages, prodPrices } = this.state
-        console.log(prodNames, prodImages, prodPrices)
         const mProduct = await api.GetProduct(product)
-        const newNames = [...prodNames, mProduct.data.name]
-        const newImages = [...prodImages, mProduct.included.main_images[0].link.href]
-        const newPrices = [...prodPrices, mProduct.data.price[0].amount]
-        console.log(newNames, newImages, newPrices)
-
-        this.setState({
-            prodNames: newNames,
-            prodImages: newImages,
-            prodPrices: newPrices
-        })
-        console.log(this.state)
-        return 'success'
+        return mProduct
     }
 
     render(){
@@ -67,7 +66,7 @@ class MobileHome extends Component{
                     {
                         this.state.streams.map((stream, index) => {
                             return(
-                                <MobileCard stream={stream} prodName={this.state.prodNames[index]} prodImage={this.state.prodImages[index]} prodPrice={this.state.prodPrices[index]} />
+                                <MobileCard stream={stream} />
                             )
                         })
                     }

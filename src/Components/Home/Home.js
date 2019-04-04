@@ -10,7 +10,6 @@ import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
@@ -19,10 +18,10 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import logo from './shoplime-logo.png'
 import ViewCounter from '../ViewCounter/ViewCounter'
 import MobileHome from './../MobileHome/MobileHome'
 import { BrowserView, MobileView } from 'react-device-detect'
-const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
@@ -54,14 +53,14 @@ const Home = () => {
        axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
-                    const { name, product_id, hls } = res.data[0]
+                    const { hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
                     
                 } else {
-                    const { name, archive_id, product_id } = res.data[0]
+                    const { archive_id,} = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
                     setHeroID(res.data[0].product_id)
@@ -123,7 +122,6 @@ const Home = () => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
-
     return (
         <div>
             <BrowserView>
@@ -137,10 +135,9 @@ const Home = () => {
                         <MuiThemeProvider theme={theme}>
                             <AppBar color="secondary">
                                 <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                                    {/* <MenuIcon></MenuIcon> */}
-                                    <Typography variant="h5">
-                                        SHOPLIME
-                                    </Typography>
+                                    <div className='logo-container'>
+                                        <img src={logo} alt='' />
+                                    </div>
                                     <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                                 </Toolbar>
                             </AppBar>
@@ -187,9 +184,7 @@ const Home = () => {
                                 }
                                 <div className='overlay'>
                                     <div className='title-overlay'>
-                                        <div className='title-wrapper'>
-                                            <h3 style={{margin: '0'}}>The World's Greatest Lime</h3>
-                                        </div>
+                                        {pastStreams[0] && <h3 style={{ margin: '10px 15px' }}>{pastStreams[0].name}</h3>}
                                         {live &&
                                         <div style={{display: 'flex', alignItems: 'center'}}>
                                             <div className='live-pulse'></div>
@@ -218,16 +213,12 @@ const Home = () => {
                             <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
                         </Suspense>
                         
-                        
-                        {/* <div>
-                            <button onClick={toggleCheckout}>Add to Cart</button>
-                            {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                        </div> */}
                         </div>
-                </div>
-            </BrowserView>
-            <MobileView><MobileHome /></MobileView>
-        </div>
+                    </div>
+                </BrowserView>
+                <MobileView><MobileHome /></MobileView>
+            </div>
+                
     )
 }
 

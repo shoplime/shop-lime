@@ -154,6 +154,13 @@
   box-shadow: 0 0 0 darkred;
   animation: pulse 2s infinite;
 }
+.logo-container{
+    width: 22%;
+    img{
+        width: 100%;
+        object-fit: contain;
+    }
+}
 
 @-webkit-keyframes pulse {
   0% {
