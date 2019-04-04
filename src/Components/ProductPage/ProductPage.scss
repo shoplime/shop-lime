@@ -15,12 +15,12 @@
 
 .player-container1 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   position: relative;
   margin-top: 4%;
-  // margin-bottom: 20%;
+  margin-bottom: 15%;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   background-color: white;
   overflow: hidden;
@@ -52,6 +52,13 @@
   @media(max-width: 768px){
     width: 80%
   }
+}
+.logo-container{
+    width: 22%;
+    img{
+        width: 100%;
+        object-fit: contain;
+    }
 }
 
 .chat-wrapper1 {

@@ -2,7 +2,6 @@ import React, { useEffect, useState, Suspense } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-// import ImageZoom from 'react-medium-image-zoom'
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import * as api from '../../moltin';
@@ -31,14 +30,14 @@ const BuyBox = (props) => {
    
      const addToCart = async (id, quantity) => {
        await api.AddCart(id, quantity)
-    //    reRender()
+    
       if (openCheckout===false){ handleOpenCheckout(!openCheckout) }
     }
     
     return (
 
         <Grid container spacing={40} justify='center' className="buybox">
-            <Grid item style={{ marginRight: '4%' }}>
+            <Grid item style={{ marginRight: '0' }}>
                 <div className='image-item'>
                 {/* <div className='thumbnail-container'>
                         <ImageZoom zoomMargin='40'
@@ -98,7 +97,7 @@ const BuyBox = (props) => {
 
             </div>
             </Grid>
-            <Grid item className='prod-desc' style={{marginLeft: '4%'}}>
+            <Grid item className='prod-desc' style={{marginLeft: '0'}}>
                 <p></p>
                 {productDetails.data && <h3>{productDetails.data.name}</h3>}
                 <p>${price/100}</p>
@@ -106,13 +105,7 @@ const BuyBox = (props) => {
                     
                 <Button onClick={()=>addToCart(props.heroID,1)}style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                     BUY NOW
-                </Button>
-                
-                    
-
-                
-
-                
+                </Button>            
             </Grid>
         </Grid>
     )

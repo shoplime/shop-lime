@@ -8,7 +8,7 @@ import MobileHome from './Components/MobileHome/MobileHome'
 import Login from './Components/Login/Login'
 import ProductPage from './Components/ProductPage/ProductPage'
 
-export default (
+export default ( 
     <Switch>
         <Route exact path= '/' component={Home} />
         <Route path= '/admin' component={Admin} />
@@ -16,6 +16,6 @@ export default (
         <Route path= '/checkout' component={CheckoutContainer} />
         <Route path= '/mobilehome' component={MobileHome} />  
         <Route path= '/login' component={Login} />
-        <Route path= '/product' component={ProductPage} />
+        <Route path= '/:productid?/:streamid?/:name?' component={ProductPage} />
     </Switch>
 )
