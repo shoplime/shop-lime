@@ -30,15 +30,8 @@ const app = express()
 
 //initializing sockets
 
-app.get('/', function(req, res){
-    res.send('<h2>hello world </h2>');
-});
-
 var http = require('http').Server(app);
-
-
 var io = require('socket.io')(http);
-
 
 io.on('connection', socket => {
     console.log('New client connected')
@@ -50,32 +43,11 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         connectCounter--;
-        // socket.on("someoneConnected", () => {
-        //     io.emit("connectCounter", connectCounter)
-        //     console.log(connectCounter)
-        
         
   console.log(connectCounter)
   console.log('user disconnected')
 })
 })
-    
-    // console.log(socket.handshake)
-    
-// io.on('connection', socket => {
-//     socket.on('hello', data => {
-//         socket.join(data.hashID)
-//         client.incr(data.hashID, (err, count) => {
-//             io.to(data.hashID).emit
-//             socket.emit('stats', count)
-
-//         })
-//     })
-
-    
-    // disconnect is fired when a client leaves the server
-    
-    
 
 //Setting up sessions / middleware
 
@@ -89,6 +61,7 @@ app.use(
 );
 
 app.use(express.json())
+app.use( express.static( `${__dirname}/../build` ) );
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 // http.listen(4001, () => console.log(`Listening on port 4001`))

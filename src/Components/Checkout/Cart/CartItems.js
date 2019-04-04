@@ -74,7 +74,6 @@ class CartItems extends Component{
             return product.id === item.product_id;
           });
           var product = productArray[0];
-
           var background = product.background_colour;
 
 

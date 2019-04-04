@@ -15,6 +15,7 @@ import theme from '../../../mui_theme';
 import { GetProducts } from '../../../ducks/products';
 import { GetCartItems } from '../../../ducks/cart';
 
+
 class Cart extends Component{
     constructor(props){
         super(props)
@@ -48,8 +49,11 @@ class Cart extends Component{
                                 <AppBar color="secondary">
                                     <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
                                         {/* <MenuIcon></MenuIcon> */}
-                                        <Typography variant="h5">
-                                            SHOPLIME
+                                        <Typography variant="h5" id='shopLime'>
+                                            <Link to='/'>SHOPLIME</Link>
+                                        </Typography>
+                                        <Typography variant="h3" style={{fontSize: '18px', marginLeft: '600px', textDecoration: 'none'}} id='viewLive'>
+                                            <Link to='/'>LIVE</Link>
                                         </Typography>
                                     </Toolbar>
                                 </AppBar>

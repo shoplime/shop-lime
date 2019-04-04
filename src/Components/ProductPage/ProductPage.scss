@@ -1,0 +1,194 @@
+@import './../variables';
+
+.body-container1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20%;
+  margin-top: 50px;
+  @media(max-width: 768px){
+    padding: 0;
+    margin-top: 0px;
+  }
+}
+
+.player-container1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  margin-top: 4%;
+  margin-bottom: 20%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  background-color: white;
+  overflow: hidden;
+}
+.right-side-video1{
+    flex-direction: column;
+    width: 50%;
+}
+
+.player-wrapper1 {
+  background-color: black;
+  position: relative;
+  min-height: 33vw;
+  width: 100%;
+  overflow: hidden;
+}
+.recently-live1{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-family: 'Montserrat';
+  color: #1b5e20;
+  border-bottom: 1px solid #1b5e20;
+  margin-bottom: 50px;
+  h3{
+    font-weight: 900;
+  }
+  @media(max-width: 768px){
+    width: 80%
+  }
+}
+
+.chat-wrapper1 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.65+100 */
+  background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+}
+
+.overlay1 {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-overlay1 {
+  color: white;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.subtitle-overlay1 {
+  color: white;
+  width: 100%;
+  position: absolute;
+  top: 35px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.left-overlay1 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: space-between;
+}
+
+.right-overlay1 {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.icon-button1 {
+  background: none;
+  border: none;
+  align-self: flex-end;
+  margin: 15px;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.chat-toggle, .mute {
+  color: #ffffff;
+}
+
+.react-player1 {
+  align-self: center;
+}
+
+.live-pulse1 {
+  margin-right: 5px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: red;
+  box-shadow: 0 0 0 darkred;
+  animation: pulse 2s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+    box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.7);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
+
+#viewLive :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+}
+#viewLive :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+
+}
+#shopLime :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+}
+#shopLime :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+}

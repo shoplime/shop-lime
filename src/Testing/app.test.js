@@ -6,11 +6,11 @@ describe('Valid emails', () => {
         let result = validateEmail('m.a@yahoo.com');
         expect(result).toBeTruthy();
     })
-    test('Should be false', () => {
+    test('Should be false if no @', () => {
         let result = validateEmail('michael');
         expect(result).toBeFalsy();
     })
-    test('Should be false', () => {
+    test('Should be false if no .com, etc', () => {
         let result = validateEmail('joe@gmail');
         expect(result).toBeFalsy();
     })
