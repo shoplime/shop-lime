@@ -123,7 +123,7 @@ app.get('/createSession', (req, res) => {
     if (error) {
         console.log("Error creating session:", error)
     } else {
-        console.log(session)
+        // console.log(session)
         const sessionId = session.sessionId;
         res.status(200).send(sessionId);
     }
@@ -133,7 +133,7 @@ app.get('/createSession', (req, res) => {
 app.get('/generateToken/:sid', (req, res) => {
     const sessionId = req.params.sid
     const token = opentok.generateToken(sessionId)
-    console.log(token)
+    // console.log(token)
     res.status(200).send(token)
 })
 
@@ -142,7 +142,7 @@ app.get('/startPublish', (req, res) => {
         if (error) {
             console.log("Error creating session:", error)
         } else {
-            console.log(session)
+            // console.log(session)
             const sessionId = session.sessionId;
             const token = opentok.generateToken(sessionId)
             const apiKey = OT_API_KEY
@@ -182,7 +182,7 @@ app.get('/startBroadcast/:sid', (req, res) => {
             res.status(500).send('There was an error')
         } else {
             app.set('broadcastID', broadcast.id)
-            console.log('broadcast object from startBroadcast', broadcast)
+            // console.log('broadcast object from startBroadcast', broadcast)
             res.json(broadcast)
         }
     })
@@ -196,7 +196,7 @@ app.get('/stopBroadcast', (req, res) => {
             res.status(500).send('There was an error stopping the broadcast')
         } else {
             app.set('broadcastID', null)
-            console.log('broadcast object from stopBroadcast', broadcast)
+            // console.log('broadcast object from stopBroadcast', broadcast)
             res.json(broadcast)
         }
     })
@@ -208,7 +208,7 @@ app.post('/startArchive', (req, res) => {
         if(error){
             return res.status(400).send('there was an error starting the archive')
         } else {
-            console.log('start archive', archive)
+            // console.log('start archive', archive)
             res.json(archive)
         }
     })
@@ -223,7 +223,7 @@ app.get('/stopArchive', (req, res) => {
         if(error){
             return res.status(400).send('there was an error stopping the archive')
         } else {
-            console.log('stop archive', archive)
+            // console.log('stop archive', archive)
             res.json(archive)
         }
     })

@@ -21,7 +21,6 @@ class MobileHome extends Component{
             loginError: '',
             user: false,
             streams: [],
-            productDetails: {},
             prodNames: [],
             prodImages: [],
             prodPrices: []
@@ -34,23 +33,20 @@ class MobileHome extends Component{
             this.setState({
                 streams: res.data
             })
-            console.log(res.data)
             res.data.forEach(async (stream) => {
                 await this.getProductInfo(stream.product_id)
                 .then((mProduct) => {
-                    const { prodNames, prodImages, prodPrices } = this.state
-                    console.log(prodNames, prodImages, prodPrices)
-                    const newNames = [...prodNames, mProduct.data.name]
-                    const newImages = [...prodImages, mProduct.included.main_images[0].link.href]
-                    const newPrices = [...prodPrices, mProduct.data.price[0].amount]
-                    console.log(newNames, newImages, newPrices)
-
-                    this.setState({
-                        prodNames: newNames,
-                        prodImages: newImages,
-                        prodPrices: newPrices,
+                    const newStreams = [...this.state.streams]
+                    newStreams.map(stream => {
+                        if(stream.product_id === mProduct.data.id){
+                            return Object.assign(stream, {pName: mProduct.data.name, pImg: mProduct.included.main_images[0].link.href, pPrice: mProduct.data.price[0].amount})
+                        } else {
+                            return stream
+                        }
                     })
-                    console.log(this.state)
+                    this.setState({
+                        streams: newStreams
+                    })
                 })
             })
             console.log(this.state)
@@ -70,7 +66,7 @@ class MobileHome extends Component{
                     {
                         this.state.streams.map((stream, index) => {
                             return(
-                                <MobileCard stream={stream} prodName={this.state.prodNames[index]} prodImage={this.state.prodImages[index]} prodPrice={this.state.prodPrices[index]} />
+                                <MobileCard stream={stream} />
                             )
                         })
                     }

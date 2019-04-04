@@ -19,7 +19,6 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
-import Dashboard from '../Dashboard/Dashboard'
 import { Link } from 'react-router-dom'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 

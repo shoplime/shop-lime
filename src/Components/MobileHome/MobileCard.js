@@ -13,10 +13,8 @@ import './MobileHome.scss'
 import ViewCounter from '../ViewCounter/ViewCounter';
 import MobileCheckout from  './../MobileCheckout/MobileCheckout'
 
-
 const MobileCard = (props) => {
-    const { archive_id, status, url, product_id, hls, name } = props.stream
-    const { prodName, prodImage, prodPrice} = props
+    const { archive_id, status, url, product_id, hls, name, pName, pImg, pPrice } = props.stream
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 
     const [playing, setPlaying] = useState(true);
@@ -126,11 +124,11 @@ const MobileCard = (props) => {
                     </div>
                     <div className='m-product-wrapper'>
                         <div className='m-img-wrapper'>
-                            <img src={prodImage} alt='Golden Gate Bridge' className='m-product-img'/>
+                            <img src={pImg} alt='Golden Gate Bridge' className='m-product-img'/>
                         </div>
                         <Grid item className='m-prod-desc'>
-                            {prodName && <h3 style={{textAlign: 'left'}}>{prodName}</h3>}
-                            <p>${(prodPrice/100).toFixed(0)}</p>
+                            {pName && <h3 style={{textAlign: 'left'}}>{pName}</h3>}
+                            <p>${(pPrice/100).toFixed(0)}</p>
                             <Button onClick={() => handleOpenCheckout(!openCheckout)} style={{ borderRadius: '0', backgroundColor: '#388e3c', marginTop: '20px', fontFamily: 'Montserrat'}} variant="contained" color="primary" size='large'>
                                 BUY NOW
                             </Button>
@@ -139,7 +137,7 @@ const MobileCard = (props) => {
                     {
                         openCheckout &&
                         <div className='checkout-modal'>
-                            <MobileCheckout />
+                            <MobileCheckout closeModal={handleOpenCheckout}/>
                         </div>
                     }
                     <div className='mobile-filler'></div>
