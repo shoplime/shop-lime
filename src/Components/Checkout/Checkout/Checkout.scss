@@ -22,8 +22,8 @@
 .cart-header {
     display: flex;
     justify-content: space-between;
-    width: 60%;
-    margin-left: 9%;
+    width: 55%;
+    margin-left: 25%;
     // border: solid black 1px;
 
 }
@@ -114,13 +114,13 @@
     width: 100%;
 }
 .complete button{
-    width: 17%;
+    width: 125px;
     height: 40px;
     background-color: #388e3c;
     font-family: 'Montserrat';
     color: white;
     border: none;
-    font-size: 20px;
+    font-size: 17px;
 }
 .cart-header-2 {
     margin-top: 100px;
@@ -130,7 +130,7 @@
     margin-left: 30%;
 }
 .cart-button{
-    width: 17%;
+    width: 20%;
     height: 40px;
     background-color: #388e3c;
     font-family: 'Montserrat';
@@ -141,4 +141,40 @@
 }
 .CheckoutForm-2{
     margin-top: 70px;
+}
+.complete-2{
+    margin-top: 70px;
+}
+.checkout-button{
+    width: 130px;
+    height: 40px;
+    background-color: #388e3c;
+    font-family: 'Montserrat';
+    color: white;
+    border: none;
+    font-size: 17px;
+    margin-top: 15px;
+}
+.cart-subtotal{
+    text-align: center;
+}
+.cart-checkout-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#quantity{
+    width:33px;
+    margin-left: 20px;
+}
+.cart-return{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat';
+    height: 40px;
+    margin-top: 15px;
+    width: 125px;
+    font-size: 20px;
+    letter-spacing: 1.5px;
 }

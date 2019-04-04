@@ -30,9 +30,14 @@
 .player-wrapper {
   background-color: black;
   position: relative;
-  min-height: 33vw;
+  // min-height: 32vw;
   width: 100%;
   overflow: hidden;
+}
+
+.react-player {
+  position: relative;
+  right: 20%
 }
 
 // .header-container{
@@ -81,6 +86,13 @@
   justify-content: space-between;
 }
 
+.title-wrapper {
+  margin: 12px 15px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
 .title-overlay {
   color: white;
   width: 100%;
@@ -95,7 +107,8 @@
   color: white;
   width: 100%;
   position: absolute;
-  top: 35px;
+  top: 45px;
+  margin: 12px 17px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -130,9 +143,6 @@
   color: #ffffff;
 }
 
-.react-player {
-  align-self: center;
-}
 
 .live-pulse {
   margin-right: 5px;

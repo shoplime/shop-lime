@@ -9,7 +9,6 @@ import BuyBox from '../BuyBox/BuyBox'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
-// import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
@@ -20,7 +19,9 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
-import Dashboard from '../Dashboard/Dashboard'
+import ViewCounter from '../ViewCounter/ViewCounter'
+import MobileHome from './../MobileHome/MobileHome'
+import { BrowserView, MobileView } from 'react-device-detect'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -58,6 +59,7 @@ const Home = () => {
                     setLive(true)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
+                    
                 } else {
                     const { name, archive_id, product_id } = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
@@ -67,9 +69,8 @@ const Home = () => {
                 }
             })
     },[])
-    console.log(pastStreams)
     const toggleCheckout = () => {
-        setCheckout(checkout === false ? true : null)
+        setCheckout(checkout === false ? true : null) 
     };
     const togglePlaying = () => {
         setPlaying(playing === false ? true : false)
@@ -125,105 +126,107 @@ const Home = () => {
 
     return (
         <div>
-            <div className='header-container'>
-            
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
-
-                <MuiThemeProvider theme={theme}>
-                    <AppBar color="secondary">
-                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                SHOPLIME
-                            </Typography>
-                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
-                        </Toolbar>
-                    </AppBar>
-                </MuiThemeProvider>
-            </div>   
-
-
-            <div className='body-container'>
-                <div className='player-container'>
-                    <div className='player-wrapper'>
-                        {
-                            (live ?
-                            <ReactPlayer
-                            className='react-player'
-                            url={hls}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            config={{
-                                file: {
-                                    forceHLS: true
+            <BrowserView>
+                <div>
+                    <div className='header-container'>
+                    
+                        <Modal open={open} onClose={() => handleOpen(false)}>
+                            <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                        </Modal>
+    
+                        <MuiThemeProvider theme={theme}>
+                            <AppBar color="secondary">
+                                <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                    {/* <MenuIcon></MenuIcon> */}
+                                    <Typography variant="h5">
+                                        SHOPLIME
+                                    </Typography>
+                                    <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
+                                </Toolbar>
+                            </AppBar>
+                        </MuiThemeProvider>
+                    </div>   
+    
+    
+                    <div className='body-container'>
+                        <div className='player-container'>
+                            <div className='player-wrapper'>
+                                {
+                                    (live ?
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={hls}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    config={{
+                                        file: {
+                                            forceHLS: true
+                                        }
+                                    }}
+                                    />
+                                    :
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={archive}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    />
+                                    )
                                 }
-                            }}
-                            />
-                            :
-                            <ReactPlayer
-                            className='react-player'
-                            url={archive}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            />
-                            )
-                        }
-                        <div className='overlay'>
-                            <div className='title-overlay'>
-                                <h3 style={{margin: '10px 15px'}}>The World's Greatest Lime Squeezer</h3>
-                                {live &&
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className='live-pulse'></div>
-                                    <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
-                                </div>}
-                                
+                                <div className='overlay'>
+                                    <div className='title-overlay'>
+                                        <div className='title-wrapper'>
+                                            <h3 style={{margin: '0'}}>The World's Greatest Lime</h3>
+                                        </div>
+                                        {live &&
+                                        <div style={{display: 'flex', alignItems: 'center'}}>
+                                            <div className='live-pulse'></div>
+                                            <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
+                                        </div>}
+                                    </div>
+                                    <div className='subtitle-overlay'>
+                                        {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
+                                        <ViewCounter />
+                                    </div>
+                                    <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                                    <div className='right-overlay'>
+                                        <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' style={{position: 'relative', left: '15px'}}/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                        {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                    </div>
+                                </div>
                             </div>
-                            <div className='subtitle-overlay'>
-                                <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p>
-                            </div>
-                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
-                            <div className='right-overlay'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
-                            </div>
+                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                            <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                            <ProductDesc heroID={heroID}/>
                         </div>
-                    </div>
-                    <div><BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} /></div>
-                    {/* <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    } */}
-                    <ProductDesc />
+                        <div className='recently-live'>
+                            <h3>RECENTLY LIVE</h3>
+                        </div>
+                        <Suspense fallback={<></>}>
+                            <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
+                        </Suspense>
+                        
+                        
+                        {/* <div>
+                            <button onClick={toggleCheckout}>Add to Cart</button>
+                            {checkout?<OrderModal toggle={toggleCheckout}/>:null}
+                        </div> */}
+                        </div>
                 </div>
-                <div className='recently-live'>
-                    <h3>RECENTLY LIVE</h3>
-                </div>
-                <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
-                </Suspense>
-                
-                
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
-                </div>
-        <div>
-            <Dashboard/>
-        </div>
+            </BrowserView>
+            <MobileView><MobileHome /></MobileView>
         </div>
     )
 }

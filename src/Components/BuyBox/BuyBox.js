@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import './BuyBox.scss'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // import ImageZoom from 'react-medium-image-zoom'
-import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import * as api from '../../moltin';
@@ -11,7 +10,7 @@ import * as api from '../../moltin';
 
 const BuyBox = (props) => {
     
-    const {openCheckout, handleOpenCheckout, heroID, reRender, toggleCheckout} = props;
+    const { openCheckout, handleOpenCheckout, heroID } = props;
 
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 
@@ -25,8 +24,7 @@ const BuyBox = (props) => {
     }, [heroID, openCheckout])
     const getImage = async () => {
         const mProduct = await api.GetProduct(heroID)
-        await setProductDetails(mProduct) 
-        console.log(mProduct)     
+        await setProductDetails(mProduct)  
         await setImgID(mProduct.included.main_images[0].link.href)
         await setPrice(mProduct.data.price[0].amount)
     }
@@ -81,18 +79,20 @@ const BuyBox = (props) => {
                         />       
                 </div> */}
                 <div>
-                    <ImageZoom zoomMargin='100'
-                        image={{
-                            src: `${imgID}`,
-                            alt: 'Golden Gate Bridge',
-                            className: 'img-zoom',
-                            
-                        }}
-                        zoomImage={{
-                            src: 'https://i.ebayimg.com/images/g/0BkAAOSww6daAfgg/s-l300.jpg',
-                            alt: 'Golden Gate Bridge',
-                        }}
-                    />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ImageZoom zoomMargin='100'
+                            image={{
+                                src: `${imgID}`,
+                                alt: '',
+                                className: 'img-zoom',
+                                
+                            }}
+                            zoomImage={{
+                                src: `${imgID}`,
+                                alt: 'Product image zoom',
+                            }}
+                        />
+                    </Suspense>
 
                 </div>
 

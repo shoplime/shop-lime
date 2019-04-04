@@ -20,7 +20,7 @@ import Details from './stepper/Details';
 import Billing from './stepper/Billing';
 import Shipping from './stepper/Shipping';
 import Payment from './stepper/Payment';
-import Complete from './stepper/Complete'
+import CompleteCart from './stepper/CompleteCart'
 
 function mapStateToProps(state) {
   return { push: state.push };
@@ -190,12 +190,15 @@ class CheckoutForm extends Component {
       activeStep: 0,
     });
   };
+  handleComplete = () => {
+    this.props.handleSubmit(this.mySubmit)
+    this.props.toggleComplete()
+  }
 
   render() {
     const { classes } = this.props;
     const steps = getSteps();
     const { activeStep } = this.state;
-    const { toggleCheckout, openCheckout } = this.props;
     return (
       <main role="main" id="container" className="main-container push">
         {/* {this.state.checkoutButton?<button>Checkout</button>} */}
@@ -216,7 +219,7 @@ class CheckoutForm extends Component {
                   {this.state.activeStep === steps.length ? (
                     <div>
 
-                      <Complete />
+                      <CompleteCart />
                       <Button onClick={this.handleReset}>Reset</Button>
                     </div>
                   ) : (
@@ -231,7 +234,7 @@ class CheckoutForm extends Component {
                           >
                             Back
                           </Button>}
-                          {activeStep === steps.length - 1 ? <Button variant="contained" className='pay' onClick={this.props.handleSubmit(this.mySubmit)} type="submit" className="pay" color='primary' aria-live="polite">
+                          {activeStep === steps.length - 1 ? <Button variant="contained" className='pay' onClick={this.handleComplete} type="submit" color='primary' aria-live="polite">
                           Pay
                           </Button>:
                           <Button variant="contained" id='next' onClick={this.handleNext}>

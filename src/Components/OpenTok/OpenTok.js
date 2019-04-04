@@ -91,7 +91,7 @@ class OpenTok extends Component {
     startArchive = () => {
         const data = {
             sessionId: this.props.sessionId,
-            resolution: '1280x720',
+            resolution: '640x480',
             outputMode: 'composed'
         }
         const headers = {

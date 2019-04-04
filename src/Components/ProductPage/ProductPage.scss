@@ -1,85 +1,43 @@
 @import './../variables';
 
-.m-header {
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  margin: 15px;
-}
-
-.m-body-container{
+.body-container1{
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
-  background-color: #fff;
-}
-
-.m-body-wrapper {
-  height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  position: relative;
-}
-
-.m-player-wrapper {
-  width: 180%;
-  position: relative;
-  right: 45%;
-}
-
-.m-react-player {
-  background-color: black;
-}
-
-.m-overlay {
-  height: 100%;
-  width: 100vw;
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 25%;
-  z-index: 1;
-}
-
-.m-product-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 200px;
-}
-
-.m-img-wrapper {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 150px;
+  padding: 0 20%;
+  margin-top: 50px;
+  @media(max-width: 768px){
+    padding: 0;
+    margin-top: 0px;
+  }
 }
 
-.m-product-img {
-  width: 100%;
-}
-
-.m-prod-desc {
-  width: 50%;
-  padding: 10px;
+.player-container1 {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  margin-top: 4%;
+  // margin-bottom: 20%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  background-color: white;
+  overflow: hidden;
+}
+.right-side-video1{
+    flex-direction: column;
+    width: 50%;
 }
 
-.header-container{
-  width: 70%;
-  padding: 0 40%;
+.player-wrapper1 {
+  background-color: black;
+  position: relative;
+  min-height: 33vw;
+  width: 100%;
+  overflow: hidden;
 }
-
-.recently-live{
+.recently-live1{
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -91,14 +49,16 @@
   h3{
     font-weight: 900;
   }
+  @media(max-width: 768px){
+    width: 80%
+  }
 }
 
-.m-chat-wrapper {
+.chat-wrapper1 {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-end;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.65+100 */
   background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -106,7 +66,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
 }
 
-.overlay {
+.overlay1 {
   position: absolute;
   top: 0;
   height: 100%;
@@ -115,7 +75,7 @@
   justify-content: space-between;
 }
 
-.title-overlay {
+.title-overlay1 {
   color: white;
   width: 100%;
   position: absolute;
@@ -125,7 +85,7 @@
   align-items: center;
 }
 
-.subtitle-overlay {
+.subtitle-overlay1 {
   color: white;
   width: 100%;
   position: absolute;
@@ -135,7 +95,7 @@
   align-items: center;
 }
 
-.left-overlay {
+.left-overlay1 {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -143,14 +103,14 @@
   align-items: space-between;
 }
 
-.right-overlay {
+.right-overlay1 {
   display: flex;
   width: 100%;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.icon-button {
+.icon-button1 {
   background: none;
   border: none;
   align-self: flex-end;
@@ -164,18 +124,11 @@
   color: #ffffff;
 }
 
-.checkout-modal {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.25);
+.react-player1 {
+  align-self: center;
 }
 
-.live-pulse {
+.live-pulse1 {
   margin-right: 5px;
   display: block;
   width: 15px;
@@ -184,16 +137,6 @@
   background: red;
   box-shadow: 0 0 0 darkred;
   animation: pulse 2s infinite;
-}
-
-.mobile-filler {
-  width: 100%;
-  height: 100%;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,00d660+100&0+0,0.65+100 */
-  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,214,96,0.65) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,214,96,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,214,96,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a600d660',GradientType=0 ); /* IE6-9 */
 }
 
 @-webkit-keyframes pulse {
@@ -220,4 +163,32 @@
       -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
       box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
   }
+}
+
+#viewLive :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+}
+#viewLive :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+
+}
+#shopLime :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+}
+#shopLime :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
 }

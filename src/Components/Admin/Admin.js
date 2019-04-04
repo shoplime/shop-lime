@@ -88,6 +88,30 @@ class Admin extends React.Component {
     } else {
   
     }
+
+  }
+  logout() {
+    axios.post('/user/logout')
+      .then(res => {
+        console.log('logged out')
+        this.props.updateUser({});
+        this.props.history.push('/');
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  logout(){
+    axios.post('/user/logout')
+    .then(res => {
+      console.log('logged out')
+      this.props.updateUser({});
+      this.props.history.push('/');
+    })
+    .catch(err => {
+        console.log(err)
+    })
   }
 
   getSignedRequest = ([file]) => {
@@ -251,9 +275,10 @@ class Admin extends React.Component {
     return (
       <div className="view">
       <div className={classes.root}>
-      <div>
-        Follow the steps below to create your Live Event
-      </div>
+        <div>
+          Follow the steps below to create you Live Event
+	        <Button variant="contained" color="secondary" onClick={() => { this.logout() }}>Logout</Button>
+        </div>
         <img src={this.state.imageId.link.href} />
         {/* {this.state.imageId} */}
         {activeStep < steps.length && (
@@ -300,6 +325,7 @@ class Admin extends React.Component {
               streamName={this.state.name}
               products={this.state.products}
               imgUrl={this.state.url}
+              logout={this.logout}
             />
             <Button onClick={this.handleReset} className={classes.button}>
               Reset
