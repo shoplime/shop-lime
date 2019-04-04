@@ -19,7 +19,6 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
-import Dashboard from '../Dashboard/Dashboard'
 import { Link } from 'react-router-dom'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -139,8 +138,8 @@ const Home = (props) => {
                             <Typography variant="h5" id='shopLime'>
                                 <Link to='/'>SHOPLIME</Link>
                             </Typography>
-                            <Typography variant="h3" style={{fontSize: '18px', marginLeft: '600px', textDecoration: 'none'}} id='viewLive'>
-                                <Link to='/'>LIVE</Link>
+                            <Typography variant="h3" style={{fontSize: '10px', marginLeft: '450px', textDecoration: 'none', padding: '5px', display: 'flex', flexDirection: 'row'}} id='viewLive'>
+                                <Link to='/' style={{fontSize: '13px', color: 'red'}}>GO TO LIVE STREAM <div className='live-pulse-2' style={{float: 'right', marginTop: '2px', marginLeft: '7px'}}></div></Link>
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>

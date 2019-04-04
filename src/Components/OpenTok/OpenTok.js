@@ -3,7 +3,6 @@ import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
 import MobileView from './../MobileView/MobileView'
-// import Dashboard from '../Dashboard/Dashboard'
 import Button from '@material-ui/core/Button';
 import Chat from './../Chat/Chat'
 
@@ -214,7 +213,6 @@ class OpenTok extends Component {
                     </div>
                 </div>
                 <div>
-                    {/* <Dashboard/> */}
                 </div>
             </div>
         );
