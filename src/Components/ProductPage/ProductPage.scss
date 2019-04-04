@@ -53,6 +53,13 @@
     width: 80%
   }
 }
+.logo-container{
+    width: 22%;
+    img{
+        width: 100%;
+        object-fit: contain;
+    }
+}
 
 .chat-wrapper1 {
   height: 100%;
@@ -163,4 +170,32 @@
       -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
       box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
   }
+}
+
+#viewLive :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+}
+#viewLive :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+
+}
+#shopLime :link {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
+}
+#shopLime :visited {
+  text-decoration: none;
+  color:  #388e3c;
+  font-family: 'Montserrat';
 }

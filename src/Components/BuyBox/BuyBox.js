@@ -10,7 +10,7 @@ import * as api from '../../moltin';
 
 const BuyBox = (props) => {
     
-    const {openCheckout, handleOpenCheckout, heroID } = props;
+    const { openCheckout, handleOpenCheckout, heroID } = props;
 
     const [productDetails, setProductDetails] = useState({}) 
     const [imgID, setImgID] = useState('') 
@@ -24,8 +24,7 @@ const BuyBox = (props) => {
     }, [heroID, openCheckout])
     const getImage = async () => {
         const mProduct = await api.GetProduct(heroID)
-        await setProductDetails(mProduct) 
-        console.log(mProduct)     
+        await setProductDetails(mProduct)  
         await setImgID(mProduct.included.main_images[0].link.href)
         await setPrice(mProduct.data.price[0].amount)
     }

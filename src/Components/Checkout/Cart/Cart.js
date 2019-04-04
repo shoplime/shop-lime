@@ -14,13 +14,19 @@ class Cart extends Component{
     constructor(){
         super()
         this.state = {
-            reRender: false
+            reRender: false,
+            toggleCheckout: false
         }
     }
     
     componentDidMount() {
         this.props.GetProducts();
         this.props.GetCartItems();
+    }
+    toggleCheckout = () => {
+        this.setState({
+            toggleCheckout: !this.state.toggleCheckout
+        })
     }
 
     render(){
@@ -36,21 +42,29 @@ class Cart extends Component{
                     var subtotal = '$' + cart.cart.meta.display_price.with_tax.amount / 100;
                     return(
                         <div className='cart'>
-                            <div className='cart-header'>
-                                <div id='cart-header-1'>Product</div>
-                                <div id='cart-header-2'>Quantity</div>
-                                <div>Price</div>
-                            </div>
-                            <div className='cart-items'>
-                                <CartItems/>
-                            </div>
-                            <div className='cart-subtotal'>
-                                {'Subtotal of all products '}
-                                <span>{subtotal}</span>
-                            </div>
-                            <div className='CheckoutForm'>
+                            
+                            {this.state.toggleCheckout? <div className='CheckoutForm'>
                                 <CheckoutForm toggleComplete={toggleComplete} toggleCheckout={toggleCheckout} openCheckout={openCheckout}/>
+                            </div>: <div>
+                                <div className='cart-header'>
+                                    <div id='cart-header-1'>Product</div>
+                                    <div id='cart-header-2'>Quantity</div>
+                                    <div>Price</div>
+                                </div>
+                                <div className='cart-items'>
+                                    <CartItems/>
+                                </div>
+                                <div className='cart-subtotal'>
+                                    {'Subtotal of all products: '}
+                                    <strong>{subtotal}</strong>
+                                </div>
+                                <div className='cart-checkout-button'>
+                                <div onClick={()=>{toggleCheckout(!openCheckout)}} className='cart-return'>RETURN</div>
+                                <button onClick={this.toggleCheckout} className='checkout-button'>CHECKOUT</button>
+                                </div>
                             </div>
+                            }
+                            
                         </div>
                     )
                 }

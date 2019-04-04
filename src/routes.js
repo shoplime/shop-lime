@@ -16,6 +16,6 @@ export default (
         <Route path= '/checkout' component={CheckoutContainer} />
         <Route path= '/mobilehome' component={MobileHome} />  
         <Route path= '/login' component={Login} />
-        <Route path= '/:productid?/:streamid?' component={ProductPage} />
+        <Route path= '/:productid?/:streamid?/:name?' component={ProductPage} />
     </Switch>
 )

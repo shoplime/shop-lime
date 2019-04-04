@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 // const socket = openSocket('http://localhost:4000')
+import './ViewCounter.scss'
+import Eye from '@material-ui/icons/RemoveRedEye'
 
 // const io = require('socketIOClient');
 // const socket = io();
 
-class App extends Component {
+class ViewCounter extends Component {
   constructor() {
     super();
     this.state = {
@@ -66,15 +68,11 @@ class App extends Component {
     // })
 
     return (
-      <div style={{ textAlign: "center" }}>
-        <button onClick={() => this.send() }>Change Color</button>
-
-        <p>{this.state.counter}</p>
-
-        
-
+      <div style={{ textAlign: "center", display: 'flex', alignItems: 'center' }}>
+        <Eye style={{ color: '#fff' }} />
+        <p className='count-number'>{this.state.counter}</p>
       </div>
     )
   }
 }
-export default App;
+export default ViewCounter;

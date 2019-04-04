@@ -15,9 +15,7 @@ import LoginButton from '../Home/Button'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
 import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
-import Link from 'react-router-dom'
-import { Chat as ChatIcon } from '@material-ui/icons'
-import Close from '@material-ui/icons/Close'
+import logo from '../Home/shoplime-logo.png'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 const Videos = React.lazy(() => import('../Videos/Videos'))
@@ -41,15 +39,17 @@ const ProductPage = (props) => {
     const [live, setLive] = useState(false)
     const [pastStreams, setPastStreams] = useState([])
     const [reRender, reRenderPage] = useState(false)
-    const [streamID, setStreamID] = useState(false)
+    const [streamID, setStreamID] = useState('')
+    const [streamName, setStreamName] = useState('')
 
     const [heroID, setHeroID] = useState('')
     
     useEffect(() => {
-        const {productid, streamid} = props.match.params
+        const {productid, streamid, name} = props.match.params
         getUser()
         setHeroID(productid)
         setStreamID(streamid)
+        setStreamName(name)
         axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
@@ -60,6 +60,7 @@ const ProductPage = (props) => {
 
                 } else {
                     const { name, archive_id, product_id } = res.data[0]
+
                     setLive(false)
                     setPastStreams(res.data)
 
@@ -133,10 +134,9 @@ const ProductPage = (props) => {
                 <MuiThemeProvider theme={theme}>
                     <AppBar color="secondary">
                         <Toolbar style={{ justifyContent: 'space-between', padding: '0px 20%' }}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                SHOPLIME
-                            </Typography>
+                            <div className='logo-container'>
+                                <img src={logo} alt='' />
+                            </div>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
                     </AppBar>
@@ -183,7 +183,7 @@ const ProductPage = (props) => {
                         }
                         <div className='overlay1'>
                             <div className='title-overlay1'>
-                                <h3 style={{ margin: '10px 15px' }}>The World's Greatest Lime Squeezer</h3>
+                                <h3 style={{ margin: '10px 15px' }}>{streamName}</h3>
                                 {live &&
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div className='live-pulse'></div>

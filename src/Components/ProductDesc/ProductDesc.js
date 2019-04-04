@@ -57,10 +57,8 @@ function SimpleExpansionPanel(props) {
     const getImage = async () => {
         const mProduct = await api.GetProduct(heroID)
         await setProdDesc(mProduct.data.description) 
-        console.log(mProduct.data.description)     
     }
 
-    console.log('prod Desc', prodDesc)
     return (
         <div className={classes.root}>
             <ExpansionPanel square className={classes.root} style={{ marginRight: '0px', borderTop: '1px solid black'}}>
@@ -70,9 +68,9 @@ function SimpleExpansionPanel(props) {
                 <ExpansionPanelDetails>
                     <Typography className={classes.heading}>
                         
-                       <div>
+                       <span>
                            {prodDesc}
-                       </div>
+                       </span>
 
 
                 </Typography>

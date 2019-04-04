@@ -20,6 +20,10 @@ import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 import logo from './shoplime-logo.png'
+import ViewCounter from '../ViewCounter/ViewCounter'
+import MobileHome from './../MobileHome/MobileHome'
+import { BrowserView, MobileView } from 'react-device-detect'
+const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
@@ -50,7 +54,6 @@ const Home = () => {
     useEffect(() => {
        axios.get('/homeStreams')
             .then(res => {
-                console.log(res.data)
                 if (res.data[0].status === 'live') {
                     const { name, product_id, hls } = res.data[0]
                     setHLS(hls)
@@ -64,11 +67,9 @@ const Home = () => {
                     setLive(false)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
-                    
                 }
             })
     },[])
-    console.log(pastStreams)
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : null) 
     };
@@ -123,100 +124,106 @@ const Home = () => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
+    
     console.log('Past Streams9', pastStreams[0])
     return (
         <div>
-            <div className='header-container'>
-            
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
-
-                <MuiThemeProvider theme={theme}>
-                    <AppBar color="secondary">
-                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                <div className='logo-container'>
-                                    <img src={logo} alt=''/>
-                                </div>
-                            </Typography>
-                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
-                        </Toolbar>
-                    </AppBar>
-                </MuiThemeProvider>
-            </div>   
-
-
-            <div className='body-container'>
-                <div className='player-container'>
-                    <div className='player-wrapper'>
-                        {
-                            (live ?
-                            <ReactPlayer
-                            className='react-player'
-                            url={hls}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            config={{
-                                file: {
-                                    forceHLS: true
+            <BrowserView>
+                <div>
+                    <div className='header-container'>
+                    
+                        <Modal open={open} onClose={() => handleOpen(false)}>
+                            <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                        </Modal>
+    
+                        <MuiThemeProvider theme={theme}>
+                            <AppBar color="secondary">
+                                <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                    {/* <MenuIcon></MenuIcon> */}
+                                    <div className='logo-container'>
+                                        <img src={logo} alt='' />
+                                    </div>
+                                    <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
+                                </Toolbar>
+                            </AppBar>
+                        </MuiThemeProvider>
+                    </div>   
+    
+    
+                    <div className='body-container'>
+                        <div className='player-container'>
+                            <div className='player-wrapper'>
+                                {
+                                    (live ?
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={hls}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    config={{
+                                        file: {
+                                            forceHLS: true
+                                        }
+                                    }}
+                                    />
+                                    :
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={archive}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    />
+                                    )
                                 }
-                            }}
-                            />
-                            :
-                            <ReactPlayer
-                            className='react-player'
-                            url={archive}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'100%'}
-                            height={'100%'}
-                            />
-                            )
-                        }
-                        <div className='overlay'>
-                            <div className='title-overlay'>
-                                {pastStreams[0] && <h3 style={{margin: '10px 15px'}}>{pastStreams[0].name}</h3>}
-                                {live &&
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className='live-pulse'></div>
-                                    <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
-                                </div>}
-                                
+                                <div className='overlay'>
+                                    <div className='title-overlay'>
+                                        {pastStreams[0] && <h3 style={{ margin: '10px 15px' }}>{pastStreams[0].name}</h3>}
+                                        {live &&
+                                        <div style={{display: 'flex', alignItems: 'center'}}>
+                                            <div className='live-pulse'></div>
+                                            <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
+                                        </div>}
+                                    </div>
+                                    <div className='subtitle-overlay'>
+                                        {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
+                                        <ViewCounter />
+                                    </div>
+                                    <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                                    <div className='right-overlay'>
+                                        <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' style={{position: 'relative', left: '15px'}}/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                        {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                    </div>
+                                </div>
                             </div>
-                            <div className='subtitle-overlay'>
-                                {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
-                            </div>
-                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
-                            <div className='right-overlay'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
-                            </div>
+                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                            <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                            <ProductDesc heroID={heroID}/>
+                        </div>
+                        <div className='recently-live'>
+                            <h3>RECENTLY LIVE</h3>
+                        </div>
+                        <Suspense fallback={<></>}>
+                            <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
+                        </Suspense>
+                        
                         </div>
                     </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
-                    <ProductDesc heroID={heroID}/>
-                </div>
-                <div className='recently-live'>
-                    <h3>RECENTLY LIVE</h3>
-                </div>
-                <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
-                </Suspense>
-                </div>        
-        </div>
+                </BrowserView>
+                <MobileView><MobileHome /></MobileView>
+            </div>
+                
     )
 }
 

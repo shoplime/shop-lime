@@ -37,7 +37,7 @@ class Videos extends React.Component {
         });
     };
     handleClick = (stream) => {
-        this.props.history.push(`/${stream.product_id}/${stream.archive_id}`)
+        this.props.history.push(`/${stream.product_id}/${stream.archive_id}/${stream.name}`)
         window.scrollTo(0, 0)
         
     }
@@ -45,11 +45,12 @@ class Videos extends React.Component {
     
     
     
+    
+    
     render() {
         const { classes, user, handleOpen, handleError, pastStreams } = this.props; 
         const { spacing } = this.state;
-        console.log('past streams', pastStreams)
-
+        
         return (
             
             <Grid container className={classes.root} spacing={16}>
