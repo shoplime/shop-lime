@@ -1,103 +1,80 @@
-import React, { useState, Suspense, useEffect, memo } from 'react'
+import React, { Component } from 'react'
 import SwipeableViews from 'react-swipeable-views';
 import './MobileHome.scss'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import MobileCard from './MobileCard'
-const Nav = React.lazy(() => import('../Nav/Nav'))
-const Videos = React.lazy(() => import('../Videos/Videos'))
+import ViewCounter from './../ViewCounter/ViewCounter'
+import * as api from '../../moltin';
 
-const MobileHome = () => {
-    
-    const [checkout, setCheckout] = useState(false);
-    const [openCheckout, handleOpenCheckout] = useState(false);
-    const [open, handleOpen] = useState(false);
-    const [email, handleEmail] = useState('')
-    const [password, handlePassword] = useState('') 
-    const [loginError, handleError] = useState('')
-    const [user, handleUser] = useState(false)
-    const [playing, setPlaying] = useState(true);
-    const [muted, setMuted] = useState(true);
-    const [chatDisplay, setChatDisplay] = useState(false);
-    const [streams, setStreams] = useState([])
+class MobileHome extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            checkout: false,
+            openCheckout: false,
+            open: false,
+            email: '',
+            password: '',
+            loginError: '',
+            user: false,
+            streams: [],
+            productDetails: {},
+            prodNames: [],
+            prodImages: [],
+            prodPrices: []
+        }
+    }
 
-    useEffect(() => {
-        getUser()
-    }, [user]);
-    useEffect(() => {
+    componentDidMount(){
         axios.get('/homeStreams')
         .then(res => {
-            console.log(res.data)
-            setStreams(res.data)
+            this.setState({
+                streams: res.data
+            })
+            res.data.forEach(async (stream) => {
+                this.getProductInfo(stream.product_id)
+            })
+            console.log(this.state)
         })
-     },[])
-
-    const toggleCheckout = () => {
-        setCheckout(checkout === false ? true : false)
-    };
-    const togglePlaying = () => {
-        setPlaying(playing === false ? true : false)
-    };
-    const toggleMuted = () => {
-        setMuted(muted === false ? true : false)
-    };
-    const toggleChat = () => {
-        setChatDisplay(chatDisplay === false ? true : false)
-    };
-    const getUser = async () => {
-        await axios.get('/user/fetchuser')
-            .then(() => {
-                handleUser(true)
-            })
-            .catch(() => {
-                handleUser(false)
-            })
-    }
-    const register = async () => {
-        const isEmail = AuthLogic.validateEmail(email)
-        const isPassword = AuthLogic.validatePassword(password)
-        
-        if(!isEmail){
-            handleError('PLEASE ENTER VALID EMAIL')
-        }else if(!isPassword.bool){
-            handleError(isPassword.message)
-        }else{
-            await axios.post('/user/register', {email, password})
-                .then(() => {
-                    handleError('Success!')
-                    handleOpen(false) 
-                    handleUser(true)  
-                })
-                .catch(() => {
-                    handleError('EMAIL ALREADY EXISTS!')
-                })    
-        }   
-    }
-    const login = async () => {
-        await axios.post('/user/login', {email, password})
-            .then(() => {
-                handleOpen(false)
-                handleUser(true)
-            })
-            .catch(() => {
-                handleError('INCORRECT EMAIL OR PASSWORD')
-            })    
     }
 
-    return (
-        <div className='m-body-container'>
-        <div className='m-header'>LIME</div>
-            <SwipeableViews containerStyle={{height: '100vh'}} axis="y" resistance>
-                {
-                    streams.map((stream, i) => (
-                        <MobileCard key={i} stream={stream}/>
-                    ))
-                }
-            </SwipeableViews>
-        </div>
-    )
+    getProductInfo = async (product) => {
+        console.log('moltin hit')
+        const { prodNames, prodImages, prodPrices } = this.state
+        console.log(prodNames, prodImages, prodPrices)
+        const mProduct = await api.GetProduct(product)
+        const newNames = [...prodNames, mProduct.data.name]
+        const newImages = [...prodImages, mProduct.included.main_images[0].link.href]
+        const newPrices = [...prodPrices, mProduct.data.price[0].amount]
+        console.log(newNames, newImages, newPrices)
+
+        this.setState({
+            prodNames: newNames,
+            prodImages: newImages,
+            prodPrices: newPrices
+        })
+        console.log(this.state)
+        return 'success'
+    }
+
+    render(){
+        return (
+            <div className='m-body-container'>
+                <SwipeableViews containerStyle={{height: '100vh'}} axis="y" resistance>
+                    {
+                        this.state.streams.map((stream, index) => {
+                            return(
+                                <MobileCard stream={stream} prodName={this.state.prodNames[index]} prodImage={this.state.prodImages[index]} prodPrice={this.state.prodPrices[index]} />
+                            )
+                        })
+                    }
+                </SwipeableViews>
+            </div>
+        )
+    }
 }
 
-export default memo(MobileHome)
-
-                
+export default MobileHome
