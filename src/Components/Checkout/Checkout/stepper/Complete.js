@@ -2,7 +2,7 @@ import React from 'react';
 const Complete = (props) => {
     const completeCheckout = () => {
         props.toggleCheckout(!props.openCheckout)
-        props.reRender()
+        // props.reRender()
     }
     return(
         <div className='complete'>

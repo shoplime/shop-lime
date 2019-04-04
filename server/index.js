@@ -30,12 +30,8 @@ const app = express()
 
 //initializing sockets
 
-
 var http = require('http').Server(app);
-
-
 var io = require('socket.io')(http);
-
 
 io.on('connection', socket => {
     console.log('New client connected')
@@ -47,32 +43,11 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         connectCounter--;
-        // socket.on("someoneConnected", () => {
-        //     io.emit("connectCounter", connectCounter)
-        //     console.log(connectCounter)
-        
         
   console.log(connectCounter)
   console.log('user disconnected')
 })
 })
-    
-    // console.log(socket.handshake)
-    
-// io.on('connection', socket => {
-//     socket.on('hello', data => {
-//         socket.join(data.hashID)
-//         client.incr(data.hashID, (err, count) => {
-//             io.to(data.hashID).emit
-//             socket.emit('stats', count)
-
-//         })
-//     })
-
-    
-    // disconnect is fired when a client leaves the server
-    
-    
 
 //Setting up sessions / middleware
 

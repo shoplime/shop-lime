@@ -19,9 +19,11 @@ import { Chat as ChatIcon } from '@material-ui/icons'
 import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import Dashboard from '../Dashboard/Dashboard'
+import { Link } from 'react-router-dom'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
-const Home = () => {
+const Home = (props) => {
 
     const [checkout, setCheckout] = useState(false);
     const [openCheckout, handleOpenCheckout] = useState(false);
@@ -134,8 +136,11 @@ const Home = () => {
                     <AppBar color="secondary">
                         <Toolbar style={{ justifyContent: 'space-between', padding: '0px 20%' }}>
                             {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                SHOPLIME, go to live
+                            <Typography variant="h5" id='shopLime'>
+                                <Link to='/'>SHOPLIME</Link>
+                            </Typography>
+                            <Typography variant="h3" style={{fontSize: '18px', marginLeft: '600px', textDecoration: 'none'}} id='viewLive'>
+                                <Link to='/'>LIVE</Link>
                             </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>

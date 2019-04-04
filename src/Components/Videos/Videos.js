@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import './Videos.scss'
 import { userInfo } from 'os';
 
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -36,12 +37,12 @@ class Videos extends React.Component {
 
     }
     
-
+    
+    
     render() {
         const { classes, user, handleOpen, handleError, pastStreams } = this.props; 
         const { spacing } = this.state;
-        console.log('past streams', pastStreams)
-
+        
         return (
             
             <Grid container className={classes.root} spacing={16}>
@@ -53,7 +54,7 @@ class Videos extends React.Component {
                                     user
                                     ?
                                     <div >
-                                            <button className='video-card'>
+                                        <button className='video-card' >
                                              <img className='img' src={stream.url} alt=''/>
                                         </button>
                                         <div className='video-details'>
