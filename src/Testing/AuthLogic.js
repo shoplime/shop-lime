@@ -18,5 +18,20 @@ module.exports = {
         }  
         returnObj.bool = true
         return returnObj
+    },
+    validateEventname: (eventName) => {
+        const returnObj = { bool: false, message: ''}
+        if (eventName.length === 0){
+            returnObj.message = 'Please enter an event name'
+            return returnObj
+        } else if (eventName.length >= 30){
+            returnObj.message = 'Event name cannot exceed 30 characters'
+            return returnObj
+        } else if (eventName.length <= 2){
+            returnObj.message = 'Event name must have at least 2 characters'
+            return returnObj
+        }  
+        returnObj.bool = true
+        return returnObj
     }
 }

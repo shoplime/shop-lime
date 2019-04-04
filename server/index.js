@@ -30,9 +30,7 @@ const app = express()
 
 //initializing sockets
 
-app.get('/', function(req, res){
-    res.send('<h2>hello world </h2>');
-});
+
 
 var http = require('http').Server(app);
 
@@ -267,6 +265,7 @@ app.post('/admin/register', ctrlm.addMerchant)
 
 //Creating Stream
 app.post('/admin/newStream', streamc.createStream)
+app.get('/homeStreams', streamc.getHomeStreams)
 
 //moltin
 app.get('/products', (req, res) => {

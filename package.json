@@ -34,6 +34,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-dropzone": "^10.1.0",
+    "react-ga": "^2.5.7",
     "react-medium-image-zoom": "^3.0.15",
     "react-player": "^1.9.3",
     "react-redux": "^6.0.1",

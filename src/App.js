@@ -3,6 +3,7 @@ import {HashRouter as Router} from 'react-router-dom'
 import routes from './routes'
 import './App.scss';
 
+
 class App extends Component {
 
   render() {

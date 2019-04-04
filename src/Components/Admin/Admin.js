@@ -13,10 +13,10 @@ import AddHeroImage from "./Stepper/AddHeroImage";
 import SelectProduct from "./Stepper/SelectProduct";
 import OpenTok from "./../OpenTok/OpenTok";
 import { v4 as randomString } from "uuid";
-import ProductImage from "./../Checkout/Products/ProductImage";
 import axios from "axios";
 import { connect } from 'react-redux';
 import { updateUser } from './../../ducks/user'
+import './Admin.scss';
 
 
 
@@ -249,7 +249,11 @@ class Admin extends React.Component {
     console.log("Admin State", this.state)
 
     return (
+      <div className="view">
       <div className={classes.root}>
+      <div>
+        Follow the steps below to create your Live Event
+      </div>
         <img src={this.state.imageId.link.href} />
         {/* {this.state.imageId} */}
         {activeStep < steps.length && (
@@ -301,7 +305,10 @@ class Admin extends React.Component {
               Reset
             </Button>
           </Paper>
+          
         )}
+        
+      </div>
       </div>
     );
   }
