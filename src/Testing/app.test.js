@@ -29,6 +29,21 @@ describe('Valid Password', () => {
     
 })
 
+// SPENCER'S LOGIC 
+
+// describe('Valid Event Name', () => {
+
+//     test('Please enter a event name', () => {
+//         let result = validatePassword('');
+//         expect(result).toEqual({ "bool": false, "message": "Please enter a event name" });
+//     })
+//     test('Event name cannot include special characters', () => {
+//         let result = validatePassword('$');
+//         expect(result).toEqual({ "bool": false, "message": "Event name cannot include special characters" });
+//     })
+    
+// })
+
 describe('Handle Reset', () => {
     
     test('Should be true', () => {

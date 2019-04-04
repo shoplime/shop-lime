@@ -13,10 +13,10 @@ import AddHeroImage from "./Stepper/AddHeroImage";
 import SelectProduct from "./Stepper/SelectProduct";
 import OpenTok from "./../OpenTok/OpenTok";
 import { v4 as randomString } from "uuid";
-import ProductImage from "./../Checkout/Products/ProductImage";
 import axios from "axios";
 import { connect } from 'react-redux';
 import { updateUser } from './../../ducks/user'
+import './Admin.scss';
 
 
 
@@ -273,63 +273,69 @@ class Admin extends React.Component {
     console.log("Admin State", this.state)
 
     return (
-      <div className={classes.root}>
-        <div>
-          Follow the steps below to create you Live Event
-	        <Button variant="contained" color="secondary" onClick={() => { this.logout() }}>Logout</Button>
+      <div className='admin-container'>
+        <div className="view">
+          <div className={classes.root}>
+            <div className='admin-header'>
+              Follow the steps below to create you Live Event
+              <Button variant="contained" color="secondary" onClick={() => { this.logout() }}>Logout</Button>
+            </div>
+            <img src={this.state.imageId.link.href} />
+            {/* {this.state.imageId} */}
+            {activeStep < steps.length && (
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((label, index) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                    <StepContent>
+                      <Typography component={"span"}>
+                        {this.getStepContent(index)}
+                      </Typography>
+                      <div className={classes.actionsContainer}>
+                        <div>
+                          <Button
+                            disabled={activeStep === 0}
+                            onClick={this.handleBack}
+                            className={classes.button}
+                          >
+                            Back
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleNext}
+                            className={classes.button}
+                          >
+                            {activeStep === steps.length - 1 ? "Preview" : "Next"}
+                          </Button>
+                        </div>
+                      </div>
+                    </StepContent>
+                  </Step>
+                ))}
+              </Stepper>
+            )}
+            {activeStep === steps.length && (
+              <Paper square elevation={0} className={classes.resetContainer}>
+                <OpenTok
+                  apiKey={this.state.apiKey}
+                  sessionId={this.state.sessionId}
+                  token={this.state.token}
+                  product={this.state.product}
+                  streamName={this.state.name}
+                  products={this.state.products}
+                  imgUrl={this.state.url}
+                  logout={this.logout}
+                />
+                <Button onClick={this.handleReset} className={classes.button}>
+                  Reset
+                </Button>
+              </Paper>
+              
+            )}
+            
+          </div>
         </div>
-        <img src={this.state.imageId.link.href} />
-        {/* {this.state.imageId} */}
-        {activeStep < steps.length && (
-          <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((label, index) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-                <StepContent>
-                  <Typography component={"span"}>
-                    {this.getStepContent(index)}
-                  </Typography>
-                  <div className={classes.actionsContainer}>
-                    <div>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                        className={classes.button}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleNext}
-                        className={classes.button}
-                      >
-                        {activeStep === steps.length - 1 ? "Preview" : "Next"}
-                      </Button>
-                    </div>
-                  </div>
-                </StepContent>
-              </Step>
-            ))}
-          </Stepper>
-        )}
-        {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
-            <OpenTok
-              apiKey={this.state.apiKey}
-              sessionId={this.state.sessionId}
-              token={this.state.token}
-              product={this.state.product}
-              streamName={this.state.name}
-              products={this.state.products}
-              imgUrl={this.state.url}
-              logout={this.logout}
-            />
-            <Button onClick={this.handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </Paper>
-        )}
       </div>
     );
   }
