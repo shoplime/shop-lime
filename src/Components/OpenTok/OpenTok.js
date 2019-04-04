@@ -3,7 +3,7 @@ import axios from 'axios'
 import { OTSession, OTPublisher } from 'opentok-react';
 import './OpenTok.scss'
 import MobileView from './../MobileView/MobileView'
-import Dashboard from '../Dashboard/Dashboard'
+// import Dashboard from '../Dashboard/Dashboard'
 import Button from '@material-ui/core/Button';
 import Chat from './../Chat/Chat'
 
@@ -91,7 +91,7 @@ class OpenTok extends Component {
     startArchive = () => {
         const data = {
             sessionId: this.props.sessionId,
-            resolution: '1280x720',
+            resolution: '640x480',
             outputMode: 'composed'
         }
         const headers = {

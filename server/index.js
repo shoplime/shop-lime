@@ -61,7 +61,7 @@ app.use(
 );
 
 app.use(express.json())
-app.use( express.static( `${__dirname}/../build` ) );
+app.use(express.static( `${__dirname}/../build` ));
 const opentok = new OpenTok(OT_API_KEY, OT_API_SECRET) 
 
 // http.listen(4001, () => console.log(`Listening on port 4001`))

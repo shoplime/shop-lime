@@ -126,7 +126,7 @@ const Home = (props) => {
 
     return (
         <div>
-            <div className='header-container'>
+            <div className='header-container1'>
 
                 <Modal open={open} onClose={() => handleOpen(false)}>
                     <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError} />
@@ -149,13 +149,13 @@ const Home = (props) => {
             </div>
 
 
-            <div className='body-container'>
-                <div className='player-container'>
-                    <div className='player-wrapper'>
+            <div className='body-container1'>
+                <div className='player-container1'>
+                    <div className='player-wrapper1'>
                         {
                             (live ?
                                 <ReactPlayer
-                                    className='react-player'
+                                    className='react-player1'
                                     url={hls}
                                     playing={true}
                                     loop={true}
@@ -173,7 +173,7 @@ const Home = (props) => {
                                 />
                                 :
                                 <ReactPlayer
-                                    className='react-player'
+                                    className='react-player1'
                                     url={archive}
                                     playing={true}
                                     loop={true}
@@ -186,8 +186,8 @@ const Home = (props) => {
                                 />
                             )
                         }
-                        <div className='overlay'>
-                            <div className='title-overlay'>
+                        {/* <div className='overlay1'>
+                            <div className='title-overlay1'>
                                 <h3 style={{ margin: '10px 15px' }}>The World's Greatest Lime Squeezer</h3>
                                 {live &&
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -196,23 +196,24 @@ const Home = (props) => {
                                     </div>}
 
                             </div>
-                            <div className='subtitle-overlay'>
+                            <div className='subtitle-overlay1'>
                                 <p style={{ margin: '0 17px', fontSize: '14px' }}>by <span style={{ fontWeight: 'bolder' }}>Nike</span></p>
                             </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute' /> : <VolumeUp className='mute' />)}</button>
-                            <div className='right-overlay'>
+                            <div className='right-overlay1'>
                                 <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
                                 {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     
-                        <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                        <div className='right-side-video1'>
+                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                        </div>
+                </div>
                         <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
                         <ProductDesc heroID={heroID} />
-                    
-                </div>
-                <div className='recently-live'>
+                <div className='recently-live1'>
                     <h3>RECENTLY LIVE</h3>
                 </div>
                 <Suspense fallback={<></>}>
@@ -224,9 +225,6 @@ const Home = (props) => {
                     <button onClick={toggleCheckout}>Add to Cart</button>
                     {checkout?<OrderModal toggle={toggleCheckout}/>:null}
                 </div> */}
-            </div>
-            <div>
-                <Dashboard />
             </div>
         </div>
     )
