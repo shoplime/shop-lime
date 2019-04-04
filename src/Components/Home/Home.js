@@ -20,6 +20,8 @@ import Close from '@material-ui/icons/Close'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
 import ViewCounter from '../ViewCounter/ViewCounter'
+import MobileHome from './../MobileHome/MobileHome'
+import { BrowserView, MobileView } from 'react-device-detect'
 const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
@@ -127,102 +129,107 @@ const Home = () => {
 
     return (
         <div>
-            <div className='header-container'>
-            
-                <Modal open={open} onClose={() => handleOpen(false)}>
-                    <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
-                </Modal>
-
-                <MuiThemeProvider theme={theme}>
-                    <AppBar color="secondary">
-                        <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                            {/* <MenuIcon></MenuIcon> */}
-                            <Typography variant="h5">
-                                SHOPLIME
-                            </Typography>
-                            <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
-                        </Toolbar>
-                    </AppBar>
-                </MuiThemeProvider>
-            </div>   
-
-
-            <div className='body-container'>
-                <div className='player-container'>
-                    <div className='player-wrapper'>
-                        {
-                            (live ?
-                            <ReactPlayer
-                            className='react-player'
-                            url={hls}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'140%'}
-                            height={'140%'}
-                            config={{
-                                file: {
-                                    forceHLS: true
+            <BrowserView>
+                <div>
+                    <div className='header-container'>
+                    
+                        <Modal open={open} onClose={() => handleOpen(false)}>
+                            <Authentication handleEmail={handleEmail} handlePassword={handlePassword} handleOpen={handleOpen} register={register} login={login} loginError={loginError}/>
+                        </Modal>
+    
+                        <MuiThemeProvider theme={theme}>
+                            <AppBar color="secondary">
+                                <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
+                                    {/* <MenuIcon></MenuIcon> */}
+                                    <Typography variant="h5">
+                                        SHOPLIME
+                                    </Typography>
+                                    <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
+                                </Toolbar>
+                            </AppBar>
+                        </MuiThemeProvider>
+                    </div>   
+    
+    
+                    <div className='body-container'>
+                        <div className='player-container'>
+                            <div className='player-wrapper'>
+                                {
+                                    (live ?
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={hls}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    config={{
+                                        file: {
+                                            forceHLS: true
+                                        }
+                                    }}
+                                    />
+                                    :
+                                    <ReactPlayer
+                                    className='react-player'
+                                    url={archive}
+                                    playing={true}
+                                    loop={true}
+                                    controls={false}
+                                    volume={0.8}
+                                    muted={muted}
+                                    pip={false}
+                                    width={'140%'}
+                                    height={'140%'}
+                                    />
+                                    )
                                 }
-                            }}
-                            />
-                            :
-                            <ReactPlayer
-                            className='react-player'
-                            url={archive}
-                            playing={true}
-                            loop={true}
-                            controls={false}
-                            volume={0.8}
-                            muted={muted}
-                            pip={false}
-                            width={'140%'}
-                            height={'140%'}
-                            />
-                            )
-                        }
-                        <div className='overlay'>
-                            <div className='title-overlay'>
-                                <div className='title-wrapper'>
-                                    <h3 style={{margin: '0'}}>The World's Greatest Lime</h3>
+                                <div className='overlay'>
+                                    <div className='title-overlay'>
+                                        <div className='title-wrapper'>
+                                            <h3 style={{margin: '0'}}>The World's Greatest Lime</h3>
+                                        </div>
+                                        {live &&
+                                        <div style={{display: 'flex', alignItems: 'center'}}>
+                                            <div className='live-pulse'></div>
+                                            <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
+                                        </div>}
+                                    </div>
+                                    <div className='subtitle-overlay'>
+                                        {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
+                                        <ViewCounter />
+                                    </div>
+                                    <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
+                                    <div className='right-overlay'>
+                                        <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' style={{position: 'relative', left: '15px'}}/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                        {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
+                                    </div>
                                 </div>
-                                {live &&
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className='live-pulse'></div>
-                                    <p style={{color: 'red', fontSize: '14px'}}>LIVE</p>
-                                </div>}
                             </div>
-                            <div className='subtitle-overlay'>
-                                {/* <p style={{margin: '0 17px', fontSize: '14px'}}>by <span style={{fontWeight: 'bolder'}}>Nike</span></p> */}
-                                <ViewCounter />
-                            </div>
-                            <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
-                            <div className='right-overlay'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' style={{position: 'relative', left: '15px'}}/> : <ChatIcon className='chat-toggle'/> )}</button>                   
-                                {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
-                            </div>
+                            <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
+                            <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
+                            <ProductDesc heroID={heroID}/>
                         </div>
-                    </div>
-                    <BuyBox openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} heroID={heroID} reRender={pageReRender} toggleCheckout={toggleCheckout} />
-                    <CheckoutPanel openCheckout={openCheckout} handleOpenCheckout={handleOpenCheckout} />
-                    <ProductDesc heroID={heroID}/>
+                        <div className='recently-live'>
+                            <h3>RECENTLY LIVE</h3>
+                        </div>
+                        <Suspense fallback={<></>}>
+                            <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
+                        </Suspense>
+                        
+                        
+                        {/* <div>
+                            <button onClick={toggleCheckout}>Add to Cart</button>
+                            {checkout?<OrderModal toggle={toggleCheckout}/>:null}
+                        </div> */}
+                        </div>
                 </div>
-                <div className='recently-live'>
-                    <h3>RECENTLY LIVE</h3>
-                </div>
-                <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams}/>
-                </Suspense>
-                
-                
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
-                </div>
+            </BrowserView>
+            <MobileView><MobileHome /></MobileView>
         </div>
     )
 }
