@@ -60,7 +60,6 @@ function SimpleExpansionPanel(props) {
         console.log(mProduct.data.description)     
     }
 
-    console.log('prod Desc', prodDesc)
     return (
         <div className={classes.root}>
             <ExpansionPanel square className={classes.root} style={{ marginRight: '0px', borderTop: '1px solid black'}}>
