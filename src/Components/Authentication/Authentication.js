@@ -4,8 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -95,11 +93,7 @@ function Authentication(props) {
                             <InputLabel className={classes.typography} htmlFor="password">Password</InputLabel>
                             <Input onChange={(e) => handlePassword(e.target.value)} style={{ marginBottom: '30px' }} name="password" type="password" id="password" autoComplete="current-password" />
                         </FormControl>
-                        
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
+
                         <Button
                             onClick={() => register()} 
                             style={buttonStyle}

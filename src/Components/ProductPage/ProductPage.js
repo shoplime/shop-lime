@@ -2,7 +2,6 @@ import React, { useState, Suspense, useEffect, memo } from 'react'
 import Modal from '@material-ui/core/Modal';
 import Authentication from '../Authentication/Authentication';
 import ReactPlayer from 'react-player';
-import Chat from './../Chat/Chat'
 import './ProductPage.scss'
 import ProductDesc from '../ProductDesc/ProductDesc'
 import BuyBox from '../BuyBox/BuyBox'
@@ -18,6 +17,7 @@ import CheckoutPanel from '../CheckoutPanel/CheckoutPanel'
 import logo from '../Home/shoplime-logo.png'
 import VolumeUp from '@material-ui/icons/VolumeUp'
 import VolumeOff from '@material-ui/icons/VolumeOff'
+import { Link } from 'react-router-dom'
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const ProductPage = (props) => {
@@ -53,13 +53,12 @@ const ProductPage = (props) => {
         axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
-                    const { name, product_id, hls } = res.data[0]
+                    const { hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
                     setPastStreams(res.data)
 
                 } else {
-                    const { name, archive_id, product_id } = res.data[0]
 
                     setLive(false)
                     setPastStreams(res.data)
@@ -135,8 +134,11 @@ const ProductPage = (props) => {
                     <AppBar color="secondary">
                         <Toolbar style={{ justifyContent: 'space-between', padding: '0px 20%' }}>
                             <div className='logo-container'>
-                                <img src={logo} alt='' />
+                                <Link to='/'><img src={logo} alt='' /></Link>
                             </div>
+                            <Typography variant="h3" style={{fontSize: '10px', marginLeft: '30%', textDecoration: 'none', padding: '5px', display: 'flex', flexDirection: 'row'}} id='viewLive'>
+                                <Link to='/' style={{fontSize: '13px', color: 'red'}}>GO TO LIVE STREAM <div className='live-pulse-2' style={{float: 'right', marginTop: '2px', marginLeft: '7px'}}></div></Link>
+                            </Typography>
                             <LoginButton handleOpen={handleOpen} handleError={handleError} user={user} fullWidth={true}></LoginButton>
                         </Toolbar>
                     </AppBar>
@@ -215,11 +217,6 @@ const ProductPage = (props) => {
                     <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams} heroID={heroID} streamID={streamID} />
                 </Suspense>
 
-
-                {/* <div>
-                    <button onClick={toggleCheckout}>Add to Cart</button>
-                    {checkout?<OrderModal toggle={toggleCheckout}/>:null}
-                </div> */}
             </div>
         </div>
     )

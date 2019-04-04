@@ -10,7 +10,6 @@ import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import LoginButton from './Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from '../../mui_theme'
@@ -23,7 +22,6 @@ import logo from './shoplime-logo.png'
 import ViewCounter from '../ViewCounter/ViewCounter'
 import MobileHome from './../MobileHome/MobileHome'
 import { BrowserView, MobileView } from 'react-device-detect'
-const Nav = React.lazy(() => import('../Nav/Nav'))
 const Videos = React.lazy(() => import('../Videos/Videos'))
 
 const Home = () => {
@@ -55,14 +53,14 @@ const Home = () => {
        axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
-                    const { name, product_id, hls } = res.data[0]
+                    const { hls } = res.data[0]
                     setHLS(hls)
                     setLive(true)
                     setHeroID(res.data[0].product_id)
                     setPastStreams(res.data)
                     
                 } else {
-                    const { name, archive_id, product_id } = res.data[0]
+                    const { archive_id,} = res.data[0]
                     setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
                     setHeroID(res.data[0].product_id)
@@ -124,8 +122,6 @@ const Home = () => {
                 handleError('INCORRECT EMAIL OR PASSWORD')
             })    
     }
-    
-    console.log('Past Streams9', pastStreams[0])
     return (
         <div>
             <BrowserView>
@@ -139,7 +135,6 @@ const Home = () => {
                         <MuiThemeProvider theme={theme}>
                             <AppBar color="secondary">
                                 <Toolbar style={{justifyContent:'space-between', padding: '0px 20%'}}>
-                                    {/* <MenuIcon></MenuIcon> */}
                                     <div className='logo-container'>
                                         <img src={logo} alt='' />
                                     </div>

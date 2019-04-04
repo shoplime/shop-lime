@@ -4,9 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import './Videos.scss'
 import { withRouter } from 'react-router-dom'
-import {Link} from 'react-router-dom'
-import { userInfo } from 'os';
-
 
 const styles = theme => ({
     root: {
@@ -21,16 +18,12 @@ const styles = theme => ({
     },
 });
 
-
 class Videos extends React.Component { 
     state = {
         spacing: '16',
         videos: [],
         product_id: ''
     };
-    getVideos = () => {
-        // axios.get
-    }
     handleChange = key => (event, value) => {
         this.setState({
             [key]: value,
@@ -38,14 +31,9 @@ class Videos extends React.Component {
     };
     handleClick = (stream) => {
         this.props.history.push(`/${stream.product_id}/${stream.archive_id}/${stream.name}`)
-        window.scrollTo(0, 0)
-        
+        window.scrollTo(0, 0)   
     }
-  
-    
-    
-    
-    
+
     
     render() {
         const { classes, user, handleOpen, handleError, pastStreams } = this.props; 
@@ -62,7 +50,6 @@ class Videos extends React.Component {
                                     user
                                     ?
                                     <div >
-                                        {/* <Link to = {stream.product_id +'/'+ stream.archive_id}> */}
                                             <button onClick={() => this.handleClick(stream)} className='video-card'>
                                              <img className='img' src={stream.url} alt=''/> 
                                              </button>
