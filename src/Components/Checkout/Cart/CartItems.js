@@ -111,6 +111,7 @@ class CartItems extends Component{
                     </button>
                     <input
                       className="quantity"
+                      id='quantity'
                       name="number"
                       type="number"
                       min="1"
