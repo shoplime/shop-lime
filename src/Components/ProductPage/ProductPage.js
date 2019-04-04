@@ -46,13 +46,10 @@ const ProductPage = (props) => {
     const [heroID, setHeroID] = useState('')
     
     useEffect(() => {
-        getUser()
-    }, [user]);
-    useEffect(() => {
         const {productid, streamid} = props.match.params
-        console.log('match params', props.match.params)
+        getUser()
         setHeroID(productid)
-        setStreamID(streamID)
+        setStreamID(streamid)
         axios.get('/homeStreams')
             .then(res => {
                 if (res.data[0].status === 'live') {
@@ -63,13 +60,12 @@ const ProductPage = (props) => {
 
                 } else {
                     const { name, archive_id, product_id } = res.data[0]
-                    setArchive(`https://lime-archive.s3.amazonaws.com/46286302/${archive_id}/archive.mp4`)
                     setLive(false)
                     setPastStreams(res.data)
 
                 }
             })
-    }, [heroID])
+    }, [heroID, streamID, props.match.params])
     console.log(pastStreams)
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : null)
@@ -195,9 +191,9 @@ const ProductPage = (props) => {
                                     </div>}
 
                             </div>
-                            <div className='subtitle-overlay1'>
+                            {/* <div className='subtitle-overlay1'>
                                 <p style={{ margin: '0 17px', fontSize: '14px' }}>by <span style={{ fontWeight: 'bolder' }}>Nike</span></p>
-                            </div>
+                            </div> */}
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute' /> : <VolumeUp className='mute' />)}</button>
                             <div className='right-overlay1'>
                                 {/* <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' /> : <ChatIcon className='chat-toggle' />)}</button>
@@ -216,7 +212,7 @@ const ProductPage = (props) => {
                     <h3>RECENTLY LIVE</h3>
                 </div>
                 <Suspense fallback={<></>}>
-                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams} />
+                    <Videos handleOpen={handleOpen} handleError={handleError} user={user} pastStreams={pastStreams} heroID={heroID} streamID={streamID} />
                 </Suspense>
 
 
