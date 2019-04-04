@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './MessageForm.scss'
-// import Send from '@material-ui/icons/Send'
+const Filter = require('bad-words')
+const filter = new Filter();
 
 class MessageForm extends Component {
   static propTypes = {
@@ -14,7 +15,8 @@ class MessageForm extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault()
-    this.props.onMessageSend(this.input.value)
+    // console.log(filter.clean(this.input.value))
+    this.props.onMessageSend(filter.clean(this.input.value))
     this.input.value = ""
   }
 
