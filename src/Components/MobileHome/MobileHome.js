@@ -3,23 +3,36 @@ import SwipeableViews from 'react-swipeable-views';
 import './MobileHome.scss'
 import axios from 'axios';
 import AuthLogic from '../../Testing/AuthLogic'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import MobileCard from './MobileCard'
-const Nav = React.lazy(() => import('../Nav/Nav'))
-const Videos = React.lazy(() => import('../Videos/Videos'))
+import ViewCounter from './../ViewCounter/ViewCounter'
+import * as api from '../../moltin';
 
 const MobileHome = () => {
     
     const [checkout, setCheckout] = useState(false);
     const [openCheckout, handleOpenCheckout] = useState(false);
+    
     const [open, handleOpen] = useState(false);
     const [email, handleEmail] = useState('')
     const [password, handlePassword] = useState('') 
     const [loginError, handleError] = useState('')
     const [user, handleUser] = useState(false)
+    
+    const [hls, setHLS] = useState('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8')
+    const [archive, setArchive] = useState('')
     const [playing, setPlaying] = useState(true);
     const [muted, setMuted] = useState(true);
     const [chatDisplay, setChatDisplay] = useState(false);
+    const [live, setLive] = useState(false)
+    const [pastStreams, setPastStreams] = useState([])
     const [streams, setStreams] = useState([])
+    const [productDetails, setProductDetails] = useState({}) 
+    const [imgID, setImgID] = useState('') 
+    const [price, setPrice] = useState('') 
+    
+
 
     useEffect(() => {
         getUser()
@@ -27,11 +40,18 @@ const MobileHome = () => {
     useEffect(() => {
         axios.get('/homeStreams')
         .then(res => {
-            console.log(res.data)
             setStreams(res.data)
         })
-     },[])
-
+    }, [streams])
+    
+    const getImage = async (productId) => {
+        const mProduct = await api.GetProduct(productId)
+        await setProductDetails(mProduct) 
+        console.log(mProduct)     
+        await setImgID(mProduct.included.main_images[0].link.href)
+        await setPrice(mProduct.data.price[0].amount)
+    }
+    
     const toggleCheckout = () => {
         setCheckout(checkout === false ? true : false)
     };
@@ -86,12 +106,13 @@ const MobileHome = () => {
 
     return (
         <div className='m-body-container'>
-        <div className='m-header'>LIME</div>
             <SwipeableViews containerStyle={{height: '100vh'}} axis="y" resistance>
                 {
-                    streams.map((stream, i) => (
-                        <MobileCard key={i} stream={stream}/>
-                    ))
+                    streams.map((stream, index) => {
+                        return(
+                            <MobileCard stream={stream}/>
+                        )
+                    })
                 }
             </SwipeableViews>
         </div>
@@ -99,5 +120,3 @@ const MobileHome = () => {
 }
 
 export default memo(MobileHome)
-
-                

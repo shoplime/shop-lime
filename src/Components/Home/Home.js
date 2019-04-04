@@ -161,8 +161,8 @@ const Home = () => {
                             volume={0.8}
                             muted={muted}
                             pip={false}
-                            width={'100%'}
-                            height={'100%'}
+                            width={'140%'}
+                            height={'140%'}
                             config={{
                                 file: {
                                     forceHLS: true
@@ -179,8 +179,8 @@ const Home = () => {
                             volume={0.8}
                             muted={muted}
                             pip={false}
-                            width={'100%'}
-                            height={'100%'}
+                            width={'140%'}
+                            height={'140%'}
                             />
                             )
                         }
@@ -201,7 +201,7 @@ const Home = () => {
                             </div>
                             <button onClick={toggleMuted} className='icon-button'>{(muted ? <VolumeOff className='mute'/> : <VolumeUp className='mute'/> )}</button>                   
                             <div className='right-overlay'>
-                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle'/> : <ChatIcon className='chat-toggle'/> )}</button>                   
+                                <button onClick={toggleChat} className='icon-button'>{(chatDisplay ? <Close className='chat-toggle' style={{position: 'relative', left: '15px'}}/> : <ChatIcon className='chat-toggle'/> )}</button>                   
                                 {chatDisplay && <div className='chat-wrapper'><Chat /></div>}
                             </div>
                         </div>

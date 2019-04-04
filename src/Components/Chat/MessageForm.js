@@ -28,6 +28,7 @@ class MessageForm extends Component {
             type="text"
             ref={(node) => (this.input = node)}
             placeholder="Enter your message..."
+            maxlength="140"
           />
         </div>
         <div className="button-container">

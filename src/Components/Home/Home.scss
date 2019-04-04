@@ -30,9 +30,14 @@
 .player-wrapper {
   background-color: black;
   position: relative;
-  min-height: 33vw;
+  // min-height: 32vw;
   width: 100%;
   overflow: hidden;
+}
+
+.react-player {
+  position: relative;
+  right: 20%
 }
 
 // .header-container{
@@ -138,9 +143,6 @@
   color: #ffffff;
 }
 
-.react-player {
-  align-self: center;
-}
 
 .live-pulse {
   margin-right: 5px;
